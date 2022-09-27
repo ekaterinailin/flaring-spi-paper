@@ -13,7 +13,7 @@ from matplotlib.lines import Line2D
 if __name__ == "__main__":
 
     # read in flare table
-    df = pd.read_csv("../results/PAPER_flare_table.csv")
+    df = pd.read_csv(paths.data / "PAPER_flare_table.csv")
 
     # pick only real flares
     df = df[df.orbital_phase != -1]
