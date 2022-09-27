@@ -85,4 +85,4 @@ if __name__ == "__main__":
     plt.tight_layout()
 
     # save the figure
-    plt.savefig(paths.figures / "PAPER_flare_phase_hist.png", dpi=300)
+    plt.savefig(paths.figures / "PAPER_flares_phase_hist.png", dpi=300)
