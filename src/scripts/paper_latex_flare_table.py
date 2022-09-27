@@ -57,7 +57,7 @@ if __name__ == "__main__":
     # Convert the dataframe to a LaTeX table
     c = "c" * (len(final_columns) - 1)
     stri = flare_table.head(20).to_latex(index=False,escape=False,
-                                         column_format=f"l|{c}")
+                                         column_format=f"l{c}")
 
     # Make some layout adjustments
     stri = stri.replace("\\toprule","\hline")
