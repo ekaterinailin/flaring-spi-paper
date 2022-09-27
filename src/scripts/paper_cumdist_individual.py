@@ -14,7 +14,7 @@ from matplotlib.lines import Line2D
 if __name__ == "__main__":
 
     # get matplotlib style
-    plt.style.use('./images/presentation.mplstyle')
+    plt.style.use('.paper.mplstyle')
 
     # read in flare table
     df = pd.read_csv(paths.data / "PAPER_flare_table.csv")
