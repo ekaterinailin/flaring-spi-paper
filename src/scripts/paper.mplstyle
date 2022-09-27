@@ -1,0 +1,10 @@
+axes.titlesize : 14
+axes.labelsize : 14
+lines.linewidth : 2
+lines.markersize : 20
+xtick.labelsize : 13
+ytick.labelsize : 13
+font.family : monospace
+figure.dpi: 103
+image.cmap    : viridis
+axes.prop_cycle : cycler('color', ['9467bd', '8c564b', 'e377c2', '7f7f7f', 'bcbd22', '17becf','1f77b4', 'ff7f0e', '2ca02c', 'd62728'])
