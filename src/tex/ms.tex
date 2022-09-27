@@ -50,7 +50,63 @@ Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna.
 Morbi ac orci et nisl hendrerit mollis, suspendisse ut massa, cras nec ante. 
 Pellentesque a nulla cum sociis natoque penatibus et magnis dis parturient. 
 Aliquam tincidunt urna, nulla ullamcorper vestibulum turpis. 
-Pellentesque cursus luctus mauris \citep{Luger2021}.
+Pellentesque cursus luctus mauris .
+
+\begin{figure}[ht!]
+    \script{paper_cumdist_individual.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_flares_phase_hist.png}
+        \caption{
+            Plot showing a bunch of random numbers.
+        }
+        \label{fig:random_numbers}
+    \end{centering}
+\end{figure}
+
+\section{Data}
+\label{sec:methods}
+\subsection{Star-Planet Systems}
+%Catalogs
+% as of January 2021
+We started our sample selection with the Planetary Systems Composite Parameters Table (PSCP)\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}} from which we removed controversial planet detections (``pl\_controv\_flag'' set to 1), i.e. detections with existing literature questioning the result. The catalog then contained XXXX unique systems.
+
+We complemented the PSCP with the TESS TOI Table~\citep[TT][]{guerrero2021arxiv}\footnote{\url{https://tev.mit.edu/data/collection/193/}}. We filtered the catalog by requiring the confirmed planet (CP) or known planet (KP) flags to be set in the ``TOI Disposition''. This added XXXX star-planet systems to the sample.
+
+%Transit information
+%Full sample statistics
+\subsection{Kepler and TESS photometry}
+Between 2009 and 2013, the Kepler space telescope~\citep{koch2010} nearly continuously observed a patch of the sky in the Cygnus-Lyra region. Each of the 18 observing Quarters contains nearly uninterrupted $\sim 90$ days of observations, totaling over 100000 stars monitored in 2-min cadence. 
+% 100000 from here: https://exoplanetarchive.ipac.caltech.edu/docs/KeplerMission.html
+
+The Transiting Exoplanet Survey Satellite~(TESS,~\citealt{ricker2014}) is an all-sky mission that began operations in 2018, completed two sky scans until summer 2022. It is observing at the time of writing, collecting nearly continuous photometric time series in the 600-1000 nm band for $\sim 27 days$ in each observing Sector. About $200\,000$ stars have been observed in 2-min cadence in the first two years of operations with about 20000 targets per Sector. Out of these, from Sector 27 on, 1000 targets were observed at even higher 20-s cadence in each Sector. 
+% 20000 per sector does not add up, because of stars observed in multiple sectors, the 20000 and 1000 figures can be found here: https://tess.mit.edu/observations/target-lists/
+% extended TESS mission https://heasarc.gsfc.nasa.gov/docs/tess/extended.html
+
+Based on the filtered PSCP and TT tables, we queried the full Kepler archive (quarters Q0-Q17, Data Release 25) and most recent TESS catalog (July 2022) for their respective 1-min and 2-min/20-s cadence light curves, accounting for systems that appeared in both catalogs. In total, we obtained XXXX Kepler light curves and XXXX TESS light curves. XXXX systems were observed only by the primary Kepler mission, XXXX only by TESS, and XXXX by both missions.
+
+\section{Methods}
+\label{sec:methods}
+same as in \cite{ilin2022searching}
+
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Individual Stars}
+
+\subsection{Combined Sample}
+
+\begin{table}[ht!]
+    \script{paper_latex_flare_table.py}
+            \caption{
+            Table showing the head of the flare table.
+        }
+    \input{output/flare_table.tex}
+        \label{fig:random_numbers}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
 
 
 \bibliography{bib}
