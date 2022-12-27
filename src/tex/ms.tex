@@ -6,62 +6,33 @@
 \begin{document}
 
 % Title
-\title{An open source scientific article}
+\title{Searching for flaring star-planet interactions in star-planet systems in Kepler and TESS}
 
 % Author list
-\author{@ekaterinailin}
+\author{Ekaterina Ilin}
+\author{Katja Poppenh\"ager}
 
 % Abstract with filler text
 \begin{abstract}
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
-    Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. 
-    Curabitur dictum gravida mauris, consectetuer id, vulputate a, magna. 
-    Donec vehicula augue eu neque, morbi tristique senectus et netus et. 
-    Mauris ut leo, cras viverra metus rhoncus sem, nulla et lectus vestibulum. 
-    Phasellus eu tellus sit amet tortor gravida placerat. 
-    Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. 
-    Praesent eget sem vel leo ultrices bibendum. 
-    Aenean faucibus, morbi dolor nulla, malesuada eu, pulvinar at, mollis ac. 
-    Curabitur auctor semper nulla donec varius orci eget risus. 
-    Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. 
-    Duis eget orci sit amet orci dignissim rutrum.
+    Star-planet system we have found so far are nothing like the Solar System. Many stars host planets in orbits much closer than Mercury, where it takes them mere days to complete a full revolution. In some of these systems, the planets are so close that they plow through the extended magnetosphere of the star, and are expected to trigger flares on their surfaces. So far, however, these flaring star-planet interactions escape our detection methods. If found, the planets and the flare they cause become localized probes of the parts of the stellar magnetosphere that extends from the location of one to the other. A measurement of these interactions constrains mass loss from the star, and potentially also the magnetic field of the planet. 
+
+    In this work, we searched star-planet systems observed by Kepler and TESS for flaring star-planet interactions. We compiled a catalog of all flaring star-planet systems known to date, and characterized the detected flares detected. We then searched for flares in excess of the intrinsic flaring of the star, i.e., flares triggered by the interaction with the planet in phase with its orbit. 
+
+    We find XXXX star-planet systems with > XXXX flares. For XXXX of them, we can calculate the expected amplitude of interaction based on the system's magnetic field strength, orbital parameters, rotation and planet radius. We find that the trend of higher interaction signal agrees with the expected strength, but also shows signs of intermittency, both for individual systems, and in comparison between ones with similar expected amplitude. HIP 67522, a 17 Myr young Sun with a Jupiter in a 9 day orbit, shows both one of the highest expected and the highest measured interaction amplitudes, albeit only at the $2.5\sigma$ level. 
 \end{abstract}
 
 % Main body with filler text
 \section{Introduction}
 \label{sec:intro}
+Star-planet system we have found so far are nothing like the Solar System.
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
-Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. 
-Curabitur dictum gravida mauris, consectetuer id, vulputate a, magna. 
-Donec vehicula augue eu neque, morbi tristique senectus et netus et. 
-Mauris ut leo, cras viverra metus rhoncus sem, nulla et lectus vestibulum. 
-Phasellus eu tellus sit amet tortor gravida placerat. 
-Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. 
-Praesent eget sem vel leo ultrices bibendum. 
-Aenean faucibus, morbi dolor nulla, malesuada eu, pulvinar at, mollis ac. 
-Curabitur auctor semper nulla donec varius orci eget risus. 
-Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. 
-Duis eget orci sit amet orci dignissim rutrum.
+What is SPI?
 
-Nam dui ligula, fringilla a, euismod sodales, sollici- tudin vel, wisi. 
-Morbi auctor lorem non justo, nam lacus libero, pretium at, lobortis vitae. 
-Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna. 
-Morbi ac orci et nisl hendrerit mollis, suspendisse ut massa, cras nec ante. 
-Pellentesque a nulla cum sociis natoque penatibus et magnis dis parturient. 
-Aliquam tincidunt urna, nulla ullamcorper vestibulum turpis. 
-Pellentesque cursus luctus mauris .
+Why look for SPI? Use planets as probes stellar magnetic fields at a defined orbit, e.g., stellar wind conditions. SPI can only occur if the planet is orbiting within the Alfv\'en radius of the star for a sizable period of time. The Alfv\'en radius is the radius at which the stellar wind velocity, which increases with increasing distance from the star because of XXXX, exceed the Alfv\'en velocity of the magnetized plasma. Beyond this radius, this plasma is disconnected from the star. Alfv\'en waves cannot propagate back to the star because the wind is carrying the plasma away faster than these waves can travel.
 
-\begin{figure*}[ht!]
-    \script{paper_cumdist_individual.py}
-    \begin{centering}
-        \includegraphics[width=\linewidth]{figures/PAPER_flares_phase_hist.png}
-        \caption{
-            Plot showing a bunch of random numbers.
-        }
-        \label{fig:random_numbers}
-    \end{centering}
-\end{figure*}
+
+
+
 
 \section{Data}
 \label{sec:methods}
@@ -71,43 +42,141 @@ Pellentesque cursus luctus mauris .
 We started our sample selection with the Planetary Systems Composite Parameters Table (PSCP)\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}} from which we removed controversial planet detections (``pl\_controv\_flag'' set to 1), i.e. detections with existing literature questioning the result. The catalog then contained XXXX unique systems.
 
 We complemented the PSCP with the TESS TOI Table~\citep[TT][]{guerrero2021arxiv}\footnote{\url{https://tev.mit.edu/data/collection/193/}}. We filtered the catalog by requiring the confirmed planet (CP) or known planet (KP) flags to be set in the ``TOI Disposition''. This added XXXX star-planet systems to the sample.
+\subsection{Orbital periods}
+Either Kepler/TESS or from RVs.
+
+\subsection{Semi-major axes}
+
+
+\subsection{Planetary radii}
+NASA table?
+
+\subsection{Stellar magnetic fields}
+\cite{foster2022identifying} and \cite{reiners2022magnetism} 
+
+
 
 %Transit information
 %Full sample statistics
 \subsection{Kepler and TESS photometry}
-Between 2009 and 2013, the Kepler space telescope~\citep{koch2010} nearly continuously observed a patch of the sky in the Cygnus-Lyra region. Each of the 18 observing Quarters contains nearly uninterrupted $\sim 90$ days of observations, totaling over 100000 stars monitored in 2-min cadence. 
+Between 2009 and 2013, the Kepler space telescope~\citep{koch2010kepler} nearly continuously observed a patch of the sky in the Cygnus-Lyra region. Each of the 18 observing Quarters contains nearly uninterrupted $\sim 90$ days of observations, totaling over 100000 stars monitored in 2-min cadence. 
 % 100000 from here: https://exoplanetarchive.ipac.caltech.edu/docs/KeplerMission.html
 
-The Transiting Exoplanet Survey Satellite~(TESS,~\citealt{ricker2014}) is an all-sky mission that began operations in 2018, completed two sky scans until summer 2022. It is observing at the time of writing, collecting nearly continuous photometric time series in the 600-1000 nm band for $\sim 27 days$ in each observing Sector. About $200\,000$ stars have been observed in 2-min cadence in the first two years of operations with about 20000 targets per Sector. Out of these, from Sector 27 on, 1000 targets were observed at even higher 20-s cadence in each Sector. 
+The Transiting Exoplanet Survey Satellite~(TESS,~\cite{ricker2015transiting}) is an all-sky mission that began operations in 2018, completed two sky scans until summer 2022. It is observing at the time of writing, collecting nearly continuous photometric time series in the 600-1000 nm band for $\sim 27 days$ in each observing Sector. About $200\,000$ stars have been observed in 2-min cadence in the first two years of operations with about 20000 targets per Sector. Out of these, from Sector 27 on, 1000 targets were observed at even higher 20-s cadence in each Sector. 
 % 20000 per sector does not add up, because of stars observed in multiple sectors, the 20000 and 1000 figures can be found here: https://tess.mit.edu/observations/target-lists/
 % extended TESS mission https://heasarc.gsfc.nasa.gov/docs/tess/extended.html
 
 Based on the filtered PSCP and TT tables, we queried the full Kepler archive (quarters Q0-Q17, Data Release 25) and most recent TESS catalog (July 2022) for their respective 1-min and 2-min/20-s cadence light curves, accounting for systems that appeared in both catalogs. In total, we obtained XXXX Kepler light curves and XXXX TESS light curves. XXXX systems were observed only by the primary Kepler mission, XXXX only by TESS, and XXXX by both missions.
 
+\subsection{Transit mid-times}
+
 \section{Methods}
 \label{sec:methods}
-same as in \cite{ilin2022searching}
+We measure flaring star-planet interactions (SPI) as the presence of excess flares triggered by the orbiting planet. These excess flares manifest as a deviation of flare timing from a random Poisson process with orbital phase. That means that in the absence of flaring SPI, flare peak time will be distributed randomly in orbital phase. In the presence of flaring SPI, we measure a phase dependent deviation from this randomness.
 
+The main data for this analysis are flare times. To obtain them, we gather the Kepler and TESS light curves for all star-planet systems, remove rotational variability trends, search the de-trended light curves for flares, and convert the flare times to orbital phases. We then perform a customized Anderson-Darling test on the flare peak time distribution, which yields a p-value for the significance of the SPI signal. We compare these results to theoretical SPI power $P_{SPI}$ using the scaling relations in~\cite{lanza2012starplanet}, where $P_{SPI}$ is proportional to
+
+\begin{equation}
+    P_{SPI} \sim B_p^{2/3} B_*^{4/3} v_{rel} R_p^2.
+\end{equation}
+
+$B_p$ and $B_*$ are the total planetary and stellar surface field strengths, respectively; $v_{rel}$ is the relative velocity between the stellar rotation and the planet's orbit at the semi-major axis; and $R_p$ is the planetary radius.
+
+
+The methods for light curve de-trending and flare finding in Kepler and TESS light curves, as well as the Anderson-Darling test, are the same as detailed in~\citep{ilin2022searching}. We therefore only briefly recap the techniques here:
+
+To remove trends and rotational variability from the light curve without losing the flare signal, we use an empirically derived multistep process. First, we apply spline fit with a coarse sampling of 30h mean values to capture slow rotation with periods above multiple days and non-periodic trends. Then, we iteratively fit a series of sines to capture rotational signal on time scales down to about half a day, close to the fastest rotational signals measured in low mass stars. Eventually, we apply two Savitzky-Golay filters in sequence, with decreasing periods at each step. At this stage, we mask all data points above a 2.5 sigma (or 1.5 sigma for very active stars) threshold as flare candidates to prevent the filter from ironing out the flares.
+
+Flare finding here. Manual vetting
+
+Orbital phase finding. Check coherence times. Orbital period is enough.
+Use transit mid-times from the same mission if possible.
+
+Anderson-Darling test here. Used four equidistant start phases instead of 20, because it does not change much.
+
+\cite{foster2022identifying} and \cite{reiners2022magnetism} to get Lx and then B.
 
 \section{Results}
 \label{sec:results}
 
-\subsection{Individual Stars}
+\subsection{Flare catalog}
 
-\subsection{Combined Sample}
-
-\begin{table*}[ht!]
+\begin{table*}
     \script{paper_latex_flare_table.py}
+    \centering
             \caption{
-            Table showing the head of the flare table.
+            Flare catalog of all star-planet systems observed by Kepler and TESS. In transiting multi-planet systems, the orbital phase refers to the innermost planet, with the transit mid-time at phase zero. 
         }
     \input{output/flare_table.tex}
         \label{fig:random_numbers}
 \end{table*}
 
+\subsection{Orbital coherence times}
+
+divide the coherence time of the orbital period by the observing baseline of the combined Kepler and TESS observations for each star.
+
+Do the same for the mid-times.
+
+\subsection{Flare phase distributions}
+
+For details on AU Mic results, see~\citep{ilin2022searching}.
+
+\begin{figure*}[ht!]
+    \script{paper_cumdist_individual.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_flares_phase_hist.png}
+        \caption{
+            Cumulative distributions of orbital phases of flares in the hosts observed by Kepler and TESS that had the most flares detected per star.
+        }
+        \label{fig:cumdist_active}
+    \end{centering}
+\end{figure*}
+
+\subsection{Flaring star-planet interaction signal}
+We use the custom Anderson-Darling test detailed in \cite{ilin2022searching} to look for flaring SPI in all system with three flares or more. We do not find $>3\sigma$ signal of star-planet interaction in any of the star-planet systems in this sample.  
+
+Table XXXX shows
+
+
+
+
+\subsection{Individual stars}
+
+\subsubsection{Proxima Cen}
+tentative detection of another planet further in, at 0.029 au, or 5 day orbital period~\citep{faria2022candidate, artigau2022linebyline}
+
+\subsubsection{HIP 67522}
+HIP 67522 has one of the strongest expected SPI signals in our sample, and shows the clearest signs of flaring SPI, albeit with only 6 flares in the sample. These flares are distributed across two Sectors in TESS. In Sector 11, two flares occur at orbital phases $\sim 0.6$ and $\sim 0.8$. Two years later, in Sector 38, four flares occur, but this time, all of them take place at orbital phases $0.00-0.05$, that is, up to a few hours after transit.
+
+HIP 67522 is young Sun, currently contracting onto the main sequence. It is a Sco-Cen member (10-20 Myr old), which was discovered to host a close-in Jupiter, HIP 67522 b, in 2020~\citep{rizzuto2020tess}. It was found with low obliquity, consistent with XXXX~\citep{heitzmann2021obliquity}. Tentative third planet transiting.
+
+HIP 67522 will be observed again with TESS in spring 2023.
+
+\subsection{TAP 26}
+
+\subsubsection{Excluded flaring star-planet systems}
+\paragraph{LTT 1445}
+ LTT 1445 is a hierarchical triple wherein LTT 1445 A hosts two close-in planets, and LTT 1445 B and C are a tight binary system separated by about 7 arcsec, that is, blended in one TESS pixel~\citep{winters2019three}. Both the binary and LTT 1445 A have been detected with flares in X-ray~\citep{brown2022xray}. Recently, LTT 1445 A was found to host a second plant LTT 1445 Ac inwards of LTT 1445 Ab~\citep{lavie2022planetary}
+
+\paragraph{HD 41004 B}
+Hierarchical system, composed of HD 41004 A and its Jupiter HD 41004 Ab, and HD 41004 B. an M dwarf, and its brown dwarf companion HD 41004 Bb. 
+
+\subsection{Combined Sample}
+
+For those stars with given transit mid-time and 
 \section{Discussion}
 \label{sec:discussion}
 
+\subsection{Similar work that puts ours in context}
+
+\subsection{Rotational variability}
+Hard to measure, because it de-phases much faster than orbital variability due to differential rotation and spot evolution. We could use single light curves within which coherence is given...
+
+\subsection{Intermittency}
+
+TAP 26 vs. HIP 67522, also different sectors for HIP 67522, see \cite{shkolnik2008nature}
+
+\subsection{Spin-orbit alignment}
 
 \bibliography{bib}
 
