@@ -1,4 +1,8 @@
 """
+Python 3.8 -- UTF-8
+
+Ekaterina Ilin, 2022, MIT License
+
 Script that generates the individual cumulative distribution 
 plot for the paper using the final flare table.
 """
