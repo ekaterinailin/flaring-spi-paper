@@ -111,11 +111,22 @@ Anderson-Darling test here. Used four equidistant start phases instead of 20, be
         \label{fig:random_numbers}
 \end{table*}
 
-\subsection{Orbital coherence times}
+\subsection{Period coherence times}
 
 divide the coherence time of the orbital period by the observing baseline of the combined Kepler and TESS observations for each star.
 
 Do the same for the mid-times.
+
+\begin{figure*}[ht!]
+    \script{paper_coherence_histogram.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_coherence_histogram.png}
+        \caption{
+           Time span of observation vs. coherence time or the orbital and rotational periods, respectively. Orbital periods are all known precisely enough, so that the phase uncertainty at the last observed flare is of the order of $10^{-2}$. In contrast, in stars with known rotation periods, the precision is often too low, so that the phase of the last flare is often undetermined (ratio on x-axis $\sim 1$.
+        }
+        \label{fig:coherence_hist}
+    \end{centering}
+\end{figure*}
 
 \subsection{Flare phase distributions}
 
