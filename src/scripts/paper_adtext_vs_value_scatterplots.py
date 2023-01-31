@@ -34,6 +34,40 @@ def get_sigma_values():
     return sigmas, sigma_label
 
 
+
+def colorcode_dist(dist):
+    """Define color code and symbol marker for rotation period.
+
+    Parameters
+    ----------
+    dist : float
+        Distance in pc.
+
+    Returns
+    -------
+    color : str
+        Color code.
+    marker : str
+        Symbol marker.
+    """
+    if dist < 50.:
+        color = "green"
+        symbol = "o"
+
+    elif (dist >= 50.) & (dist < 100.):
+        color = "blue"
+        symbol = "x"
+
+    elif (dist >= 100.) & (dist < 150.):
+        color = "black"
+        symbol = "d"
+
+    else:
+        color = "lightgrey"
+        symbol = "s"
+
+    return color, symbol
+
 def colorcode_rotation(st_rotp):
     """Define color code and symbol marker for rotation period.
 
@@ -68,8 +102,66 @@ def colorcode_rotation(st_rotp):
     return color, symbol
 
 
+def colorcode_multiplicity(snum):
+    """Define color code and symbol marker for rotation period.
 
-def make_adtest_figure(df, value, valuelabel, legend, labels):
+    Parameters
+    ----------
+    snum : float
+        Number of stars in the system.
+
+    Returns
+    -------
+    color : str
+        Color code.
+    marker : str
+        Symbol marker.
+    """
+    if snum == 1.:
+        color = "green"
+        symbol = "o"
+
+    elif snum>1:
+        color = "blue"
+        symbol = "x"
+
+    else:
+        color = "lightgrey"
+        symbol = "s"
+
+    return color, symbol
+
+def colorcode_Lx(lx):
+    """Define color code and symbol marker for available X-ray luminosity.
+
+    Parameters
+    ----------
+    lx : float
+        X-ray luminosity in erg/s.
+
+    Returns
+    -------
+    color : str
+        Color code.
+    marker : str
+        Symbol marker.
+    """
+    if np.isnan(lx):
+        color = "blue"
+        symbol = "o"
+
+    elif np.isfinite(lx):
+        color = "green"
+        symbol = "x"
+
+    else:
+        color = "lightgrey"
+        symbol = "s"
+
+    return color, symbol
+
+
+def make_adtest_figure(df, value, valuelabel, legend, labels, ext):
     """Create an AD test vs. value figure.
     
     Parameters
@@ -84,6 +176,8 @@ def make_adtest_figure(df, value, valuelabel, legend, labels):
         List of legend elements.
     labels : list
         List of legend labels.
+    ext : str
+        Extension for the figure name.
     
     Returns
     -------
@@ -99,19 +193,32 @@ def make_adtest_figure(df, value, valuelabel, legend, labels):
     fig, ax = plt.subplots(figsize=(10, 6.5))
 
     data = df[df[value].notnull()]
-
+    norm = data.loc[data.ID=="AU Mic",value].values[0]
+    
+    data[value] = data[value] / norm
+    data[f"{value}_high"] = data[f"{value}_high"] / norm
+    data[f"{value}_low"] = data[f"{value}_low"] / norm
     texts = []
 
     # plot the data
     for color, group in data.groupby("color"):
 
         # make the scatter plot
-        plt.scatter(group[value], group["mean"], marker=group["symbol"].iloc[0],
-                    c=color, s=50., alpha=1.)
+        x = group[value]
+        xhigh = group[f"{value}_high"]
+        xlow = group[f"{value}_low"]
+        plt.errorbar(x, group["mean"], 
+                        xerr=[x - xlow, xhigh - x],
+                         yerr=group["std"],
+                     fmt=".",markersize=1,
+                     c="grey", alpha=1., lw=0.5, zorder=0)
+        plt.scatter(x, group["mean"], marker=group["symbol"].iloc[0],
+                    c=color, alpha=1., s=50, zorder=1)
 
-        # add the label to each star
+        # # add the label to each star
         for star, row in group.iterrows():
-            texts.append(plt.text(x=row[value], y=row["mean"], s=row["ID"],
+            if (row["mean"]<=.2) | (row[value]>=1.):
+                texts.append(plt.text(x=row[value], y=row["mean"], s=row["ID"],
                         fontsize=11, ha="right", va="top", rotation=0))
 
     # log scale
@@ -121,7 +228,7 @@ def make_adtest_figure(df, value, valuelabel, legend, labels):
     # add sigma lines
     for sigma, label in list(zip(sigmas, sigma_labels)):
         plt.axhline(sigma, color="grey", linestyle="-.")
-        plt.text(data[value].max()*1.2, sigma, label, fontsize=15,
+        plt.text(data[f"{value}_high"].max()*1.2, sigma, label, fontsize=15,
                 color="k", verticalalignment="center")
 
     # labels
@@ -132,7 +239,7 @@ def make_adtest_figure(df, value, valuelabel, legend, labels):
     plt.legend(legend, labels, loc=(0, 0.07), fontsize=15)
 
     # limits
-    plt.xlim(data[value].min() * 0.85, data[value].max() * 1.15)
+    plt.xlim(data[f"{value}_low"].min() * 0.85, data[f"{value}_high"].max() * 1.15)
     plt.ylim(1.5e-3, 1)
 
     # adjust label positions
@@ -142,7 +249,7 @@ def make_adtest_figure(df, value, valuelabel, legend, labels):
     plt.tight_layout()
 
     # save the figure
-    plt.savefig(paths.figures / f"PAPER_ADtest_vs_{value}.png", dpi=300)
+    plt.savefig(paths.figures / f"PAPER_ADtest_vs_{value}_{ext}.png", dpi=300)
 
 
 if __name__ == "__main__":
@@ -163,13 +270,39 @@ if __name__ == "__main__":
             Line2D([0], [0], marker='o', color='w',
             markerfacecolor='green', markersize=10),
             Line2D([0], [0], marker='s', color='w',
+            markerfacecolor='lightgrey', markersize=10),
+            Line2D([0], [0], marker='o', color='w',
+            markerfacecolor='blue', markersize=10),
+            Line2D([0], [0], marker='X', color='w',
+            markerfacecolor='green', markersize=10),
+            Line2D([0], [0], marker='o', color='w',
+            markerfacecolor='green', markersize=10),
+            Line2D([0], [0], marker='X', color='w',
+            markerfacecolor='blue', markersize=10),
+            Line2D([0], [0], marker='d', color='w',
+            markerfacecolor='black', markersize=10),
+            Line2D([0], [0], marker='s', color='w',
+            markerfacecolor='lightgrey', markersize=10),
+            Line2D([0], [0], marker='X', color='w',
+            markerfacecolor='blue', markersize=10),
+            Line2D([0], [0], marker='o', color='w',
+            markerfacecolor='green', markersize=10),
+            Line2D([0], [0], marker='s', color='w',
             markerfacecolor='lightgrey', markersize=10)]
+
 
     # define legend labels
     labels = [r"$10 \leq P_{rot} < 15$ d",
             r"$P_{rot} \geq 15$ d",
             r"$P_{rot} < 10$ d",
-            r"no $P_{rot}$"]
+            r"no $P_{rot}$",
+            f"B from Ro from Reiners2022",
+            f"B from X-ray luminosity from FP2022",
+            "d < 50 pc","50 pc < d < 100 pc","100 pc < d < 150 pc","d > 150 pc",
+            "multiple star",
+            "single star",
+            "unknown multiplicity"]
+
 
     # ------------------------------------------------------------
 
@@ -180,40 +313,63 @@ if __name__ == "__main__":
     # read in results table
     df = pd.read_csv(paths.data / "results.csv")
 
-    # define the colors and symbols for the different rotation periods
-    df["color"], df["symbol"] = zip(*df.st_rotp.apply(colorcode_rotation))
+    # define the colors and symbols for the different Lx
+    df["color"], df["symbol"] = zip(*df.sy_dist.apply(colorcode_dist))
+    valuelegend = legend[-7:-3]
+    valuelabels = labels[-7:-3]
 
 
     # ------------------------------------------------------------
     # P-VALUE VS. P_SPI with Bp=1G
 
     value = "p_spi_erg_s"
-    valuelabel = "P$_{SPI}$ [erg/s]  @ B$_p$=1G"
-    valuelegend = legend[1:3]
-    valuelabels = labels[1:3]
+    valuelabel = r"$\sim$ P$_{SPI}$  @ B$_p$=1G"
 
-    make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels)
+    make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, "sab_wBp_colorcode_dist")
 
     # ------------------------------------------------------------
     # P-VALUE VS. P_SPI with Bp=0G
 
-    value = "p_spi_erg_s_bp0"
-    valuelabel = "P$_{SPI}$ [erg/s] @ B$_p$=0G"
-    valuelegend = legend[1:3]
-    valuelabels = labels[1:3]
+    # value = "p_spi_erg_s_bp0"
+    # valuelabel = r"$\sim$ P$_{SPI}$ @ B$_p$=0G"
+    # valuelegend = legend[-4:]
+    # valuelabels = labels[-4:]
 
-    make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels)
+    # make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels)
+
+
+    # ------------------------------------------------------------
+    # P-VALUE VS. P_SPI with Bp=1G with Kavanagh+2022
+
+    value = "p_spi_kav22"
+    valuelabel = r"$\sim$ P$_{SPI}$ @ B$_p$=1G"
+  
+
+    make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, "aw_wBp_colorcode_dist")
 
     # ------------------------------------------------------------
     # P-VALUE VS. L_X
 
-    value = "xray_flux_erg_s"
-    valuelabel = r"$L_X$ [erg/s]"
+    # value = "xray_flux_erg_s"
+    # valuelabel = r"$L_X$ [erg/s]"
 
-    valuelegend = legend[1:]
-    valuelabels = labels[1:]
+    # valuelegend = legend[1:]
+    # valuelabels = labels[1:]
 
 
-    make_adtest_figure(df, value, valuelabel,  valuelegend, valuelabels)
+    # make_adtest_figure(df, value, valuelabel,  valuelegend, valuelabels)
 
     # ------------------------------------------------------------
+
+    # define the colors and symbols for the different Lx
+    df["color"], df["symbol"] = zip(*df.sy_snum.apply(colorcode_multiplicity))
+
+    # ------------------------------------------------------------
+    # P-VALUE VS. P_SPI with Bp=1G
+
+    value = "p_spi_erg_s"
+    valuelabel = r"$\sim$ P$_{SPI}$  @ B$_p$=1G"
+    valuelegend = legend[-3:]
+    valuelabels = labels[-3:]
+
+    make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, "sab_wBp_colorcode_multiplicity")
