@@ -35,24 +35,40 @@ Why look for SPI? Use planets as probes stellar magnetic fields at a defined orb
 
 
 \section{Data}
-\label{sec:methods}
+\label{sec:data}
 \subsection{Star-Planet Systems}
 %Catalogs
 % as of January 2021
 We started our sample selection with the Planetary Systems Composite Parameters Table (PSCP)\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}} from which we removed controversial planet detections (``pl\_controv\_flag'' set to 1), i.e. detections with existing literature questioning the result. The catalog then contained XXXX unique systems.
 
 We complemented the PSCP with the TESS TOI Table~\citep[TT][]{guerrero2021arxiv}\footnote{\url{https://tev.mit.edu/data/collection/193/}}. We filtered the catalog by requiring the confirmed planet (CP) or known planet (KP) flags to be set in the ``TOI Disposition''. This added XXXX star-planet systems to the sample.
+\subsection{Multiplicity}
+We flag all multiple stars except for Proxima Cen (whose companion are well separated both physically and on the sky), but kept them in for the analysis. In addition to noting the multiplicity of some well-known stars, we also use the Robo-AO catalog of nearby companions to Kepler planet candidates from ~\cite{ziegler2018measuring}
+
+
 \subsection{Orbital periods}
 Either Kepler/TESS or from RVs.
 
 \subsection{Semi-major axes}
+\label{sec:data:a}
+The critical parameter is the distance between the star and the planet, not the semi-major axis itself. This varies if the orbit is eccentric. To account for varying distance, we adopt the mean semi-major axes from the literature, but use a custom estimate for the uncertainty that includes the eccentricity.
+If the eccentricity is known, then the range of the distance is set to either the error on the semi-major axis or half of the difference between the semi-major and semi-minor axis, as calculated from the eccentricity -- whichever is larger. If eccentricity is NOT known, then the range of the distance is either the 25\% error on the semi-major axis, that is, assuming e=0.5 or the uncertainty on the semi-major axis -- whichever is larger.
 
+\subsection{Rotation periods}
+We adopt available rotation period values from the literature. When uncertainties are not given, we assume 10\% uncertainty.% _09_
 
 \subsection{Planetary radii}
-NASA table?
+NASA table, see references in table, or using the planetary mass to calculate the radius using the empirical relations derived in \cite{chen2007} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. 
 
-\subsection{Stellar magnetic fields}
-\cite{foster2022identifying} and \cite{reiners2022magnetism} 
+\subsection{Relative velocity}
+
+We calculate the relative velocity between the magnetic field of the star, assumed to be co-rotating, at the planetary orbit, as
+
+\begin{equation}
+    v_{rel} = 2 \pi a \left(\dfrac{1}{P_{orb}} - \dfrac{1}{P_{rot}}\right) 
+\end{equation}
+
+We use quadratic error propagation to estimate the uncertainty in $v_{rel}$ with the mean of the upper and lower uncertainty values on the orbital period and rotation period, if both are given, and the uncertainty on semi-major axis as derived in Sec.~\ref{sec:data:a}. 
 
 
 
@@ -68,6 +84,15 @@ The Transiting Exoplanet Survey Satellite~(TESS,~\cite{ricker2015transiting}) is
 
 Based on the filtered PSCP and TT tables, we queried the full Kepler archive (quarters Q0-Q17, Data Release 25) and most recent TESS catalog (July 2022) for their respective 1-min and 2-min/20-s cadence light curves, accounting for systems that appeared in both catalogs. In total, we obtained XXXX Kepler light curves and XXXX TESS light curves. XXXX systems were observed only by the primary Kepler mission, XXXX only by TESS, and XXXX by both missions.
 
+\subsection{X-ray luminosity}
+We take the \cite{foster2022exoplanet} X-ray luminosity catalog as the basis for our calculation, assuming an uncertainty of 30\% in the reported values, covering typical intrinsic variability among stars of similar rotation periods in studies like ~\cite{wright2011stellaractivityrotation, wright2018stellar}.
+
+\subsection{Stellar magnetic fields}
+\cite{foster2022identifying} and \cite{reiners2022magnetism} 
+
+The intrinsic scatter in Eq. 4 in \cite{reiners2022magnetism} dominates the uncertainty in B over the uncertainty in stellar radius and $L_X$. We use the $+/-1\sigma$ values for the latter two for the final uncertainty estimate $\sigma B$
+
+The estimate is consistent with existing Zeeman broadening for, e.g. AU Mic (3010 G~\cite{reiners2022magnetism})
 \subsection{Transit mid-times}
 
 \section{Methods}
@@ -137,11 +162,12 @@ For details on AU Mic results, see~\citep{ilin2022searching}.
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/PAPER_flares_phase_hist.png}
         \caption{
-            Cumulative distributions of orbital phases of flares in the hosts observed by Kepler and TESS that had the most flares detected per star.
+            Cumulative distributions of orbital phases of flares in the hosts observed by Kepler and TESS that had the most flares detected per star. 
         }
         \label{fig:cumdist_active}
     \end{centering}
 \end{figure*}
+
 
 \subsection{Flaring star-planet interaction signal}
 We use the custom Anderson-Darling test detailed in \cite{ilin2022searching} to look for flaring SPI in all system with three flares or more. We do not find $>3\sigma$ signal of star-planet interaction in any of the star-planet systems in this sample.  
@@ -150,27 +176,82 @@ Table XXXX shows
 
 
 
+\begin{figure*}[ht!]
+    \script{paper_adtext_vs_value_scatterplots.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_ADtest_vs_p_spi_erg_s_bp0.png}
+        \caption{
+            Expected power of SPI vs. AD test results, assuming an unmagnetized planet. These results are mainly dominated by the X-ray luminosity of the host star, see Fig.~\ref{fig:adtest_xray_flux_erg_s}. Assuming a magnetized planet with $B_p=1$ G has only minor influence on the results shown in this figure, see Appendix.
+        }
+        \label{fig:adtest_p_spi_erg_s_bp0}
+    \end{centering}
+\end{figure*}
+
+
+\begin{figure*}[ht!]
+    \script{paper_adtext_vs_value_scatterplots.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_ADtest_vs_xray_flux_erg_s.png}
+        \caption{X-ray luminosity of the host star~\cite{foster2022identifying} vs. AD test results.
+        }
+        \label{fig:adtest_xray_flux_erg_s}
+    \end{centering}
+\end{figure*}
 
 \subsection{Individual stars}
 
 \subsubsection{Proxima Cen}
 tentative detection of another planet further in, at 0.029 au, or 5 day orbital period~\citep{faria2022candidate, artigau2022linebyline}
+Although Proxima Cen is part of a triple stellar system, we treat it a single star here because of the large angular separation to its two companions.
+
+Proxima Cen b has an eccentricity upper limit of 0.35~\cite{anglada-escude2016terrestrial}
 
 \subsubsection{HIP 67522}
 HIP 67522 has one of the strongest expected SPI signals in our sample, and shows the clearest signs of flaring SPI, albeit with only 6 flares in the sample. These flares are distributed across two Sectors in TESS. In Sector 11, two flares occur at orbital phases $\sim 0.6$ and $\sim 0.8$. Two years later, in Sector 38, four flares occur, but this time, all of them take place at orbital phases $0.00-0.05$, that is, up to a few hours after transit.
 
 HIP 67522 is young Sun, currently contracting onto the main sequence. It is a Sco-Cen member (10-20 Myr old), which was discovered to host a close-in Jupiter, HIP 67522 b, in 2020~\citep{rizzuto2020tess}. It was found with low obliquity, consistent with XXXX~\citep{heitzmann2021obliquity}. Tentative third planet transiting.
 
-HIP 67522 will be observed again with TESS in spring 2023.
+HIP 67522 is in close spin-orbit commensurability -- $P_{rot}/P_{orb}=5/1$. The system's $a/R_*\approx11.7$, eccentricity below .25~\cite{rizzuto2020tess}, so that  
 
-\subsection{TAP 26}
+\cite{wood2021characterizing} rule out stellar companions for HIP 67522 based on RV, high-resolution imaging, and Gaia data.
+
+HIP 67522 will be observed again with TESS in spring 2023.
+\subsubsection{GJ 3323}
+
+GJ 3323 b is a non-transiting, likely rocky planet. We adopted the mean radius between assuming pure iron through pure ice composition in \cite{lovos2022null} Table A1, and took the difference from this mean to either of the extremes as uncertainty estimate
+
+\subsubsection{GJ 1061}
+GJ 1061 b is a non-transiting, likely rocky planet. We adopted the mean radius between assuming pure iron through pure ice composition in \cite{lovos2022null} Table A1, and took the difference from this mean to either of the extremes as uncertainty estimate
+
+\subsubsection{TAP 26}
+Likely low eccentricity given in \cite{yu2017hot}
+
+\subsubsection{GJ 393}
+Eccentricity likely low, but not quantified in \cite{amado2021carmenes}, so we treat it as unconstrained (set e=0.5)
+
+\subsubsection{Kepler-42}
+ 	KOI-961 in the detection paper \cite{muirhead2012characterizing}, low eccentricity constrained by \cite{mann2017gold}
+
+\subsubsection{GJ 674}
+Has hot UV flares~\cite{froning2019hot}
+The mass estimates in \cite{bonfils2007harps} and \cite{boisse2011disentangling} do not quote errors, but differ by 0.3MEarth, so we assume that as the uncertainty on $M_p\sin i$
+
+\subsubsection{K2-354}
+Found under EPIC 211314705 and K2-329 in \cite{bouma2020cluster}, who refer to the detection paper \cite{pope2016transiting}, also TIC 468989066.
+
+\subsubsection{DS Tuc A}
+It's a multiple
+\subsubsection{Kepler-1651}
+It's a multiple
+
 
 \subsubsection{Excluded flaring star-planet systems}
 \paragraph{LTT 1445}
- LTT 1445 is a hierarchical triple wherein LTT 1445 A hosts two close-in planets, and LTT 1445 B and C are a tight binary system separated by about 7 arcsec, that is, blended in one TESS pixel~\citep{winters2019three}. Both the binary and LTT 1445 A have been detected with flares in X-ray~\citep{brown2022xray}. Recently, LTT 1445 A was found to host a second plant LTT 1445 Ac inwards of LTT 1445 Ab~\citep{lavie2022planetary}
+ LTT 1445 is a hierarchical triple wherein LTT 1445 A hosts two close-in planets, and LTT 1445 B and C are a tight binary system separated by about 7 arcsec, that is, blended in one TESS pixel~\citep{winters2019three}. Both the binary and LTT 1445 A have been detected with flares in X-ray~\citep{brown2022xray}. Recently, LTT 1445 A was found to host a second planet LTT 1445 Ac inwards of LTT 1445 Ab~\citep{lavie2022planetary}. The rotation periods are not known, so it does not appear in the final figure.
 
 \paragraph{HD 41004 B}
-Hierarchical system, composed of HD 41004 A and its Jupiter HD 41004 Ab, and HD 41004 B. an M dwarf, and its brown dwarf companion HD 41004 Bb. 
+Hierarchical system, composed of HD 41004 A and its Jupiter HD 41004 Ab, and HD 41004 B. an M dwarf, and its brown dwarf companion HD 41004 Bb. The rotation periods are not well-known, so it does not appear at all in the final figure.
+
 
 \subsection{Combined Sample}
 
@@ -191,4 +272,20 @@ TAP 26 vs. HIP 67522, also different sectors for HIP 67522, see \cite{shkolnik20
 
 \bibliography{bib}
 
+\appendix
+\section{Expected $P_{SPI}$ vs. measure flaring SPI with a magnetized planet}
+
+\begin{figure*}[ht!]
+    \script{paper_adtext_vs_value_scatterplots.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_ADtest_vs_p_spi_erg_s.png}
+        \caption{
+            Expected power of SPI vs. AD test results, same as Fig.~\ref{fig:adtest_p_spi_erg_s_bp0}, but assuming a magnetized planet with $B_p=1$ G. 
+        }
+        \label{appendix:fig:adtest_p_spi_erg_s}
+    \end{centering}
+\end{figure*}
+
 \end{document}
+
+
