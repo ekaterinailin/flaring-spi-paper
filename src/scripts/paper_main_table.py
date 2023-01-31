@@ -281,6 +281,8 @@ if __name__ == "__main__":
     singles = singles[singles.TIC != 67646988 ]
     singles = singles[singles.TIC != 236387002 ]
 
+    fulltable = singles.copy()
+
     # convert the singles table to latex after converting the values to tex format
     print("Converting each parameter to a latex formatted column.")
     for col in cols:
@@ -306,7 +308,7 @@ if __name__ == "__main__":
 
     # layout
     string = string.replace("\citet{[*]}","[*]")
-    string = string.replace("rllllllllllll","c"*14)
+    # string = string.replace("rllllllllllll","c"*14)
     string = string.replace("midrule","hline")
     string = string.replace("toprule","hline")
     string = string.replace("bottomrule","hline")
@@ -318,3 +320,29 @@ if __name__ == "__main__":
     with open(path, "w") as f:
         f.write(string)
 
+
+    # Get all bibkeys from singles table
+    bibkeys = fulltable.st_rotp_bibkey.unique()
+    bibkeys = np.append(bibkeys, fulltable.pl_orbper_bibkey.unique())
+    bibkeys = np.append(bibkeys, fulltable.st_rad_bibkey.unique())
+    bibkeys = np.append(bibkeys, fulltable.pl_radj_bibkey.unique())
+    bibkeys = np.append(bibkeys, fulltable.pl_orbsmax_bibkey.unique())
+    bibkeys = np.append(bibkeys, fulltable.st_lum_bibkey.unique())
+
+    # enumerate the bibkeys
+    bibkeys = np.unique(bibkeys)
+
+    # make a dictionary with the bibkeys and the corresponding index
+    bibkeys = {bibkeys[i]:i+1 for i in range(len(bibkeys))}
+
+    # replace the bibkeys with the index in the string table
+    for key in bibkeys.keys():
+        replace = "\citet{"+key+"}"
+        string = string.replace(replace, "(" + str(bibkeys[key]) + ")")
+
+    # write to file
+    path = paths.output / "fit_parameters_bibkeys.tex"
+    print("Write to file: ", path)
+
+    with open(path, "w") as f:
+        f.write(string)
