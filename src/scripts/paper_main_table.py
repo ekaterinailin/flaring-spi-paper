@@ -182,10 +182,11 @@ def tex_one_err(val, err):
         The LaTeX string.
     """
 
-    return (convert_to_scinote(val) +
+    return ("$" +
+            convert_to_scinote(val) +
             "[" +
             convert_to_scinote(err) +
-            "]")
+            "]$")
 
 # for each type of value cols, define a function that
 # converts them into one list of strings for latex
