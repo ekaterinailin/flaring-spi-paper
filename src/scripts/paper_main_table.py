@@ -234,7 +234,7 @@ if __name__ == "__main__":
         "st_rad":"$R_{*}$ [R$_\odot$]",
         "pl_radj":"$R_{p}$ [R$_J$]",
         "a_au":"$a$ [au]",
-        "st_lum":"$L_{*}$ [L$_\odot$]",
+        "st_lum":"log${10} L_{*}$ [L$_\odot$]",
         "Ro":"Ro",
         "B_G":"$B$ [G]",
         "p_spi_erg_s":"log$_{10} P_{SPI,sb}$ [erg s$^{-1}$]",
@@ -299,26 +299,25 @@ if __name__ == "__main__":
     del singles["orbits_covered"]
 
     # make TeX table
-    print("Converting table to TeX format.")
+    # print("Converting table to TeX format.")
 
-    # make the default string length longer
-    pd.set_option('display.max_colwidth', 1000)
+    # # make the default string length longer
+    # pd.set_option('display.max_colwidth', 1000)
 
-    string = singles.to_latex(escape=False,index=False)
+    # string = singles.to_latex(escape=False,index=False)
 
-    # layout
-    string = string.replace("\citet{[*]}","[*]")
-    # string = string.replace("rllllllllllll","c"*14)
-    string = string.replace("midrule","hline")
-    string = string.replace("toprule","hline")
-    string = string.replace("bottomrule","hline")
+    # # layout
+    # string = string.replace("\citet{[*]}","[*]")
+    # string = string.replace("midrule","hline")
+    # string = string.replace("toprule","hline")
+    # string = string.replace("bottomrule","hline")
 
-    # write to file
-    path = paths.output / "fit_parameters.tex"
-    print("Write to file: ", path)
+    # # write to file
+    # path = paths.output / "fit_parameters.tex"
+    # print("Write to file: ", path)
 
-    with open(path, "w") as f:
-        f.write(string)
+    # with open(path, "w") as f:
+    #     f.write(string)
 
 
     # Get all bibkeys from singles table
@@ -335,14 +334,63 @@ if __name__ == "__main__":
     # make a dictionary with the bibkeys and the corresponding index
     bibkeys = {bibkeys[i]:i+1 for i in range(len(bibkeys))}
 
-    # replace the bibkeys with the index in the string table
-    for key in bibkeys.keys():
-        replace = "\citet{"+key+"}"
-        string = string.replace(replace, "(" + str(bibkeys[key]) + ")")
+    # # replace the bibkeys with the index in the string table
+    # for key in bibkeys.keys():
+    #     replace = "\citet{"+key+"}"
+    #     string = string.replace(replace, "(" + str(bibkeys[key]) + ")")
 
-    # write to file
-    path = paths.output / "fit_parameters_bibkeys.tex"
-    print("Write to file: ", path)
+    # # write to file
+    # path = paths.output / "fit_parameters_bibkeys.tex"
+    # print("Write to file: ", path)
 
-    with open(path, "w") as f:
-        f.write(string)
+    # with open(path, "w") as f:
+    #     f.write(string)
+
+
+    # literature parameters table columns
+    lit_cols = ["ID", "TIC", "$P_{rot}$ [d]", "$P_{orb}$ [d]", "$R_{*}$ [R$_\odot$]",
+            "$R_{p}$ [R$_J$]", "$a$ [au]", "log${10} L_{*}$ [L$_\odot$]"]
+
+    # derived parameters table columns
+    der_cols = ["ID", "Ro", "$B$ [G]", "log$_{10} P_{SPI,sb}$ [erg s$^{-1}$]",
+                "log$_{10} P_{SPI,aw}$ [erg s$^{-1}$]", "$v_{rel}$ [km s$^{-1}$]",
+                "p-value",]
+
+    # make a list of tuples with the two column lists
+    splitcols = [("lit", lit_cols), ("der", der_cols)]
+
+    # SPLIT TABLE IN TWO
+
+    for label, cs in splitcols:
+
+        # make a new singles table with the literature parameters
+        lit_singles = singles[cs]
+
+        # make TeX table
+        print("Converting table to TeX format.")
+
+        # make the default string length longer
+        pd.set_option('display.max_colwidth', 1000)
+
+        # convert to LaTeX
+        string = lit_singles.to_latex(escape=False,index=False)
+
+        # layout
+        string = string.replace("\citet{[*]}","[*]")
+        string = string.replace("midrule","hline")
+        string = string.replace("toprule","hline")
+        string = string.replace("bottomrule","hline")
+
+        # replace the bibkeys with the index in the string table
+        for key in bibkeys.keys():
+            replace = "\citet{"+key+"}"
+            string = string.replace(replace, "(" + str(bibkeys[key]) + ")")
+
+        # write to file
+        path = paths.output / f"table_{label}_vals.tex"
+        print("Write to file: ", path)
+
+        with open(path, "w") as f:
+            f.write(string)
+
+            
