@@ -28,6 +28,6 @@ if __name__ == "__main__":
     multiples = ", ".join(multiples)
 
     # write to file
-    print("Write to file ", paths.data / "multiples_string.tex")
-    with open(paths.data / "multiples_string.tex", "w") as f:
+    print("Write to file ", paths.output / "multiples_string.tex")
+    with open(paths.output / "multiples_string.tex", "w") as f:
         f.write(multiples)
