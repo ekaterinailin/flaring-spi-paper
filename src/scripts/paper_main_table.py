@@ -108,7 +108,7 @@ def round_to_decimals(df, col, err, err2=None, typ="err"):
     """
 
     df["_"] = get_len_decimals(df, col, err, err2=err2,typ=typ).astype(int)
-    val = df.apply(lambda x: np.round(x[col], x._) if np.abs(x[err])<1 else  np.round(x[col],0).astype(int), axis=1)
+    val = df.apply(lambda x: np.round(x[col], x._) if np.abs(x[col])<1 else  np.round(x[col],0).astype(int), axis=1)
     
     if err2 is None:
         err = df.apply(lambda x: np.round(x[err], x._) if x[err]<1 else np.round(x[err],0).astype(int), axis=1)
@@ -137,8 +137,8 @@ def convert_to_scinote(series, rel_err=1e-2):
     pd.Series
         The converted series of strings.
     """
-
-    return series.apply(lambda x: f"{x:.1e}" if np.abs(x)<rel_err else x).astype(str)
+    print(rel_err)
+    return series.apply(lambda x: f"{x:.1e}" if np.abs(x)<rel_err else f"{x:.2f}").astype(str)
 
 
 def tex_up_low(val, err, err2):
@@ -160,11 +160,11 @@ def tex_up_low(val, err, err2):
     """
 
     return ("$" +
-            convert_to_scinote(val,rel_err=1e-9) +
-            r"^{" + 
-            convert_to_scinote(err,rel_err=1e-9) + 
+            convert_to_scinote(val) +
+            "^{" + 
+            convert_to_scinote(err) + 
             "}_{" +
-            convert_to_scinote(err2,rel_err=1e-9) + "}$")
+            convert_to_scinote(err2) + "}$")
 
 def tex_one_err(val, err):
     """Convert a value and one error into a LaTeX string.
@@ -209,24 +209,27 @@ def to_tex(df, col):
    
         if col[2][-6:] == "bibkey":
 
-            val, err = round_to_decimals(df, col[0], col[1],typ=col[3])
-            tex = tex_one_err(val, err) + citation_from_bibkey(df[col[2]])
-   
+            # val, err = round_to_decimals(df, col[0], col[1],typ=col[3])
+            # tex = tex_one_err(val, err) + citation_from_bibkey(df[col[2]])
+            tex = tex_one_err(df[col[0]], df[col[1]]) + citation_from_bibkey(df[col[2]])
         else:
    
-            val, err, err2 = round_to_decimals(df, col[0], col[1], err2=col[2],typ=col[3])
-            tex = tex_up_low(val, err, err2)
+            # val, err, err2 = round_to_decimals(df, col[0], col[1], err2=col[2],typ=col[3])
+            # tex = tex_up_low(val, err, err2)
+            tex = tex_up_low(df[col[0]], df[col[1]], df[col[2]])
    
     elif len(col) == 5:
    
-        val, err, err2 = round_to_decimals(df, col[0], col[1], err2=col[2],typ=col[4])
-        tex = tex_up_low(val, err, err2) + citation_from_bibkey(df[col[3]])
-   
+        # val, err, err2 = round_to_decimals(df, col[0], col[1], err2=col[2],typ=col[4])
+
+        # tex = tex_up_low(val, err, err2) + citation_from_bibkey(df[col[3]])
+        tex = tex_up_low(df[col[0]], df[col[1]], df[col[2]]) + citation_from_bibkey(df[col[3]])
     elif len(col) == 3:
    
-        val, err = round_to_decimals(df, col[0], col[1], typ=col[2])
-        tex = tex_one_err(val, err)
-   
+        # val, err = round_to_decimals(df, col[0], col[1], typ=col[2])
+        # tex = tex_one_err(val, err)
+        tex = tex_one_err(df[col[0]], df[col[1]])
+
     else:
    
         tex = df[col[0]].astype(str)
