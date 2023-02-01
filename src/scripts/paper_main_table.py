@@ -234,7 +234,7 @@ if __name__ == "__main__":
         "orbper_d":"$P_{orb}$ [d]",
         "st_rad":"$R_{*}$ [R$_\odot$]",
         "pl_radj":"$R_{p}$ [R$_J$]",
-        "a_au":"$a$ [au]",
+        "a_au":"$a$ [$10^{-2}$ au]",
         "st_lum":"log${10} L_{*}$ [L$_\odot$]",
         "Ro":"Ro",
         "B_G":"$B$ [G]",
@@ -255,7 +255,9 @@ if __name__ == "__main__":
     for col in makelog:
         df[col] = np.log10(df[col])
 
-    # convert to scientific notation
+    # convert au and au_err to 10^-2 au
+    df["a_au"] = df["a_au"] * 100
+    df["a_au_err"] = df["a_au_err"] * 100
 
     # select only the columns we want
     sel = df[["ID","TIC",
@@ -319,7 +321,7 @@ if __name__ == "__main__":
 
     # literature parameters table columns
     lit_cols = ["ID", "$P_{rot}$ [d]", "$P_{orb}$ [d]", "$R_{*}$ [R$_\odot$]",
-            "$R_{p}$ [R$_J$]", "$a$ [au]", "log${10} L_{*}$ [L$_\odot$]"]
+            "$R_{p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "log${10} L_{*}$ [L$_\odot$]"]
 
     # derived parameters table columns
     der_cols = ["ID", "Ro", "$B$ [G]", "log$_{10} P_{sb}$ [erg s$^{-1}$]",
