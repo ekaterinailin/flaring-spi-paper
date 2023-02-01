@@ -42,9 +42,10 @@ Why look for SPI? Use planets as probes stellar magnetic fields at a defined orb
 We started our sample selection with the Planetary Systems Composite Parameters Table (PSCP)\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}} from which we removed controversial planet detections (``pl\_controv\_flag'' set to 1), i.e. detections with existing literature questioning the result. The catalog then contained XXXX unique systems.
 
 We complemented the PSCP with the TESS TOI Table~\citep[TT][]{guerrero2021arxiv}\footnote{\url{https://tev.mit.edu/data/collection/193/}}. We filtered the catalog by requiring the confirmed planet (CP) or known planet (KP) flags to be set in the ``TOI Disposition''. This added XXXX star-planet systems to the sample.
-\subsection{Multiplicity}
-We flag all multiple stars except for Proxima Cen (whose companion are well separated both physically and on the sky), but kept them in for the analysis. In addition to noting the multiplicity of some well-known stars, we also use the Robo-AO catalog of nearby companions to Kepler planet candidates from ~\cite{ziegler2018measuring}
+\subsection{Multiplicity and contamination}
+We drop all multiple stars except for Proxima Cen (whose companion are well separated both physically and on the sky), and all stars with nearby objects that contaminate our analysis, e.g., from ~\citet{ziegler2018measuring}.
 
+Quoting the references for multiplicity/contamination, we dropped the following targets: \input{output/multiples_string.tex}
 
 \subsection{Orbital periods}
 Either Kepler/TESS or from RVs.
@@ -84,8 +85,12 @@ The Transiting Exoplanet Survey Satellite~(TESS,~\cite{ricker2015transiting}) is
 
 Based on the filtered PSCP and TT tables, we queried the full Kepler archive (quarters Q0-Q17, Data Release 25) and most recent TESS catalog (July 2022) for their respective 1-min and 2-min/20-s cadence light curves, accounting for systems that appeared in both catalogs. In total, we obtained XXXX Kepler light curves and XXXX TESS light curves. XXXX systems were observed only by the primary Kepler mission, XXXX only by TESS, and XXXX by both missions.
 
-\subsection{X-ray luminosity}
-We take the \cite{foster2022exoplanet} X-ray luminosity catalog as the basis for our calculation, assuming an uncertainty of 30\% in the reported values, covering typical intrinsic variability among stars of similar rotation periods in studies like ~\cite{wright2011stellaractivityrotation, wright2018stellar}.
+\subsection{Bolometric luminosity}
+
+We take bolometric luminosity values as given in the NASA Table if given with uncertainties, and supplement missing values and entries without quoted uncertainties with Gaia DR3 FLAME~\citep{fouesneau2022gaia} solutions. 
+
+% \subsection{X-ray luminosity}
+% We take the \cite{foster2022exoplanet} X-ray luminosity catalog as the basis for our calculation, assuming an uncertainty of 30\% in the reported values, covering typical intrinsic variability among stars of similar rotation periods in studies like ~\cite{wright2011stellaractivityrotation, wright2018stellar}.
 
 \subsection{Stellar magnetic fields}
 \cite{foster2022identifying} and \cite{reiners2022magnetism} 
