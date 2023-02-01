@@ -159,7 +159,8 @@ def tex_one_err(val, err):
     str
         The LaTeX string.
     """
-    return val.astype(str) + "[" + err.astype(str) + "]"
+
+    return val.astype(str) + "[" + err.apply(lambda x: f"{x:.1e}" if x<1e-2 else x).astype(str) + "]"
 
 # for each type of value cols, define a function that
 # converts them into one list of strings for latex
@@ -254,6 +255,8 @@ if __name__ == "__main__":
     for col in makelog:
         df[col] = np.log10(df[col])
 
+    # convert to scientific notation
+
     # select only the columns we want
     sel = df[["ID","TIC",
                 'st_rotp','st_rotp_err','st_rotp_source', 
@@ -298,7 +301,7 @@ if __name__ == "__main__":
     del singles["multiple_star_source"]
     del singles["orbits_covered"]
 
-
+    
 
     # Get all bibkeys from singles table
     bibkeys = fulltable.st_rotp_bibkey.unique()
