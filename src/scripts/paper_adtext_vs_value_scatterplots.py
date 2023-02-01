@@ -313,17 +313,23 @@ if __name__ == "__main__":
     # read in results table
     df = pd.read_csv(paths.data / "results.csv")
 
-    # define the colors and symbols for the different Lx
+
+
+    # ------------------------------------------------------------
+    # DISTANCE
+    # ------------------------------------------------------------
+
+    # define the colors and symbols for the different distance bins
     df["color"], df["symbol"] = zip(*df.sy_dist.apply(colorcode_dist))
     valuelegend = legend[-7:-3]
     valuelabels = labels[-7:-3]
 
 
     # ------------------------------------------------------------
-    # P-VALUE VS. P_SPI with Bp=1G
+    # STRETCH AND BREAK with Bp=1G
 
     value = "p_spi_erg_s"
-    valuelabel = r"$\sim$ P$_{SPI}$  @ B$_p$=1G"
+    valuelabel = r"$\sim$ P$_{sb}$  @ B$_p$=1G"
 
     make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, "sab_wBp_colorcode_dist")
 
@@ -342,33 +348,24 @@ if __name__ == "__main__":
     # P-VALUE VS. P_SPI with Bp=1G with Kavanagh+2022
 
     value = "p_spi_kav22"
-    valuelabel = r"$\sim$ P$_{SPI}$ @ B$_p$=1G"
+    valuelabel = r"$\sim$ P$_{aw}$ @ B$_p$=1G"
   
 
     make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, "aw_wBp_colorcode_dist")
 
+    
     # ------------------------------------------------------------
-    # P-VALUE VS. L_X
-
-    # value = "xray_flux_erg_s"
-    # valuelabel = r"$L_X$ [erg/s]"
-
-    # valuelegend = legend[1:]
-    # valuelabels = labels[1:]
-
-
-    # make_adtest_figure(df, value, valuelabel,  valuelegend, valuelabels)
-
+    # MULTIPICITY
     # ------------------------------------------------------------
 
-    # define the colors and symbols for the different Lx
+    # define the colors and symbols for the different multiplicity
     df["color"], df["symbol"] = zip(*df.sy_snum.apply(colorcode_multiplicity))
 
     # ------------------------------------------------------------
     # P-VALUE VS. P_SPI with Bp=1G
 
     value = "p_spi_erg_s"
-    valuelabel = r"$\sim$ P$_{SPI}$  @ B$_p$=1G"
+    valuelabel = r"$\sim$ P$_{sb}$  @ B$_p$=1G"
     valuelegend = legend[-3:]
     valuelabels = labels[-3:]
 

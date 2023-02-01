@@ -124,6 +124,22 @@ def round_to_decimals(df, col, err, err2=None, typ="err"):
         del df["_"]
         return val, err, err2
 
+def convert_to_scinote(series, rel_err=1e-2):
+    """Convert a series to scientific notation.
+
+    Parameters
+    ----------
+    series : pd.Series
+        The series to convert.
+
+    Returns
+    -------
+    pd.Series
+        The converted series of strings.
+    """
+
+    return series.apply(lambda x: f"{x:.1e}" if np.abs(x)<rel_err else x).astype(str)
+
 
 def tex_up_low(val, err, err2):
     """Convert a value and two errors into a LaTeX string.
@@ -143,7 +159,12 @@ def tex_up_low(val, err, err2):
         The LaTeX string.
     """
 
-    return "$" + val.astype(str) + r"^{" + err.astype(str) + "}_{" + err2.astype(str) + "}$"
+    return ("$" +
+            convert_to_scinote(val) +
+            r"^{" + 
+            convert_to_scinote(err) + 
+            "}_{" +
+            convert_to_scinote(err2) + "}$")
 
 def tex_one_err(val, err):
     """Convert a value and one error into a LaTeX string.
@@ -161,7 +182,10 @@ def tex_one_err(val, err):
         The LaTeX string.
     """
 
-    return val.astype(str) + "[" + err.apply(lambda x: f"{x:.1e}" if x<1e-2 else x).astype(str) + "]"
+    return (convert_to_scinote(val) +
+            "[" +
+            convert_to_scinote(err) +
+            "]")
 
 # for each type of value cols, define a function that
 # converts them into one list of strings for latex
@@ -222,8 +246,10 @@ if __name__ == "__main__":
 
             ("Ro","Ro_high","Ro_low", 'high-low'),
             ("B_G","B_G_high","B_G_low", 'high-low'),
-            ("p_spi_erg_s","p_spi_erg_s_high","p_spi_erg_s_low",'high-low'),
-            ('p_spi_kav22', 'p_spi_kav22_high','p_spi_kav22_low', 'high-low'),
+            ("p_spi_sb_bp1_norm","p_spi_sb_bp1_norm_high","p_spi_sb_bp1_norm_low",'high-low'),
+            ('p_spi_aw_bp1_norm', 'p_spi_aw_bp1_norm_high','p_spi_aw_bp1_norm_low', 'high-low'),
+            ("p_spi_sb_bp0_norm","p_spi_sb_bp0_norm_high","p_spi_sb_bp0_norm_low",'high-low'),
+            ('p_spi_aw_bp0_norm', 'p_spi_aw_bp0_norm_high','p_spi_aw_bp0_norm_low', 'high-low'),
             
             ("v_rel_km_s", 'v_rel_err_km_s', 'err'),
 
@@ -239,22 +265,16 @@ if __name__ == "__main__":
         "st_lum":"log${10} L_{*}$ [L$_\odot$]",
         "Ro":"Ro",
         "B_G":"$B$ [G]",
-        "p_spi_erg_s":"log$_{10} P_{sb}$ [erg s$^{-1}$]",
-        "p_spi_kav22":"log$_{10} P_{aw}$ [erg s$^{-1}$]",
+        "p_spi_sb_bp1_norm":"$P_{sb}$",
+        "p_spi_aw_bp1_norm":"$P_{aw}$",
+        "p_spi_sb_bp0_norm":"$P_{sb0}$",
+        "p_spi_aw_bp0_norm":"$P_{aw0}$",
         "v_rel_km_s":"$v_{rel}$ [km s$^{-1}$]",
         "mean":"p-value",
         }
 
     # read table to texify
     df = pd.read_csv(paths.data / "results.csv")
-
-
-    # make log10 on following columns
-    makelog = ["p_spi_erg_s","p_spi_erg_s_high","p_spi_erg_s_low",
-            'p_spi_kav22', 'p_spi_kav22_high','p_spi_kav22_low']
-
-    for col in makelog:
-        df[col] = np.log10(df[col])
 
     # convert au and au_err to 10^-2 au
     df["a_au"] = df["a_au"] * 100
@@ -273,8 +293,10 @@ if __name__ == "__main__":
                 "B_G","B_G_high","B_G_low",
                 "orbits_covered",
                 "v_rel_km_s", 'v_rel_err_km_s',
-                "p_spi_erg_s","p_spi_erg_s_high","p_spi_erg_s_low",
-                'p_spi_kav22', 'p_spi_kav22_high','p_spi_kav22_low',
+                "p_spi_sb_bp1_norm","p_spi_sb_bp1_norm_high","p_spi_sb_bp1_norm_low",
+               'p_spi_aw_bp1_norm', 'p_spi_aw_bp1_norm_high','p_spi_aw_bp1_norm_low', 
+               "p_spi_sb_bp0_norm","p_spi_sb_bp0_norm_high","p_spi_sb_bp0_norm_low",
+               'p_spi_aw_bp0_norm', 'p_spi_aw_bp0_norm_high','p_spi_aw_bp0_norm_low',
                 "mean", "std"]]
     
     # select only the single stars
@@ -325,9 +347,8 @@ if __name__ == "__main__":
             "$R_{p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "log${10} L_{*}$ [L$_\odot$]"]
 
     # derived parameters table columns
-    der_cols = ["ID", "Ro", "$B$ [G]", "log$_{10} P_{sb}$ [erg s$^{-1}$]",
-                "log$_{10} P_{aw}$ [erg s$^{-1}$]", "$v_{rel}$ [km s$^{-1}$]",
-                "p-value",]
+    der_cols = ["ID", "Ro", "$B$ [G]", "$v_{rel}$ [km s$^{-1}$]", "$P_{sb}$",
+                "$P_{sb0}$", "$P_{aw}$", "$P_{aw0}$", "p-value",]
 
     # make a list of tuples with the two column lists
     splitcols = [("lit", lit_cols), ("der", der_cols)]
@@ -372,7 +393,8 @@ if __name__ == "__main__":
         bibstring += "(" + str(bibkeys[key]) + ") \citet{" + key + "}, "
 
     # replace [*] with 10% error assumed
-    bibstring = bibstring.replace(r"\citet{[*]}","$10\%$ error assumed")
+    bibstring = bibstring.replace(r"(1) \citet{[*]}","(*) $10\%$ error assumed")
+    bibstring = bibstring.replace("[*]","(*)")
    
     # write the bibstring to a file
     path = paths.output / "lit_table_bibstring.tex"
