@@ -365,4 +365,19 @@ if __name__ == "__main__":
         with open(path, "w") as f:
             f.write(string)
 
+    # generate a bibkey string to put in the footnote of the tex table
+    bibstring = ""
+    for key in bibkeys.keys():
+        bibstring += "(" + str(bibkeys[key]) + ") \citet{" + key + "}, "
+
+    # replace [*] with 10% error assumed
+    bibstring = bibstring.replace(r"\citet{[*]}","$10\%$ error assumed")
+   
+    # write the bibstring to a file
+    path = paths.output / "lit_table_bibstring.tex"
+    print("Write footnote list to file: ", path)
+
+    with open(path, "w") as f:
+        f.write(bibstring)
+
             
