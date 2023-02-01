@@ -3,9 +3,10 @@ Python 3.8 -- UTF-8
 
 Ekaterina Ilin, 2022, MIT License
 
-Script that generates the main table of the paper, showing the
-AD test results for the orbital period all stellar and planetary
-parameters.
+Script that generates the main tables of the paper, showing 1. all stellar and 
+planetary parameters necessary for analysis (and producing a string of 
+references for the footnote), and 2. derived parameters and AD test results 
+for the orbital period. 
 """
 
 import numpy as np
