@@ -374,6 +374,8 @@ if __name__ == "__main__":
         string = string.replace("midrule","hline")
         string = string.replace("toprule","hline")
         string = string.replace("bottomrule","hline")
+        for n in range(1,10):
+            string = string.replace(fr"e-0{n}",fr"\cdot 10^{{-{n}}}")
 
         # replace the bibkeys with the index in the string table
         for key in bibkeys.keys():
