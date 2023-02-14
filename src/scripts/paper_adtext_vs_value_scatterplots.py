@@ -239,8 +239,8 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
 
         # make the scatter plot
         x = group[value]
-        xhigh = group[value]
-        xlow = group[value]
+        xhigh = group[value + "_high"]
+        xlow = group[value + "_low"]
         ax.errorbar(x, group["mean"], 
                         xerr=[x - xlow, xhigh - x],
                          yerr=group["std"],

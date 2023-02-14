@@ -26,29 +26,28 @@ if __name__ == "__main__":
     # pick only real flares
     df = df[df.orbital_phase != -1]
 
-    # get the 15 stars with the most flares as a sorted list
-    tics = df.groupby("TIC").count().sort_values("ED", ascending=False)
-    tics = tics.head(15).reset_index().TIC.values
+    # only use the systems that appear in the results table
+    tics = pd.read_csv(paths.data / "results.csv")
 
-    # get the subsample of most active stars
-    new_df = df[df.TIC.isin(tics)]
+    tics = tics[(tics.multiple_star.isnull()) & (tics.multiple_star_source != "BD")]
+    tics = tics.sort_values(by="number_of_flares", ascending=False).TIC.astype(str)
 
-    # defined categorical index for tics
-    new_df['TIC'] = pd.Categorical(new_df['TIC'], tics)
-
-    # sort by new categorical index
-    new_df = new_df.sort_values("TIC", ascending=False)
+    tics = tics.values
 
     # make a plot for 15 panels
-    fig, ax = plt.subplots(nrows=5, ncols=3, figsize=(14,18))
+    fig, ax = plt.subplots(nrows=6, ncols=3, figsize=(14,19), sharex=True)
 
     # linearize the axes
     ax = [_1 for _0 in ax for _1 in _0]
 
     # create a subplot for each star
-    for i, g in new_df.groupby("TIC"):
-        # pick only stars with more than 8 flares
-        if ((g.shape[0]>8) & (len(ax)>0)):
+    for tic in tics:
+
+        # print(g.shape)
+        g = df[df.TIC.astype(str) == tic]
+        print(tic, g.shape, len(ax))
+        # pick only stars with more than 0 flares
+        if ((g.shape[0]>=3) & (len(ax)>0)):
             
             # pick an axis
             a = ax.pop()
@@ -63,13 +62,13 @@ if __name__ == "__main__":
 
             # ge the phases
             phases = g.orbital_phase.sort_values(ascending=True).values
-        
+            # print(phases)
             # define the bins
             bins = np.linspace(0,1,len(phases))
     
             # plot the histogram
             a.hist(phases, bins=bins, histtype="step",
-                cumulative=True,);
+                cumulative=True,)
             
             # make a line for the legend
             line = Line2D([0], [0], color='w', linestyle='-', 
@@ -86,11 +85,16 @@ if __name__ == "__main__":
             a.set_xlim(0,1)
 
             # set the axis labels
-            a.set_xlabel("orbital phase")
+            if len(ax) >14:
+                a.set_xlabel("orbital phase")
             a.set_ylabel("number of flares")
 
     # layout the figure
-    plt.tight_layout()
+    plt.tight_layout(h_pad=0.1)
+
+    # make sure y-axis labels are visible
+    plt.subplots_adjust(left=0.07, right=0.99, top=0.99, bottom=0.05)
+
 
     # save the figure
-    plt.savefig(paths.figures / "PAPER_flares_phase_hist.png", dpi=300)
+    plt.savefig(paths.figures / "PAPER_flares_phase_hist_transiting.png", dpi=300)
