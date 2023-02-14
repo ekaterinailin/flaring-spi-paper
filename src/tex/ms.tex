@@ -36,10 +36,10 @@ Why look for SPI? Use planets as probes stellar magnetic fields at a defined orb
 
 \section{Data}
 \label{sec:data}
-\subsection{Star-Planet Systems}
-%Catalogs
-% as of January 2021
-We started our sample selection with the Planetary Systems Composite Parameters Table (PSCP)\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}} from which we removed controversial planet detections (``pl\_controv\_flag'' set to 1), i.e. detections with existing literature questioning the result. The catalog then contained XXXX unique systems.
+\subsection{Star-planet systems}
+
+
+ction with the Planetary Systems Composite Parameters Table (PSCP)\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}} from which we removed controversial planet detections (``pl\_controv\_flag'' set to 1), i.e. detections with existing literature questioning the result. The catalog then contained XXXX unique systems.
 
 We complemented the PSCP with the TESS TOI Table~\citep[TT][]{guerrero2021arxiv}\footnote{\url{https://tev.mit.edu/data/collection/193/}}. We filtered the catalog by requiring the confirmed planet (CP) or known planet (KP) flags to be set in the ``TOI Disposition''. This added XXXX star-planet systems to the sample.
 \subsection{Multiplicity and contamination}
@@ -178,7 +178,7 @@ Do the same for the mid-times.
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/PAPER_coherence_histogram.png}
         \caption{
-           Time span of observation vs. coherence time or the orbital and rotational periods, respectively. Orbital periods are all known precisely enough, so that the phase uncertainty at the last observed flare is of the order of $10^{-2}$. In contrast, in stars with known rotation periods, the precision is often too low, so that the phase of the last flare is often undetermined (ratio on x-axis $\sim 1$.
+           Time span of observation vs. coherence time of the orbital and rotational periods, respectively. Orbital periods are all known precisely enough, so that the phase uncertainty at the last observed flare is of the order of $10^{-2}$. In contrast, in stars with known rotation periods, the precision is often too low, so that the phase of the last flare is often undetermined (ratio on x-axis $\sim 1$.
         }
         \label{fig:coherence_hist}
     \end{centering}
@@ -191,25 +191,34 @@ For details on AU Mic results, see~\citep{ilin2022searching}.
 \begin{figure*}[ht!]
     \script{paper_cumdist_individual.py}
     \begin{centering}
-        \includegraphics[width=\linewidth]{figures/PAPER_flares_phase_hist.png}
+        \includegraphics[width=\linewidth]{figures/PAPER_flares_phase_hist_transiting.png}
         \caption{
-            Cumulative distributions of orbital phases of flares in the hosts observed by Kepler and TESS that had the most flares detected per star. 
+            Cumulative distributions of orbital phases of flares in the transiting planet hosts observed by Kepler and TESS with 4 or more flares each. 
         }
-        \label{fig:cumdist_active}
+        \label{fig:cumdist_transiting}
     \end{centering}
 \end{figure*}
 
+\begin{figure*}[ht!]
+    \script{paper_cumdist_individual.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_flares_phase_hist_rv.png}
+        \caption{
+            Cumulative distributions of orbital phases of flares in the RV planet hosts observed by Kepler and TESS with 4 or more flares each. 
+        }
+        \label{fig:cumdist_transiting}
+    \end{centering}
+\end{figure*}
 
 \subsection{Flaring star-planet interaction signal}
 We use the custom Anderson-Darling test detailed in \cite{ilin2022searching} to look for flaring SPI in all system with three flares or more. We do not find $>3\sigma$ signal of star-planet interaction in any of the star-planet systems in this sample.  
-
 
 
 \begin{table*}
 \movetableright=-20mm
 \footnotesize
     \script{paper_main_table.py}
-    \caption{Star-planet systems.}
+    \caption{Flaring single star-planet system parameters.}
     \input{output/table_lit_vals.tex}
         \label{tab:maintable_lit}
     \tablerefs{\input{output/lit_table_bibstring.tex}}
@@ -219,10 +228,10 @@ We use the custom Anderson-Darling test detailed in \cite{ilin2022searching} to 
 \begin{table*}
 \footnotesize
 \movetableright=-20mm
-    \script{paper_main_table.py}
-    \caption{Flaring SPI results.}
-    \input{output/table_der_vals.tex}
-        \label{tab:maintable_der}
+\script{paper_main_table.py}
+\caption{Flaring star-planet interaction. $Ro$, $B$, and $v_{rel}$, are derived from literature values (Table~\ref{tab:maintable_lit}). $P_{xx}$ stands for the power of stretch-and-break ($sb$) and ALfv\'en wing ($aw$) interaction mechanisms, assuming the planet has a magnetic field strength of 1 G. $P_{xx0}$ is the same, but assuming an unmagnetized planet. All powers are normalized to AU Mic. The p-value of the Anderson-Darling test is lower when the system shows more flares periodic with the planetary orbit.}
+\input{output/table_der_vals.tex}
+    \label{tab:maintable_der}
 
 \end{table*}
 
@@ -232,7 +241,7 @@ We use the custom Anderson-Darling test detailed in \cite{ilin2022searching} to 
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/PAPER_ADtest_bg.png}
         \caption{
-            Expected power of SPI vs. AD test results, assuming four different scenarios, colorcoded but stellar surface field strength.
+            Expected power of SPI vs. AD test results, assuming four different scenarios, color-coded by stellar surface field strength.
         }
         \label{fig:adtest_bp}
     \end{centering}
@@ -250,6 +259,21 @@ We use the custom Anderson-Darling test detailed in \cite{ilin2022searching} to 
 % \end{figure*}
 
 \subsection{Individual stars}
+
+\subsubsection{Excluded targets}
+Kepler-808 (KOI 1300) has a $\sim0.4$ Msun \cite{kraus2016impact}companion that is about 1.8 mag fainter than the primary at a separation of .78 arcsec~\cite{baranec2016roboao}.
+
+TOI-837 has co-moving M dwarf a few arcsec away in the same young cluster, 5 mag fainter, but the primary is an F9-G0 star, so flare could come from both stars~\cite{bouma2020cluster}
+
+HD 41004 B and DS Tuc A and LTT 1445
+
+\subsubsection{Kepler-411}
+Kepler-411 has 3 mag fainter companion~\cite{wang2014influence,ziegler2018measuring}. It was observed in Kepler short cadence by \cite{jackman2021stellara} and both the planet host, and the companion flare. \cite{jackman2021stellara} disentangle the contributions on a pixel level. According to \cite{morton2016false, sun2019kepler411} the planets orbit the primary companion. In fact, the fainter companion of Kepler-411 appears to cause the majority of flares (41), whereas Kepler-411 causes only 7. We adopt the 7 flares from \cite{jackman2021stellara} for our analysis.
+
+
+
+\subsubsection{HAT-P-11}
+\cite{miskovetz2022resolving}  found background stars that were not co-moving HAT-P-11. HAT-P-11 rotates nearly pole-on, and HAT-P-11 b is transiting in a near-polar orbit~\citep{bourrier2023dream}. This may be the reason for absent SPI
 
 \subsubsection{Proxima Cen}
 tentative detection of another planet further in, at 0.029 au, or 5 day orbital period~\citep{faria2022candidate, artigau2022linebyline}
@@ -311,13 +335,13 @@ Hard to measure, because it de-phases much faster than orbital variability due t
 TAP 26 vs. HIP 67522, also different sectors for HIP 67522, see \cite{shkolnik2008nature}
 
 \subsection{Spin-orbit alignment}
-
+or more broadly system architecture including misalignment of the magnetic axis. See HAT-P-11, or instance, and the many polar orbits in \cite{bourrier2023dream}
 \subsection{Eccentricity}
 The star-planet systems in this work do not have notably eccentric orbits.
 \bibliography{bib}
 
 \appendix
-\section{Expected $P_{SPI}$ vs. measure flaring SPI with a magnetized planet}
+\section{Expected $P$ vs. measured flaring SPI}
 
 
 \end{document}
