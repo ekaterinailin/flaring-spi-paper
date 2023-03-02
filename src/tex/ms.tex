@@ -30,7 +30,10 @@ What is SPI?
 
 Why look for SPI? Use planets as probes stellar magnetic fields at a defined orbit, e.g., stellar wind conditions. SPI can only occur if the planet is orbiting within the Alfv\'en radius of the star for a sizable period of time. The Alfv\'en radius is the radius at which the stellar wind velocity, which increases with increasing distance from the star because of XXXX, exceed the Alfv\'en velocity of the magnetized plasma. Beyond this radius, this plasma is disconnected from the star. Alfv\'en waves cannot propagate back to the star because the wind is carrying the plasma away faster than these waves can travel.
 
+Stretch and break
 
+
+Alfven wing
 
 
 
@@ -60,7 +63,8 @@ Based on the filtered PSCP and TT tables, we queried the full Kepler archive (qu
 
 \subsection{Orbital periods}
 Either Kepler/TESS or from RVs.
-
+\subsection{Transit mid-times}
+Use transit mid-times from the same mission if possible.
 \subsection{Semi-major axes}
 \label{sec:data:a}
 The critical parameter is the distance between the star and the planet, not the semi-major axis itself. This varies if the orbit is eccentric. To account for varying distance, we adopt the mean semi-major axes from the literature, but use a custom estimate for the uncertainty that includes the eccentricity.
@@ -89,41 +93,64 @@ We take bolometric luminosity values as given in the NASA Table if given with un
 
 \section{Methods}
 \label{sec:methods}
-We measure flaring star-planet interactions (SPI) as the presence of excess flares triggered by the orbiting planet. These excess flares manifest as a deviation of flare timing from a random Poisson process with orbital phase. That means that in the absence of flaring SPI, flare peak time will be distributed randomly in orbital phase. In the presence of flaring SPI, we measure a phase dependent deviation from this randomness.
+We measure flaring star-planet interactions (SPI) as the presence of excess flares triggered by the orbiting planet. In the absence of flaring SPI, flare peak times will be distributed randomly in orbital phase. In the presence of flaring SPI, we measure a phase dependent deviation from this randomness.
 
-The main data for this analysis are flare times. To obtain them, we gather the Kepler and TESS light curves for all star-planet systems, remove rotational variability trends, search the de-trended light curves for flares, and convert the flare times to orbital phases. We then perform a customized Anderson-Darling test on the flare peak time distribution, which yields a p-value for the significance of the SPI signal. We compare these results to theoretical SPI power $P_{SPI}$
+The main data for this analysis are flare times. To obtain them, we gather the Kepler and TESS light curves for all star-planet systems, remove rotational variability trends, search the de-trended light curves for flares, and convert the flare times to orbital phases. We then perform a customized Anderson-Darling test on the flare peak time distribution, which yields a p-value for the significance of the SPI signal. Finally, we compare these results to the theoretically expected SPI power $P_{SPI}$ in each system.
 
-The methods for light curve de-trending and flare finding in Kepler and TESS light curves, as well as the Anderson-Darling test, are the same as detailed in~\citep{ilin2022searching}. We therefore only briefly recap the techniques here:
+The methods for light curve de-trending and flare finding in Kepler and TESS light curves, as well as the Anderson-Darling test, are the same as detailed in~\citet{ilin2022searching}. We briefly recap the techniques in Sections~\ref{methods:flaresearch} and \ref{methods:adtest}. The expected power of SPI depends on the relative velocity between the planet and the magnetic field strength in its orbit, the derivation of which we explain in 
+Sections~\ref{methods:relvel} and \ref{methods:bfield}, respectively. With relative velocity and magnetic field strength derived, we can combine them with stellar radius, planetary radius, and semi-major axis to estimate the power of SPI. We use the scaling laws from two different magnetic SPI models, which we introduce in Section~\ref{methods:pspi}.
 
-To remove trends and rotational variability from the light curve without losing the flare signal, we use an empirically derived multistep process. First, we apply spline fit with a coarse sampling of 30h mean values to capture slow rotation with periods above multiple days and non-periodic trends. Then, we iteratively fit a series of sines to capture rotational signal on time scales down to about half a day, close to the fastest rotational signals measured in low mass stars. Eventually, we apply two Savitzky-Golay filters in sequence, with decreasing periods at each step. At this stage, we mask all data points above a 2.5 sigma (or 1.5 sigma for very active stars) threshold as flare candidates to prevent the filter from ironing out the flares.
+\subsection{Light curve de-trending and flare search}
+\label{methods:flaresearch}
+To remove trends and rotational variability from the light curve without losing the flare signal, we use an empirically derived multistep process. First, we apply spline fit with a coarse sampling of 30h mean values to capture slow rotation with periods above multiple days and non-periodic trends. Then, we iteratively fit a series of sines to capture rotational signal on time scales down to about half a day, close to the fastest rotational signals measured in low mass stars. Eventually, we apply two Savitzky-Golay~\cite{savitzky1964smoothing} filters in sequence, with window sizes of 6h and 3h each. At this stage, we mask all data points above a $2.5 \sigma$ (or $1.5 \sigma$ for very active stars like AU Mic or Proxima Cen) threshold as flare candidates to prevent the filter from ironing out the flares. As a final step, we fit exponential functions to the edges of the light curves, if there are data points that deviate more than one standard deviation from the median value, while keeping the flare candidates masked.
 
-Flare finding here. Manual vetting
+In these light curves, we then search for flares as series of at least three consecutive data points $3\sigma$ above the noise level, implemented in AltaiPony~\cite{ilin2021altaipony}. We estimate the noise
+level as the standard deviation in a rolling window of two hours, while masking deviation above $2.5\sigma$ (or $1.5$ sigma for active stars). To capture the exponential tail of the flare, we use the \texttt{addtail} flag to continue adding data points to the end of the flare as long as they are $2\sigma$ above the noise threshold. For these flares, we calculate the relative amplitude $a$ and equivalent duration $ED$, defined as the integrated flare flux $F_{flare}$ over the duration of the flare, divided by the median flux $F_0$ of the star, integrated over the flare duration~\citep{gershberg1972results}:
+\begin{equation}
+\label{eq:ED}
+ED=\displaystyle \int \mathrm dt\, \frac{F_{flare}(t)}{F_0}.
+\end{equation}
+Equivalent duration is the time during which the non-flaring star releases as much energy as the flare.
 
-Orbital phase finding. Check coherence times. Orbital period is enough.
-Use transit mid-times from the same mission if possible.
+
 \subsection{Custom Anderson-Darling test}
-Anderson-Darling test here. Used four equidistant start phases instead of 20, because it does not change much.
+\label{methods:adtest}
+For each star-planet system with three or more flares in their Kepler and/or TESS light curves, we test for deviations from a random distribution of flares with orbital phase. We use the same customized Anderson-Darling test as in \cite{ilin2022searching}. In brief, we first take the number of flares observed in the TESS and Kepler data, calculate a base flare rate for each light curve. We then calculate how often each orbital phase has been covered by the data, again for each light curve. With the phase coverage and base flare rate combined, we can tell how many flares we would expect to see in any given phase bin if flares were randomly distributed. This number of expected flares per bin can be aggregated into one expected distribution by summing over all available light curves. As a last step, this distribution is then compared to the observed one using an Anderson-Darling test. We repeat this test with different phase offsets to account for potential biases in sensitivity of the test at different phases.
+
+The only adjustment to the procedure in \cite{ilin2022searching} is that we use four equidistant start phases (i.e., 0, 0.25, 0.5 and 0.75) compared to the 20 used in~\cite{ilin2022searching} to save time, and because the range of derived $p$-values is already well-sampled using four. We adopt the standard deviation of these four $p$-values as the uncertainty on the flaring SPI measurement.
+
+
+% \subsection{Orbital phase}
+% \label{methods:orbitalphase}
+
+% For the star-planet system that have transiting innermost planets, we use the transit mid-time to signify orbital phase zero. For non-transiting planets, we use arbitrary phase zero. The inferior conjunction time from the orbital parameters of planets that only have radial velocity measurements is usually either very uncertain, of the order of $10\%$ of the orbital duration~(XXXX), or cannot be derived because the eccentricity is poorly constrained~(XXXX). 
 
 
 \subsection{Relative velocity}
-
-We calculate the relative velocity between the magnetic field of the star, assumed to be co-rotating, at the planetary orbit, as
+\label{methods:relvel}
+We calculate the relative velocity between the magnetic field of the star, which we assume is co-rotating with the stellar rotation period $P_{rot}$, at the planetary orbit, where the planet moves with a period $P_{orb}$:
 
 \begin{equation}
-    v_{rel} = 2 \pi a \left(\dfrac{1}{P_{orb}} - \dfrac{1}{P_{rot}}\right) 
+    v_{rel} = 2 \pi a \left(\frac{1}{P_{orb}} - \frac{1}{P_{rot}}\right).
 \end{equation}
 
-We use quadratic error propagation to estimate the uncertainty in $v_{rel}$ with the mean of the upper and lower uncertainty values on the orbital period and rotation period, if both are given, and the uncertainty on semi-major axis as derived in Sec.~\ref{sec:data:a}. 
+We use quadratic error propagation to estimate the uncertainty in $v_{rel}$ with the mean of the upper and lower uncertainty values on the orbital period and rotation period, if both are given, and the uncertainty on semi-major axis $a$ as derived in Sec.~\ref{sec:data:a}. 
 
 \subsection{Stellar magnetic fields}
-We derive B from Ro using Eq. XXX in \cite{reiners2022magnetism}:
+\label{methods:bfield}
+We derive the average magnetic field strength $B$ from $Ro$ using the empirical relation derived in \cite{reiners2022magnetism},  Table 2, in the unsaturated and saturated regimes, respectively:
 
+\begin{eqnarray}
+    B &= 199\,\text{G} \cdot Ro^{-1.26\pm 0.1} \;(\text{if}\; Ro > 0.13) \\
+    B &= 2050\,\text{G} \cdot Ro^{-0.11\pm 0.03} \;(\text{if}\; Ro < 0.13) 
+\end{eqnarray}
 
 The estimate is consistent with existing Zeeman broadening for, e.g. AU Mic (3010 G~\cite{reiners2022magnetism})
 \subsection{Power of star-planet interaction}
+\label{methods:pspi}
+We consider two theories for the mechanism behind flaring star-planet interactions, the stretch-and-break and the Alfv\'en wing mechanisms. For both of them, we include the case of a magnetized and an unmagnetized planet, for a total of estimates of the expected power of magnetic star-planet interaction.
 
-
-We estimate the power of star-planet interaction generated by the strech-and-break mechanism using the scaling relations in~\cite{lanza2012starplanet} (their Eqn. 45), where $P_{sb}$ is proportional to
+First, we estimate the power of star-planet interaction generated by the stretch-and-break mechanism using the scaling relations in~\cite{lanza2012starplanet} (their Eqn. 45), where $P_{sb}$ is proportional to
 
 \begin{equation}
     P_{sb} \sim B_p^{2/3} B_*^{4/3} v_{rel} R_p^2 a^{-4} R_*^4.
@@ -131,21 +158,20 @@ We estimate the power of star-planet interaction generated by the strech-and-bre
 
 $B_p$ and $B_*$ are the total planetary and stellar surface field strengths, respectively; $v_{rel}$ is the relative velocity between the stellar rotation and the planet's orbit at the semi-major axis; and $R_*$ and $R_p$ are the stellar and planetary radii, respectively; and $a$ is the semi-major axis.
 
-
-We also consider the case of an unmagnetized planet with $B_p=0$, in which case Eq.~45 in~\cite{lanza2012starplanet} reduces to
+Second, we also consider the case of an unmagnetized planet with $B_p=0$, in which case Eq.~45 in~\cite{lanza2012starplanet} reduces to
 
 \begin{equation}
-    P_{sb0} \sim B^2 v_{rel}  R_p^2  a^{-4} R_*^4
+    P_{sb0} \sim B_*^2 v_{rel}  R_p^2  a^{-4} R_*^4
 \end{equation}
 
-For comparison, we estimate the power of star-planet interaction generated by the Alfv\'en wing mechanism ~\cite{saur2013magnetic,kavanagh2022radio}, combining Eqs.~8~and~11 in \cite{kavanagh2022radio} to give
+Third, for comparison, we estimate the power of star-planet interaction generated by the Alfv\'en wing mechanism ~\cite{saur2013magnetic,kavanagh2022radio}, combining Eqs.~8~and~11 in \cite{kavanagh2022radio} to give
 
 \begin{equation}
-    P_{aw} \sim R_{p}^2  B_p^{2/3}  B^{1/3}  v_{rel}^2 * a^{-2}  
+    P_{aw} \sim R_{p}^2  B_p^{2/3}  B^{1/3}  v_{rel}^2 a^{-2}  
 \end{equation}
 where we approximate the stellar wind density $\rho_W$ with $a^{-2}$ and stellar wind magnetic field at the planetary radius $B_W$ with the surface field strength $B a^{-3}$, which result in the total $a^{-2}$ factor.
 
-Here, we also consider the case of an unmagnetized planet with $B_p=0$, in which case Eq.~8 in \cite{kavanagh2022radio} reduces to
+And fourth, we finally consider the case of an unmagnetized planet with $B_p=0$, in which case Eq.~8 in \cite{kavanagh2022radio} reduces to
 
 \begin{equation}
     P_{aw0} \sim R_p^2  B  v_{rel}^2  a^{-4}
@@ -155,7 +181,10 @@ Here, we also consider the case of an unmagnetized planet with $B_p=0$, in which
 \section{Results}
 \label{sec:results}
 
+Our goal was to measure magnetic star-planet interaction as the presence of excess flares in phase with the innermost planet's orbit. We searched all star-planet systems that were observed with Kepler and TESS at 1 or 2 min cadence, respectively, for flares. For the star-planet systems in the resulting flare catalog~(Section~\ref{sec:results:catalog}), we confirmed that the orbital phase could be known well enough for the entire observing baseline of the system~(Section~\ref{sec:results:coherence}). Knowing that, we could move on to calculate the orbital phases of each flare, and calculate distributions for each system in the catalog~(Section \ref{sec:results:phasedist}). We then applied the custom Anderson-Darling test to check how likely it is that some of the flares were triggered by the planet. Comparing the test results with the expected power of magnetic star-planet interaction, we found that the probability of observing planet induced flares increases with the expected power in all considered scenarios~(Section~\ref{sec:results:spi}). However, not all systems with high expected power show signs of flaring SPI, which appears as a branching in the distribution of test results, and could be due to the intermittency of the interaction. Finally, we provide additional context for the most interesting systems in our sample, and explain why we had to exclude some systems from the analysis in Section~\ref{sec:results:individualstars}.
 \subsection{Flare catalog}
+\label{sec:results:catalog}
+We searched a total of XXXX light curves of XXXX star-planet systems for flares. We inspected all candidates manually, and added flares observed by K2 on TRAPPIST-1~\cite{paudel2018k2}, and flares from the planet hosting primary in the Kepler-411 binary~\cite{jackman2021stellara}. The final table contains a total of \input{output/PAPER_total_number_of_flares.txt} flares in \input{output/PAPER_total_number_of_systems_with_flares.txt} systems. In Table~\ref{tab:flares}, we list all the flares and their characteristics. To identify each event, we provide the name of the system in which the flare was found, along with its TIC, whether it was observed with Kepler or TESS, and during what Quarter or Sector, respectively. For each flare, we also give the start and finish time, relative amplitude $a$ and equivalent duration $ED$. If the transit midtime is known for the innermost planet, we also give the orbital phase at which the flare occurred.
 
 \begin{table*}
     \script{paper_latex_flare_table.py}
@@ -164,11 +193,11 @@ Here, we also consider the case of an unmagnetized planet with $B_p=0$, in which
             Flare catalog of all star-planet systems observed by Kepler and TESS. In transiting multi-planet systems, the orbital phase refers to the innermost planet, with the transit mid-time at phase zero. 
         }
     \input{output/flare_table.tex}
-        \label{fig:random_numbers}
+        \label{tab:flares}
 \end{table*}
 
 \subsection{Period coherence times}
-
+\label{sec:results:coherence}
 divide the coherence time of the orbital period by the observing baseline of the combined Kepler and TESS observations for each star.
 
 Do the same for the mid-times.
@@ -185,15 +214,15 @@ Do the same for the mid-times.
 \end{figure}
 
 \subsection{Flare phase distributions}
-
+\label{sec:results:phasedist}
 For details on AU Mic results, see~\citep{ilin2022searching}.
 
 \begin{figure*}[ht!]
     \script{paper_cumdist_individual_transiting.py}
     \begin{centering}
-        \includegraphics[width=\linewidth]{figures/PAPER_flares_phase_hist_transiting.png}
+        \includegraphics[width=.95\linewidth]{figures/PAPER_flares_phase_hist_transiting.png}
         \caption{
-            Cumulative distributions of orbital phases of flares in the transiting planet hosts observed by Kepler and TESS with 4 or more flares each. 
+            Cumulative distributions of orbital phases of flares in the transiting planet hosts observed by Kepler and TESS with 4 or more flares each. Phase zero corresponds to the transit mid-time of the planet.
         }
         \label{fig:cumdist_transiting}
     \end{centering}
@@ -202,15 +231,16 @@ For details on AU Mic results, see~\citep{ilin2022searching}.
 \begin{figure*}[ht!]
     \script{paper_cumdist_individual_rv.py}
     \begin{centering}
-        \includegraphics[width=\linewidth]{figures/PAPER_flares_phase_hist_rv.png}
+        \includegraphics[width=0.95\linewidth]{figures/PAPER_flares_phase_hist_rv.png}
         \caption{
-            Cumulative distributions of orbital phases of flares in the RV planet hosts observed by Kepler and TESS with 4 or more flares each. 
+            Cumulative distributions of orbital phases of flares in the RV planet hosts observed by Kepler and TESS with 4 or more flares each. Phase zero is chosen arbitrarily.
         }
         \label{fig:cumdist_transiting}
     \end{centering}
 \end{figure*}
 
 \subsection{Flaring star-planet interaction signal}
+\label{sec:results:spi}
 We use the custom Anderson-Darling test detailed in \cite{ilin2022searching} to look for flaring SPI in all system with three flares or more. We do not find $>3\sigma$ signal of star-planet interaction in any of the star-planet systems in this sample.  
 
 
@@ -259,7 +289,7 @@ We use the custom Anderson-Darling test detailed in \cite{ilin2022searching} to 
 % \end{figure*}
 
 \subsection{Individual stars}
-
+\label{sec:results:individualstars}
 \subsubsection{Excluded targets}
 Kepler-808 (KOI 1300) has a $\sim0.4$ Msun \cite{kraus2016impact}companion that is about 1.8 mag fainter than the primary at a separation of .78 arcsec~\cite{baranec2016roboao}.
 
@@ -327,11 +357,14 @@ For those stars with given transit mid-time and
 
 \subsection{Similar work that puts ours in context}
 
+Any indication of flaring SPI anywhere else? Any reason to think there should be any?
+Why does HIP 67522 stick out so much? -- spin-orbit alignment
+
 \subsection{Rotational variability}
 Hard to measure, because it de-phases much faster than orbital variability due to differential rotation and spot evolution. We could use single light curves within which coherence is given...
 
 \subsection{Intermittency}
-
+\label{sec:discussion:intermittency}
 TAP 26 vs. HIP 67522, also different sectors for HIP 67522, see \cite{shkolnik2008nature}
 
 \subsection{Spin-orbit alignment}
