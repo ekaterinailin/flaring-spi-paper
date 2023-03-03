@@ -35,7 +35,7 @@ if __name__ == "__main__":
     tics = tics.values
 
     # make a plot for 15 panels
-    fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(14,11), sharex=True)
+    fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(14,9), sharex=True)
 
     # linearize the axes
     ax = [_1 for _0 in ax for _1 in _0]

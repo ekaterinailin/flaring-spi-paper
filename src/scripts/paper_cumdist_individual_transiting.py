@@ -34,7 +34,7 @@ if __name__ == "__main__":
     tics = tics.sort_values(by="number_of_flares", ascending=False)
 
     # make a plot for 15 panels
-    fig, ax = plt.subplots(nrows=6, ncols=3, figsize=(14,19), sharex=True)
+    fig, ax = plt.subplots(nrows=7, ncols=3, figsize=(14,21), sharex=True)
 
     # linearize the axes
     ax = [_1 for _0 in ax for _1 in _0]
