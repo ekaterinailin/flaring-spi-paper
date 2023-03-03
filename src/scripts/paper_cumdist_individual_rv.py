@@ -35,7 +35,7 @@ if __name__ == "__main__":
     tics = tics.values
 
     # make a plot for 15 panels
-    fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(14,9), sharex=True)
+    fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(14,7.5), sharex=True)
 
     # linearize the axes
     ax = [_1 for _0 in ax for _1 in _0]
@@ -93,7 +93,7 @@ if __name__ == "__main__":
             label = f"{ID}, {len(phases)-2} flares"
 
             # add the legend
-            a.legend([line], [label], loc=(-.1,.87), fontsize=13)
+            a.legend([line], [label], loc=(-.1,.85), fontsize=13)
             
             # plot a 1-1 line
             a.plot([0,1],[0,1], linestyle="dotted")
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     plt.tight_layout(h_pad=0.1)
 
     # make sure y-axis labels are visible
-    plt.subplots_adjust(left=0.07, right=0.97, top=0.97, bottom=0.05)
+    plt.subplots_adjust(left=0.07, right=0.97, top=0.97, bottom=0.07)
 
 
     # save the figure

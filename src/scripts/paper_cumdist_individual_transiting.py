@@ -34,7 +34,7 @@ if __name__ == "__main__":
     tics = tics.sort_values(by="number_of_flares", ascending=False)
 
     # make a plot for 15 panels
-    fig, ax = plt.subplots(nrows=7, ncols=3, figsize=(14,21), sharex=True)
+    fig, ax = plt.subplots(nrows=7, ncols=3, figsize=(14,18.5), sharex=True)
 
     # linearize the axes
     ax = [_1 for _0 in ax for _1 in _0]
@@ -84,7 +84,7 @@ if __name__ == "__main__":
             a.set_xlim(0,1)
 
             # set the axis labels
-            if len(ax) >14:
+            if len(ax) >17:
                 a.set_xlabel("orbital phase")
             a.set_ylabel("number of flares")
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     plt.tight_layout(h_pad=0.1)
 
     # make sure y-axis labels are visible
-    plt.subplots_adjust(left=0.07, right=0.99, top=0.99, bottom=0.05)
+    plt.subplots_adjust(left=0.07, right=0.99, top=0.99, bottom=0.03)
 
 
     # save the figure
