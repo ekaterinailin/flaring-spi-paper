@@ -184,7 +184,7 @@ And fourth, we finally consider the case of an unmagnetized planet with $B_p=0$,
 Our goal was to measure magnetic star-planet interaction as the presence of excess flares in phase with the innermost planet's orbit. We searched all star-planet systems that were observed with Kepler and TESS at 1 or 2 min cadence, respectively, for flares. For the star-planet systems in the resulting flare catalog~(Section~\ref{sec:results:catalog}), we confirmed that the orbital phase could be known well enough for the entire observing baseline of the system~(Section~\ref{sec:results:coherence}). Knowing that, we could move on to calculate the orbital phases of each flare, and calculate distributions for each system in the catalog~(Section \ref{sec:results:phasedist}). We then applied the custom Anderson-Darling test to check how likely it is that some of the flares were triggered by the planet. Comparing the test results with the expected power of magnetic star-planet interaction, we found that the probability of observing planet induced flares increases with the expected power in all considered scenarios~(Section~\ref{sec:results:spi}). However, not all systems with high expected power show signs of flaring SPI, which appears as a branching in the distribution of test results, and could be due to the intermittency of the interaction. Finally, we provide additional context for the most interesting systems in our sample, and explain why we had to exclude some systems from the analysis in Section~\ref{sec:results:individualstars}.
 \subsection{Flare catalog}
 \label{sec:results:catalog}
-We searched a total of XXXX light curves of XXXX star-planet systems for flares. We inspected all candidates manually, and added flares observed by K2 on TRAPPIST-1~\cite{paudel2018k2}, and flares from the planet hosting primary in the Kepler-411 binary~\cite{jackman2021stellara}. The final table contains a total of \input{output/PAPER_total_number_of_flares.txt} flares in \input{output/PAPER_total_number_of_systems_with_flares.txt} systems. In Table~\ref{tab:flares}, we list all the flares and their characteristics. To identify each event, we provide the name of the system in which the flare was found, along with its TIC, whether it was observed with Kepler or TESS, and during what Quarter or Sector, respectively. For each flare, we also give the start and finish time, relative amplitude $a$ and equivalent duration $ED$. If the transit midtime is known for the innermost planet, we also give the orbital phase at which the flare occurred.
+We searched a total of 3032 Kepler Quarters and 4181 TESS Sectors of a total of 1811 star-planet systems for flares. We inspected all candidates manually, and added flares observed by K2 on TRAPPIST-1~\cite{paudel2018k2}, and flares from the planet hosting primary in the Kepler-411 binary~\cite{jackman2021stellara}. The final table contains a total of \input{output/PAPER_total_number_of_flares.txt} flares in \input{output/PAPER_total_number_of_systems_with_flares.txt} systems. In Table~\ref{tab:flares}, we list all the flares and their characteristics. To identify each event, we provide the name of the system in which the flare was found, along with its TIC, whether it was observed with Kepler or TESS, and during what Quarter or Sector, respectively. For each flare, we also give the start and finish time, relative amplitude $a$ and equivalent duration $ED$. If the transit midtime is known for the innermost planet, we also give the orbital phase at which the flare occurred. The full table is provided with the supplementary material and via Zenodo (see Data Availability).
 
 \begin{table*}
     \script{paper_latex_flare_table.py}
@@ -198,16 +198,23 @@ We searched a total of XXXX light curves of XXXX star-planet systems for flares.
 
 \subsection{Period coherence times}
 \label{sec:results:coherence}
-divide the coherence time of the orbital period by the observing baseline of the combined Kepler and TESS observations for each star.
+In many cases, the observing baseline covered by Kepler and TESS for a given system can span multiple years. In these cases, the orbital period of the innermost planet must be known very precisely so that we can assign accurate orbital phases to the flare events.
+We test this by dividing the timespan between the first and the last flare in the combined Kepler and TESS observations by the coherence time $\tau$ of the orbital period for each system. We calculate the coherence time as
 
-Do the same for the mid-times.
+\begin{equation}
+    \tau = P^2 / \sigma_P,
+\end{equation}
+where $P$ is the orbital period, and $\sigma_P$ is its uncertainty.
+The resulting ratio should be $<<1$. The bottom panel in Figure~\ref{fig:coherence_hist} shows a histogram of these ratios in our sample. The orbital period is known sufficiently well for our analysis in most cases with ratios $<0.02$. The three cases where the ratio is highest with $0.05$, $0.12$, $0.24$ deviation are TAP 26, GJ 3082, and GJ 674, respectively. We keep these systems in our sample, but caution that the measured absence of flaring SPI might be due to the uncertain orbital period of the planet in these cases.
+
+We repeated the coherence calculation for $P_{rot}$, and found that the ratio is $>.1$ for most stars~(Figure~\ref{fig:coherence_hist}, top panel). There are three reasons for this: First, the uncertainty for the rotation was not always provided. Second, rotation period is more difficult to ascertain from a light curves' variability than the orbital period, particularly if the modulation is weak and or rapidly evolving. And third, differential rotation causes spots at different latitudes to move at different speeds, so it becomes difficult to even define a rotation period, as long as we don't know at which latitude(s) the flares occur.
 
 \begin{figure}[ht!]
     \script{paper_coherence_histogram.py}
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/PAPER_coherence_histogram.png}
         \caption{
-           Time span of observation vs. coherence time of the orbital and rotational periods, respectively. Orbital periods are all known precisely enough, so that the phase uncertainty at the last observed flare is of the order of $10^{-2}$. In contrast, in stars with known rotation periods, the precision is often too low, so that the phase of the last flare is often undetermined (ratio on x-axis $\sim 1$.
+           Time span of observation vs. coherence time of the orbital and rotational periods, respectively. Orbital periods are all known precisely enough, so that the phase uncertainty at the last observed flare is of the order of $10^{-2}$. In contrast, in stars with known rotation periods, the precision is often too low, so that the phase of the last flare is often undetermined (ratio on x-axis $\sim 1$).
         }
         \label{fig:coherence_hist}
     \end{centering}
@@ -215,7 +222,7 @@ Do the same for the mid-times.
 
 \subsection{Flare phase distributions}
 \label{sec:results:phasedist}
-For details on AU Mic results, see~\citep{ilin2022searching}.
+The Anderson-Darling test we use compares the measured distribution of orbital phases of the flares to the expected distribution, and return the significance of the deviation between the two. In the expected distribution, the same number of flares would be distributed randomly across the observing time. Figures~\ref{fig:cumdist_transiting} and \ref{fig:cumdist_rv} show the flare phase distributions along with the corresponding expected distributions. The latter is not a straight line from zero to 1 because we take into account the coverage of the orbital phases by the Kepler and TESS observations, as well as the different detection thresholds in each light curve.
 
 \begin{figure*}[ht!]
     \script{paper_cumdist_individual_transiting.py}
@@ -235,7 +242,7 @@ For details on AU Mic results, see~\citep{ilin2022searching}.
         \caption{
             Cumulative distributions of orbital phases of flares in the RV planet hosts observed by Kepler and TESS with 4 or more flares each. Phase zero is chosen arbitrarily.
         }
-        \label{fig:cumdist_transiting}
+        \label{fig:cumdist_rv}
     \end{centering}
 \end{figure*}
 
