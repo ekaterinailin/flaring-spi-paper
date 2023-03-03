@@ -310,8 +310,14 @@ if __name__ == "__main__":
     singles = singles.rename(columns={"st_rotp_source":"st_rotp_bibkey"})
 
     # drop rows with TIC 67646988 and 236387002, the brown dwarfs
-    singles = singles[singles.TIC != 67646988 ]
-    singles = singles[singles.TIC != 236387002 ]
+    singles = singles[singles.TIC != "67646988" ]
+    singles = singles[singles.TIC != "236387002" ]
+
+    # the old Kepler-411 instance
+    singles = singles[singles.TIC != "399954349(c)" ]
+
+    # GJ 1061
+    singles = singles[singles.TIC != "79611981" ]
 
     fulltable = singles.copy()
 
@@ -333,12 +339,12 @@ if __name__ == "__main__":
     
 
     # Get all bibkeys from singles table
-    bibkeys = fulltable.st_rotp_bibkey.unique()
-    bibkeys = np.append(bibkeys, fulltable.pl_orbper_bibkey.unique())
-    bibkeys = np.append(bibkeys, fulltable.st_rad_bibkey.unique())
-    bibkeys = np.append(bibkeys, fulltable.pl_radj_bibkey.unique())
-    bibkeys = np.append(bibkeys, fulltable.pl_orbsmax_bibkey.unique())
-    bibkeys = np.append(bibkeys, fulltable.st_lum_bibkey.unique())
+    bibkeys = fulltable.st_rotp_bibkey.dropna().unique()
+    bibkeys = np.append(bibkeys, fulltable.pl_orbper_bibkey.dropna().unique())
+    bibkeys = np.append(bibkeys, fulltable.st_rad_bibkey.dropna().unique())
+    bibkeys = np.append(bibkeys, fulltable.pl_radj_bibkey.dropna().unique())
+    bibkeys = np.append(bibkeys, fulltable.pl_orbsmax_bibkey.dropna().unique())
+    bibkeys = np.append(bibkeys, fulltable.st_lum_bibkey.dropna().unique())
 
     # enumerate the bibkeys
     bibkeys = np.unique(bibkeys)
