@@ -21,18 +21,17 @@ if __name__ == "__main__":
     plt.style.use(paths.scripts / 'paper.mplstyle')
 
     # read in flare table
-    df = pd.read_csv(paths.data / "PAPER_flare_table.csv")
+    flares = pd.read_csv(paths.data / "PAPER_flare_table.csv")
 
     # pick only real flares
-    df = df[df.orbital_phase != -1]
+    flares = flares[flares.orbital_phase != -1]
 
     # only use the systems that appear in the results table
     tics = pd.read_csv(paths.data / "results.csv")
+    tics = tics[tics.TIC != '399954349(c)']
 
     tics = tics[(tics.multiple_star.isnull()) & (tics.multiple_star_source != "BD")]
-    tics = tics.sort_values(by="number_of_flares", ascending=False).TIC.astype(str)
-
-    tics = tics.values
+    tics = tics.sort_values(by="number_of_flares", ascending=False)
 
     # make a plot for 15 panels
     fig, ax = plt.subplots(nrows=6, ncols=3, figsize=(14,19), sharex=True)
@@ -41,45 +40,45 @@ if __name__ == "__main__":
     ax = [_1 for _0 in ax for _1 in _0]
 
     # create a subplot for each star
-    for tic in tics:
+    for id_, row in tics.iterrows():
 
-        # print(g.shape)
-        g = df[df.TIC.astype(str) == tic]
-        print(tic, g.shape, len(ax))
-        # pick only stars with more than 0 flares
-        if ((g.shape[0]>=3) & (len(ax)>0)):
-            
-            # pick an axis
+        # get the orbital phases
+        phases = flares[flares.TIC.astype(str) == str(row.TIC)].orbital_phase.values
+
+        if (len(phases) > 2) & (len(ax) > 0):
             a = ax.pop()
-            
-            # gey the ID
-            ID = g.ID.iloc[0]
-            
-            # if no ID, use TIC instead
-            if str(ID)=="nan":
-                print(ID)
-                ID = f"TIC {g.TIC.iloc[0]}"
 
-            # ge the phases
-            phases = g.orbital_phase.sort_values(ascending=True).values
-            # print(phases)
-            # define the bins
-            bins = np.linspace(0,1,len(phases))
-    
-            # plot the histogram
-            a.hist(phases, bins=bins, histtype="step",
-                cumulative=True,)
+            # read in file with phase distribution
+            df = pd.read_csv(paths.data / f"TIC_{row.TIC}_cumhist.csv")
             
+            # plot the distribution
+            a.plot(df.p, df.f, color="blue", linewidth=1.5)
+
+            # plot the flares
+            # sort the phases
+            phases = np.sort(phases)
+            print(len(phases))
+            # plot the histogram
+            hist = np.cumsum(np.ones_like(phases))
+            hist = hist/hist[-1]
+            # insert 1 and 0 at the beginning and the end
+            hist = np.append(hist, 1)
+            hist = np.insert(hist, 0, 0)
+            phases = np.append(phases, 1)
+            phases = np.insert(phases, 0, 0)
+            print(phases)
+            a.plot(phases, hist, color="k", linewidth=1.5)
+
             # make a line for the legend
             line = Line2D([0], [0], color='w', linestyle='-', 
                             linewidth=1, alpha=0.)
-            label = f"{ID}, {len(phases)} flares"
+            label = f"{row.ID}, {len(phases)-2} flares"
 
             # add the legend
             a.legend([line], [label], loc=(-.1,.87), fontsize=13)
             
             # plot a 1-1 line
-            a.plot([0,1],[0,len(g)], linestyle="dotted")
+            a.plot([0,1],[0,1], linestyle="dotted")
 
             # set the limits
             a.set_xlim(0,1)

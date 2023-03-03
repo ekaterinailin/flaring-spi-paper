@@ -21,10 +21,10 @@ if __name__ == "__main__":
     plt.style.use(paths.scripts / 'paper.mplstyle')
 
     # read in flare table
-    df = pd.read_csv(paths.data / "PAPER_flare_table.csv")
+    flares = pd.read_csv(paths.data / "PAPER_flare_table.csv")
 
     # pick only real flares
-    df = df[(~df.tstart.isnull()) & (df.orbital_phase==-1)]
+    flares = flares[(~flares.tstart.isnull()) & (flares.orbital_phase==-1)]
 
     # only use the systems that appear in the results table
     res = pd.read_csv(paths.data / "results.csv")
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     for tic in tics:
 
         # print(g.shape)
-        g = df[df.TIC.astype(str) == tic]
+        g = flares[flares.TIC.astype(str) == tic]
         print(tic, g.shape, len(ax))
         # pick only stars with more than 0 flares
         if ((g.shape[0]>3) & (len(ax)>0)):
@@ -60,6 +60,13 @@ if __name__ == "__main__":
                 print(ID)
                 ID = f"TIC {g.TIC.iloc[0]}"
 
+            # read in file with phase distribution
+            df = pd.read_csv(paths.data / f"TIC_{tic}_cumhist.csv")
+            
+            # plot the distribution
+            a.plot(df.p, df.f, color="blue", linewidth=1.5)
+
+
             # get the orbital period
             orbper = res[res.TIC.astype(str) == tic].orbper_d.values[0]
             
@@ -69,23 +76,27 @@ if __name__ == "__main__":
             # sort the phases
             phases = np.sort(phases)
             
-            # define the bins
-            bins = np.linspace(0,1,len(phases))
-    
             # plot the histogram
-            a.hist(phases, bins=bins, histtype="step",
-                cumulative=True,)
-            
+            hist = np.cumsum(np.ones_like(phases))
+            hist = hist/hist[-1]
+            # insert 1 and 0 at the beginning and the end
+            hist = np.append(hist, 1)
+            hist = np.insert(hist, 0, 0)
+            phases = np.append(phases, 1)
+            phases = np.insert(phases, 0, 0)
+           
+            a.plot(phases, hist, color="k", linewidth=1.5)
+
             # make a line for the legend
             line = Line2D([0], [0], color='w', linestyle='-', 
                             linewidth=1, alpha=0.)
-            label = f"{ID}, {len(phases)} flares"
+            label = f"{ID}, {len(phases)-2} flares"
 
             # add the legend
             a.legend([line], [label], loc=(-.1,.87), fontsize=13)
             
             # plot a 1-1 line
-            a.plot([0,1],[0,len(g)], linestyle="dotted")
+            a.plot([0,1],[0,1], linestyle="dotted")
 
             # set the limits
             a.set_xlim(0,1)
