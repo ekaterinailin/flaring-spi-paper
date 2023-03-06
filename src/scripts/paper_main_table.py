@@ -316,8 +316,9 @@ if __name__ == "__main__":
     # the old Kepler-411 instance
     singles = singles[singles.TIC != "399954349(c)" ]
 
-    # GJ 1061
+    # GJ 1061 because rotation is unclear
     singles = singles[singles.TIC != "79611981" ]
+
 
     # sort table by p-value
     singles = singles.sort_values(by="mean", ascending=False)

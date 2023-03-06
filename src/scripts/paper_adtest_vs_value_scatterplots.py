@@ -328,6 +328,16 @@ if __name__ == "__main__":
     # read in results table
     df = pd.read_csv(paths.data / "results.csv")
 
+    # remove GJ 1061 because it does not have a rotation period
+    df = df[df["ID"] != "GJ 1061"]
+
+    # drop rows with TIC 67646988 and 236387002, the brown dwarfs
+    df = df[df.TIC != "67646988" ]
+    df = df[df.TIC != "236387002" ]
+
+    # the old Kepler-411 instance
+    df = df[df.TIC != "399954349(c)" ]
+
     # FOUR SCENARIO PLOTS
 
     columns = ["p_spi_sb_bp1_norm", "p_spi_sb_bp0_norm",

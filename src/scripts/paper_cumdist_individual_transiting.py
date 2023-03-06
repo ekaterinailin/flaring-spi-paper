@@ -28,13 +28,23 @@ if __name__ == "__main__":
 
     # only use the systems that appear in the results table
     tics = pd.read_csv(paths.data / "results.csv")
+
+    # remove old Kepler-411 instance
     tics = tics[tics.TIC != '399954349(c)']
+
+    # remove GJ 1061 because it does not have a rotation period
+    tics = tics[tics["ID"] != "GJ 1061"]
+
+    # drop rows with TIC 67646988 and 236387002, the brown dwarfs
+    tics = tics[tics.TIC != "67646988" ]
+    tics = tics[tics.TIC != "236387002" ]
+
 
     tics = tics[(tics.multiple_star.isnull()) & (tics.multiple_star_source != "BD")]
     tics = tics.sort_values(by="number_of_flares", ascending=False)
 
     # make a plot for 15 panels
-    fig, ax = plt.subplots(nrows=7, ncols=3, figsize=(14,18.5), sharex=True)
+    fig, ax = plt.subplots(nrows=6, ncols=3, figsize=(14,17), sharex=True)
 
     # linearize the axes
     ax = [_1 for _0 in ax for _1 in _0]
