@@ -74,7 +74,7 @@ If the eccentricity is known, then the range of the distance is set to either th
 We adopt available rotation period values from the literature. When uncertainties are not given, we assume 10\% uncertainty.% _09_
 
 \subsection{Planetary radii}
-NASA table, see references in table, or using the planetary mass to calculate the radius using the empirical relations derived in \cite{chen2007} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. 
+NASA table, see references in table, or using the planetary mass to calculate the radius using the empirical relations derived in \cite{chen2017probabilistic} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. 
 
 
 
@@ -97,8 +97,8 @@ We measure flaring star-planet interactions (SPI) as the presence of excess flar
 
 The main data for this analysis are flare times. To obtain them, we gather the Kepler and TESS light curves for all star-planet systems, remove rotational variability trends, search the de-trended light curves for flares, and convert the flare times to orbital phases. We then perform a customized Anderson-Darling test on the flare peak time distribution, which yields a p-value for the significance of the SPI signal. Finally, we compare these results to the theoretically expected SPI power $P_{SPI}$ in each system.
 
-The methods for light curve de-trending and flare finding in Kepler and TESS light curves, as well as the Anderson-Darling test, are the same as detailed in~\citet{ilin2022searching}. We briefly recap the techniques in Sections~\ref{methods:flaresearch} and \ref{methods:adtest}. The expected power of SPI depends on the relative velocity between the planet and the magnetic field strength in its orbit, the derivation of which we explain in 
-Sections~\ref{methods:relvel} and \ref{methods:bfield}, respectively. With relative velocity and magnetic field strength derived, we can combine them with stellar radius, planetary radius, and semi-major axis to estimate the power of SPI. We use the scaling laws from two different magnetic SPI models, which we introduce in Section~\ref{methods:pspi}.
+The methods for light curve de-trending and flare finding in Kepler and TESS light curves, as well as the Anderson-Darling test, are the same as detailed in~\citet{ilin2022searching}. We briefly recap the techniques in Sections~\ref{sec:methods:flaresearch} and \ref{sec:methods:adtest}. The expected power of SPI depends on the relative velocity between the planet and the magnetic field strength in its orbit, the derivation of which we explain in 
+Sections~\ref{sec:methods:relvel} and \ref{sec:methods:bfield}, respectively. With relative velocity and magnetic field strength derived, we can combine them with stellar radius, planetary radius, and semi-major axis to estimate the power of SPI. We use the scaling laws from two different magnetic SPI models, which we introduce in Section~\ref{sec:methods:pspi}.
 
 \subsection{Light curve de-trending and flare search}
 \label{sec:methods:flaresearch}
@@ -222,7 +222,7 @@ We repeated the coherence calculation for $P_{rot}$, and found that the ratio is
 
 \subsection{Flare phase distributions}
 \label{sec:results:phasedist}
-The Anderson-Darling test we use compares the measured distribution of orbital phases of the flares to the expected distribution, and return the significance of the deviation between the two. In the expected distribution, the same number of flares would be distributed randomly across the observing time. Figures~\ref{fig:cumdist_transiting} and \ref{fig:cumdist_rv} show the flare phase distributions along with the corresponding expected distributions. The latter usually deviate from a straight line from zero to 1 because we take into account the coverage of the orbital phases by the Kepler and TESS observations, as well as the different detection thresholds in each light curve.
+The Anderson-Darling test we use compares the measured distribution of orbital phases of the flares to the expected distribution, and return the significance of the deviation between the two. In the expected distribution, the same number of flares would be distributed randomly across the observing time. Figures~\ref{fig:cumdist_transiting} and \ref{fig:cumdist_rv} show the flare phase distributions along with the corresponding expected distributions for transiting and non-transiting systems, respectively. The expected distributions usually deviate from a straight line because we take into account the coverage of the orbital phases by the Kepler and TESS observations, as well as the different detection thresholds in each light curve.
 
 \begin{figure*}[ht!]
     \script{paper_cumdist_individual_transiting.py}
@@ -248,8 +248,9 @@ The Anderson-Darling test we use compares the measured distribution of orbital p
 
 \subsection{Flaring star-planet interaction signal}
 \label{sec:results:spi}
-We used the custom Anderson-Darling test introduced in  \citet{ilin2022searching} and Section~\ref{methods:adtest} to look for flaring SPI in all systems with three  or more flares detected in their Kepler and TESS observations. Table~\ref{tab:maintable_der} lists the $p$-value results for each star-planet system. We do not find any $>3\sigma$ signal of star-planet interaction in our sample. However, the significance of the deviation increases with higher expected power of interaction. Figure~\ref{fig:adtest_bp} shows that in every scenario we considered (Alfv\'en wing or stretch-and-break mechanism, with or without planetary magnetic field), the significance of the measured interaction is correlated with the expected power $P$. Table~\ref{tab:maintable_der} lists the values for the four different powers $P$, calculated with the scaling laws introduced in Section~\ref{sec:methods:pspi} and normalized to AU Mic, along with the derived parameters for these scaling laws, i.e., Rossby number R$_o$, surface magnetic field strength $B$, and relative velocity between the planet and a co-rotating magnetic field $v_{rel}$. 
+We used the custom Anderson-Darling test introduced in  \citet{ilin2022searching} and Section~\ref{sec:methods:adtest} to look for flaring SPI in all systems with three  or more flares detected in their Kepler and TESS observations. Table~\ref{tab:maintable_der} lists the $p$-value results for each star-planet system. We do not find any $>3\sigma$ signal of star-planet interaction in our sample. However, the significance of the deviation increases with higher expected power of interaction. Figure~\ref{fig:adtest_bp} shows that in every scenario we considered (Alfv\'en wing or stretch-and-break mechanism, with or without planetary magnetic field), the significance of the measured interaction is correlated with the expected power $P$. Table~\ref{tab:maintable_der} lists the values for the four different powers $P$, calculated with the scaling laws introduced in Section~\ref{sec:methods:pspi} and normalized to AU Mic, along with the derived parameters for these scaling laws, i.e., Rossby number R$_o$, surface-average magnetic field strength $B$, and relative velocity between the planet and a co-rotating magnetic field $v_{rel}$. 
 
+We observe the highest interaction strength for 
 
 \begin{table*}
 \movetableright=-20mm
@@ -266,7 +267,7 @@ We used the custom Anderson-Darling test introduced in  \citet{ilin2022searching
 \footnotesize
 \movetableright=-20mm
 \script{paper_main_table.py}
-\caption{Flaring star-planet interaction. $Ro$, $B$, and $v_{rel}$, are derived from literature values (Table~\ref{tab:maintable_lit}). $P_{xx}$ stands for the power of stretch-and-break ($sb$) and ALfv\'en wing ($aw$) interaction mechanisms, assuming the planet has a magnetic field strength of 1 G. $P_{xx0}$ is the same, but assuming an unmagnetized planet. All powers are normalized to AU Mic. The p-value of the Anderson-Darling test is lower when the system shows more flares periodic with the planetary orbit.}
+\caption{Flaring star-planet interaction. $Ro$, $B$, and $v_{rel}$, are derived from literature values (Table~\ref{tab:maintable_lit}). $P_{xx}$ stands for the power of stretch-and-break ($sb$) and ALfv\'en wing ($aw$) interaction mechanisms, assuming the planet has a magnetic field strength of 1 G. $P_{xx0}$ is the same, but assuming an unmagnetized planet. All powers are normalized to AU Mic. The $p$-value of the Anderson-Darling test is lower when the system shows more flares periodic with the planetary orbit.}
 \input{output/table_der_vals.tex}
     \label{tab:maintable_der}
 
