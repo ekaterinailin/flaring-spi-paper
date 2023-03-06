@@ -45,10 +45,6 @@ Alfven wing
 ction with the Planetary Systems Composite Parameters Table (PSCP)\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}} from which we removed controversial planet detections (``pl\_controv\_flag'' set to 1), i.e. detections with existing literature questioning the result. The catalog then contained XXXX unique systems.
 
 We complemented the PSCP with the TESS TOI Table~\citep[TT][]{guerrero2021arxiv}\footnote{\url{https://tev.mit.edu/data/collection/193/}}. We filtered the catalog by requiring the confirmed planet (CP) or known planet (KP) flags to be set in the ``TOI Disposition''. This added XXXX star-planet systems to the sample.
-\subsection{Multiplicity and contamination}
-We drop all multiple stars except for Proxima Cen (whose companion are well separated both physically and on the sky), and all stars with nearby objects that contaminate our analysis, e.g., from ~\citet{ziegler2018measuring}.
-
-Quoting the references for multiplicity/contamination, we dropped the following targets: \input{output/multiples_string.tex}
 
 \subsection{Kepler and TESS photometry}
 Between 2009 and 2013, the Kepler space telescope~\citep{koch2010kepler} nearly continuously observed a patch of the sky in the Cygnus-Lyra region. Each of the 18 observing Quarters contains nearly uninterrupted $\sim 90$ days of observations, totaling over 100000 stars monitored in 2-min cadence. 
@@ -74,22 +70,13 @@ If the eccentricity is known, then the range of the distance is set to either th
 We adopt available rotation period values from the literature. When uncertainties are not given, we assume 10\% uncertainty.% _09_
 
 \subsection{Planetary radii}
-NASA table, see references in table, or using the planetary mass to calculate the radius using the empirical relations derived in \cite{chen2017probabilistic} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. 
+NASA table, see references in table, or using the planetary mass $M_p$ or $M_p\sin i$ to calculate the radius or a lower limit for the radius using the empirical relations derived in \cite{chen2017probabilistic} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. 
 
-
-
-
-
-%Transit information
-%Full sample statistics
+We note that for GJ 674, the mass estimates in \cite{bonfils2007harps} and \cite{boisse2011disentangling} do not quote uncertainties, but differ by 0.3MEarth, so we assumed that value as the uncertainty on $M_p\sin i$.
 
 \subsection{Bolometric luminosity}
 
 We take bolometric luminosity values as given in the NASA Table if given with uncertainties, and supplement missing values and entries without quoted uncertainties with Gaia DR3 FLAME~\citep{fouesneau2022gaia} solutions. 
-
-% \subsection{X-ray luminosity}
-% We take the \cite{foster2022exoplanet} X-ray luminosity catalog as the basis for our calculation, assuming an uncertainty of 30\% in the reported values, covering typical intrinsic variability among stars of similar rotation periods in studies like ~\cite{wright2011stellaractivityrotation, wright2018stellar}.
-
 
 \section{Methods}
 \label{sec:methods}
@@ -248,9 +235,12 @@ The Anderson-Darling test we use compares the measured distribution of orbital p
 
 \subsection{Flaring star-planet interaction signal}
 \label{sec:results:spi}
-We used the custom Anderson-Darling test introduced in  \citet{ilin2022searching} and Section~\ref{sec:methods:adtest} to look for flaring SPI in all systems with three  or more flares detected in their Kepler and TESS observations. Table~\ref{tab:maintable_der} lists the $p$-value results for each star-planet system. We do not find any $>3\sigma$ signal of star-planet interaction in our sample. However, the significance of the deviation increases with higher expected power of interaction. Figure~\ref{fig:adtest_bp} shows that in every scenario we considered (Alfv\'en wing or stretch-and-break mechanism, with or without planetary magnetic field), the significance of the measured interaction is correlated with the expected power $P$. Table~\ref{tab:maintable_der} lists the values for the four different powers $P$, calculated with the scaling laws introduced in Section~\ref{sec:methods:pspi} and normalized to AU Mic, along with the derived parameters for these scaling laws, i.e., Rossby number R$_o$, surface-average magnetic field strength $B$, and relative velocity between the planet and a co-rotating magnetic field $v_{rel}$. 
+We used the custom Anderson-Darling test introduced in  \citet{ilin2022searching} and Section~\ref{sec:methods:adtest} to look for flaring SPI in all systems with three  or more flares with equivalent duration $ED>1\,$s, detected in their Kepler and TESS observations. Table~\ref{tab:maintable_der} lists the $p$-value results for each star-planet system. We do not find any $>3\sigma$ signal of star-planet interaction in our sample. However, overall, the significance of the deviation increases with higher expected power of interaction. 
 
-We observe the highest interaction strength for 
+Figure~\ref{fig:adtest_bp} shows that in every scenario we considered (Alfv\'en wing or stretch-and-break mechanism, with or without planetary magnetic field), there are two branches. On one branch, the significance of the measured interaction is correlated with the expected power $P$. On the other branch, no interaction is measured regardless of the expected power $P$. 
+
+Table~\ref{tab:maintable_der} lists the values for the four different powers $P$, calculated with the scaling laws introduced in Section~\ref{sec:methods:pspi} and normalized to AU Mic, along with the derived parameters for these scaling laws, i.e., Rossby number R$_o$, surface-average magnetic field strength $B$, and relative velocity between the planet and a co-rotating magnetic field $v_{rel}$. 
+
 
 \begin{table*}
 \movetableright=-20mm
@@ -286,42 +276,45 @@ We observe the highest interaction strength for
 \end{figure*}
 
 
-% \begin{figure*}[ht!]
-%     \script{paper_adtext_vs_value_scatterplots.py}
-%     \begin{centering}
-%         \includegraphics[width=\linewidth]{figures/PAPER_ADtest_vs_xray_flux_erg_s.png}
-%         \caption{X-ray luminosity of the host star~\cite{foster2022identifying} vs. AD test results.
-%         }
-%         \label{fig:adtest_xray_flux_erg_s}
-%     \end{centering}
-% \end{figure*}
 
 \subsection{Individual stars}
 \label{sec:results:individualstars}
+The properties of star-planet systems in this work are diverse, including both very young and old systems (with slowly rotating host stars); systems with super-Earths, Neptunes, and Hot Jupiters; and spectral types covering the lower main sequence from early G to late M dwarfs. 
+
+For our analysis, it is important to know that the observed flares indeed occurred on the planet host star. We therefore excluded some systems due to documented contamination from nearby (bound or co-moving) companions~(Section~\ref{sec:results:individualstars:excluded}). One exception to this rule is Kepler-411, a binary system for which the flare contributions from each component could be separated~(Section~\ref{sec:results:individualstars:kep411}). We also dropped GJ 1061 from the sample because its rotation period was unconstrained. Another uncertainty in our analysis is the possibility of additional planets at even shorter orbits than the currently known innermost planet, such as might be the case for Proxima Cen~(Section~\ref{sec:results:individualstars:proxima}). 
+
+The bulk of the systems in our sample are neither expected to show high power of magnetic star-planet interaction, nor do they show any deviation from intrinsic stellar flaring that could be indicative of flaring star-planet interaction. In the subsample of stars with high expected power, of the order of AU Mic's and above, we first take a closer look at those that seem to follow an increase in measured flaring star-planet interaction with increasing expected power $P$, that is AU Mic itself, K2-25, TOI-540, and HIP 67522~(Sections \ref{sec:results:individualstars:aumic}-\ref{sec:results:individualstars:hip67522}). Then we consider those systems where high power was expected in all scenarios, but not measured, i.e., TAP 26 and KOI-12~(Sections \ref{sec:results:individualstars:tap26} and \ref{sec:results:individualstars:koi12}).
 \subsubsection{Excluded targets}
-Kepler-808 (KOI 1300) has a $\sim0.4$ Msun \cite{kraus2016impact}companion that is about 1.8 mag fainter than the primary at a separation of .78 arcsec~\cite{baranec2016roboao}.
+\label{sec:results:individualstars:excluded}
 
-TOI-837 has co-moving M dwarf a few arcsec away in the same young cluster, 5 mag fainter, but the primary is an F9-G0 star, so flare could come from both stars~\cite{bouma2020cluster}
+While they appear in Table~\ref{tab:flares}, we excluded a number of systems from further analysis. We drop all multiple stars except for Proxima Cen (whose components are well separated both physically and on the sky), and all stars with nearby objects that contaminate our analysis, e.g., from ~\citet{ziegler2018measuring}: \input{output/multiples_string.tex}
 
-HD 41004 B and DS Tuc A and LTT 1445
+For instance, Kepler-808 (KOI 1300) has a $\sim0.4M_\odot$ \citep{kraus2016impact} companion that is about 1.8 mag fainter than the primary at a separation of .78 arcsec~\citep{baranec2016roboao}. TOI-837 has co-moving M dwarf a few arcsec away in the same young cluster, 5 mag fainter, but the primary is an F9-G0 star, so flares could still originate come from both stars~\citep{bouma2020cluster}. HD 41004 B, DS Tuc A, and LTT 1445 are known multiple systems where all components contribute significantly to the total flux.
 
-GJ 1061 is lacking a stellar rotation period estimate, which we to calculate the magnetic field, and $v_{rel}$. \cite{dreizler2020reddots} estimate that it is a fairly slow rotator with a period between 50 and 200 days.
+The only single star system excluded is GJ 1061. The star is lacking a stellar rotation period estimate, which we need to calculate the magnetic field, and $v_{rel}$. \citet{dreizler2020reddots} estimate that it is a fairly slow rotator with a period between 50 and 200 days, so we do not expect it to have a strong magnetic field anyway.
 
 \subsubsection{Kepler-411}
-Kepler-411 has 3 mag fainter companion~\cite{wang2014influence,ziegler2018measuring}. It was observed in Kepler short cadence by \cite{jackman2021stellara} and both the planet host, and the companion flare. \cite{jackman2021stellara} disentangle the contributions on a pixel level. According to \cite{morton2016false, sun2019kepler411} the planets orbit the primary companion. In fact, the fainter companion of Kepler-411 appears to cause the majority of flares (41), whereas Kepler-411 causes only 7. We adopt the 7 flares from \cite{jackman2021stellara} for our analysis.
-
-
-
-\subsubsection{HAT-P-11}
-\cite{miskovetz2022resolving}  found background stars that were not co-moving HAT-P-11. HAT-P-11 rotates nearly pole-on, and HAT-P-11 b is transiting in a near-polar orbit~\citep{bourrier2023dream}. This may be the reason for absent SPI
+\label{sec:results:individualstars:kep411}
+Kepler-411 has 3 mag fainter companion~\cite{wang2014influence,ziegler2018measuring}, but we do not exclude it from the analysis. The system was observed in Kepler short cadence by \citet{jackman2021stellara} and both the planet host, and the companion star flare. \citet{jackman2021stellara} disentangle the contributions from each component on a pixel level. According to \citet{morton2016false, sun2019kepler411}, Kepler-411's planets orbit the primary companion. The fainter companion of Kepler-411 appears to cause the majority of flares (41), whereas the planet host causes only 7. We adopt the 7 flares from \cite{jackman2021stellara} in our analysis.
 
 \subsubsection{Proxima Cen}
-tentative detection of another planet further in, at 0.029 au, or 5 day orbital period~\citep{faria2022candidate, artigau2022linebyline}
-Although Proxima Cen is part of a triple stellar system, we treat it a single star here because of the large angular separation to its two companions.
+\label{sec:results:individualstars:proxima}
+We do not detect a deviation from intrinsic flaring on Proxima Cen, consistent with numerical models that place Proxima Cen b well outside the sub-Alfv\'enic zone~\citep{kavanagh2021planetinduced}. However, this might not entirely exclude Proxima Cen from the search for flaring star-planet interaction. The tentatively detected Proxima Cen d, a planet further in, at 0.029 au, or 5 day orbital period~\citep{faria2022candidate, artigau2022linebyline} could still cause flaring star-planet interactions. However, the orbital period of the tentative planet is so uncertain at this point that its coherence time is shorter than the roughly 2yr observing baseline of Proxima Cen, preventing us from accurately measuring the flare phases. 
 
-Proxima Cen b has an eccentricity upper limit of 0.35~\cite{anglada-escude2016terrestrial}
+
+\subsubsection{AU Mic}
+\label{sec:results:individualstars:aumic}
+
+AU Mic is a 16-29 Myr old pre-main sequence M0-M1 dwarf with a strong magnetic field of about $3010\pm220\,$G obtained from Zeeman broadening measurements~\citep{reiners2022magnetism}. The innermost Neptune-sized planet, AU Mic b, could be both inside the sub-Alfv\'enic zone if the star's mass loss rate is relatively low at about 30 times the solar value or lower. If the mass loss rate is high, exceeding the solar value by a factor of several hundreds, AU Mic b could orbit in the super-Alfv\'enic zone, and become unable to experience any planet-induced flaring. Recently, \citet{klein2022one} found tentative periodicity with the orbital period of AU Mic b in the chromospheric He I D line, which increases if the contribution from flares is included in the calculation. Overall, our marginal signal of flaring star-planet interaction in the AU Mic system supports the idea that this young, magnetically active M dwarf system with a close-in Neptune could exhibit planet=induced flaring.
+For a detailed discussion of AU Mic and its flaring star-planet interaction, we refer to~\cite{ilin2022searching}, where we also estimate that an additional 50–100 days of TESS-like monitoring of AU Mic would yield a $3\sigma$ detection if the marginal signal in our data is real.
+ 
+\subsubsection{K2-25}
+\label{sec:results:individualstars:k225}
+\subsubsection{TOI-540}
+\label{sec:results:individualstars:toi540}
 
 \subsubsection{HIP 67522}
+\label{sec:results:individualstars:hip67522}
 HIP 67522 has one of the strongest expected SPI signals in our sample, and shows the clearest signs of flaring SPI, albeit with only 6 flares in the sample. These flares are distributed across two Sectors in TESS. In Sector 11, two flares occur at orbital phases $\sim 0.6$ and $\sim 0.8$. Two years later, in Sector 38, four flares occur, but this time, all of them take place at orbital phases $0.00-0.05$, that is, up to a few hours after transit.
 
 HIP 67522 is young Sun, currently contracting onto the main sequence. It is a Sco-Cen member (10-20 Myr old), which was discovered to host a close-in Jupiter, HIP 67522 b, in 2020~\citep{rizzuto2020tess}. It was found with low obliquity, consistent with XXXX~\citep{heitzmann2021obliquity}. Tentative third planet transiting.
@@ -331,36 +324,22 @@ HIP 67522 is in close spin-orbit commensurability -- $P_{rot}/P_{orb}=5/1$. The 
 \cite{wood2021characterizing} rule out stellar companions for HIP 67522 based on RV, high-resolution imaging, and Gaia data.
 
 HIP 67522 will be observed again with TESS in spring 2023.
-\subsubsection{GJ 3323}
-
-GJ 3323 b is a non-transiting, likely rocky planet. We adopted the mean radius between assuming pure iron through pure ice composition in \cite{lovos2022null} Table A1, and took the difference from this mean to either of the extremes as uncertainty estimate
-
-
 
 \subsubsection{TAP 26}
-Likely low eccentricity given in \cite{yu2017hot}
+\label{sec:results:individualstars:tap26}
 
-\subsubsection{GJ 393}
-Eccentricity likely low, but not quantified in \cite{amado2021carmenes}, so we treat it as unconstrained (set e=0.5)
-
-\subsubsection{Kepler-42}
- 	KOI-961 in the detection paper \cite{muirhead2012characterizing}, low eccentricity constrained by \cite{mann2017gold}
-
-\subsubsection{GJ 674}
-Has hot UV flares~\cite{froning2019hot}
-The mass estimates in \cite{bonfils2007harps} and \cite{boisse2011disentangling} do not quote errors, but differ by 0.3MEarth, so we assume that as the uncertainty on $M_p\sin i$
-
-\subsubsection{K2-354}
-Found under EPIC 211314705 and K2-329 in \cite{bouma2020cluster}, who refer to the detection paper \cite{pope2016transiting}, also TIC 468989066.
+\subsubsection{KOI-12}
+\label{sec:results:individualstars:koi12}
 
 
 
 
 
 
-\subsection{Combined Sample}
+%\subsection{Combined Sample}
 
-For those stars with given transit mid-time and 
+%For those stars with given transit mid-time and 
+
 \section{Discussion}
 \label{sec:discussion}
 
@@ -377,15 +356,35 @@ Hard to measure, because it de-phases much faster than orbital variability due t
 TAP 26 vs. HIP 67522, also different sectors for HIP 67522, see \cite{shkolnik2008nature}
 
 \subsection{Spin-orbit alignment}
+nother relevant factor is the geometry of the system. If we assume that the magnetic dipole axis and the rotation axis of the star are relatively well-aligned, the spin-orbit alignment may have an influence on interaction strength. 
+
+
 or more broadly system architecture including misalignment of the magnetic axis. See HAT-P-11, or instance, and the many polar orbits in \cite{bourrier2023dream}
+
+\cite{miskovetz2022resolving}  found background stars that were not co-moving HAT-P-11. HAT-P-11 rotates nearly pole-on, and HAT-P-11 b is transiting in a near-polar orbit~\citep{bourrier2023dream}. This may be the reason for absent SPI.
 \subsection{Eccentricity}
 The star-planet systems in this work do not have notably eccentric orbits.
+
+\section{Summary and Conclusions}
+
 \bibliography{bib}
 
 \appendix
-\section{Expected $P$ vs. measured flaring SPI}
+\section{Notes on individual stars}
+\subsection{Proxima Cen}
+Although Proxima Cen is part of a triple stellar system, we treat it a single star in this work because of the large angular separation to its two companions. Proxima Cen b has an eccentricity upper limit of 0.35~\cite{anglada-escude2016terrestrial}.
+\subsection{TAP 26}
+Likely low eccentricity given in \cite{yu2017hot}.
+
+\subsection{GJ 393}
+Eccentricity likely low, but not quantified in \cite{amado2021carmenes}, so we treat it as unconstrained (set e=0.5)
+
+\subsection{Kepler-42}
+ KOI-961 in the detection paper \cite{muirhead2012characterizing}, low eccentricity constrained by \cite{mann2017gold}
 
 
+\subsection{K2-354}
+We note that we found K2-354 under EPIC 211314705 and K2-329(!) in \cite{bouma2020cluster}, who refer to the detection paper \cite{pope2016transiting}, and also under TIC 468989066.
 \end{document}
 
 
