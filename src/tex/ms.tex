@@ -101,7 +101,7 @@ The methods for light curve de-trending and flare finding in Kepler and TESS lig
 Sections~\ref{methods:relvel} and \ref{methods:bfield}, respectively. With relative velocity and magnetic field strength derived, we can combine them with stellar radius, planetary radius, and semi-major axis to estimate the power of SPI. We use the scaling laws from two different magnetic SPI models, which we introduce in Section~\ref{methods:pspi}.
 
 \subsection{Light curve de-trending and flare search}
-\label{methods:flaresearch}
+\label{sec:methods:flaresearch}
 To remove trends and rotational variability from the light curve without losing the flare signal, we use an empirically derived multistep process. First, we apply spline fit with a coarse sampling of 30h mean values to capture slow rotation with periods above multiple days and non-periodic trends. Then, we iteratively fit a series of sines to capture rotational signal on time scales down to about half a day, close to the fastest rotational signals measured in low mass stars. Eventually, we apply two Savitzky-Golay~\cite{savitzky1964smoothing} filters in sequence, with window sizes of 6h and 3h each. At this stage, we mask all data points above a $2.5 \sigma$ (or $1.5 \sigma$ for very active stars like AU Mic or Proxima Cen) threshold as flare candidates to prevent the filter from ironing out the flares. As a final step, we fit exponential functions to the edges of the light curves, if there are data points that deviate more than one standard deviation from the median value, while keeping the flare candidates masked.
 
 In these light curves, we then search for flares as series of at least three consecutive data points $3\sigma$ above the noise level, implemented in AltaiPony~\cite{ilin2021altaipony}. We estimate the noise
@@ -114,7 +114,7 @@ Equivalent duration is the time during which the non-flaring star releases as mu
 
 
 \subsection{Custom Anderson-Darling test}
-\label{methods:adtest}
+\label{sec:methods:adtest}
 For each star-planet system with three or more flares in their Kepler and/or TESS light curves, we test for deviations from a random distribution of flares with orbital phase. We use the same customized Anderson-Darling test as in \cite{ilin2022searching}. In brief, we first take the number of flares observed in the TESS and Kepler data, calculate a base flare rate for each light curve. We then calculate how often each orbital phase has been covered by the data, again for each light curve. With the phase coverage and base flare rate combined, we can tell how many flares we would expect to see in any given phase bin if flares were randomly distributed. This number of expected flares per bin can be aggregated into one expected distribution by summing over all available light curves. As a last step, this distribution is then compared to the observed one using an Anderson-Darling test. We repeat this test with different phase offsets to account for potential biases in sensitivity of the test at different phases.
 
 The only adjustment to the procedure in \cite{ilin2022searching} is that we use four equidistant start phases (i.e., 0, 0.25, 0.5 and 0.75) compared to the 20 used in~\cite{ilin2022searching} to save time, and because the range of derived $p$-values is already well-sampled using four. We adopt the standard deviation of these four $p$-values as the uncertainty on the flaring SPI measurement.
@@ -127,7 +127,7 @@ The only adjustment to the procedure in \cite{ilin2022searching} is that we use 
 
 
 \subsection{Relative velocity}
-\label{methods:relvel}
+\label{sec:methods:relvel}
 We calculate the relative velocity between the magnetic field of the star, which we assume is co-rotating with the stellar rotation period $P_{rot}$, at the planetary orbit, where the planet moves with a period $P_{orb}$:
 
 \begin{equation}
@@ -137,7 +137,7 @@ We calculate the relative velocity between the magnetic field of the star, which
 We use quadratic error propagation to estimate the uncertainty in $v_{rel}$ with the mean of the upper and lower uncertainty values on the orbital period and rotation period, if both are given, and the uncertainty on semi-major axis $a$ as derived in Sec.~\ref{sec:data:a}. 
 
 \subsection{Stellar magnetic fields}
-\label{methods:bfield}
+\label{sec:methods:bfield}
 We derive the average magnetic field strength $B$ from $Ro$ using the empirical relation derived in \cite{reiners2022magnetism},  Table 2, in the unsaturated and saturated regimes, respectively:
 
 \begin{eqnarray}
@@ -147,8 +147,8 @@ We derive the average magnetic field strength $B$ from $Ro$ using the empirical 
 
 The estimate is consistent with existing Zeeman broadening for, e.g. AU Mic (3010 G~\cite{reiners2022magnetism})
 \subsection{Power of star-planet interaction}
-\label{methods:pspi}
-We consider two theories for the mechanism behind flaring star-planet interactions, the stretch-and-break and the Alfv\'en wing mechanisms. For both of them, we include the case of a magnetized and an unmagnetized planet, for a total of estimates of the expected power of magnetic star-planet interaction.
+\label{sec:methods:pspi}
+We consider two theories for the mechanism behind flaring star-planet interactions, the stretch-and-break and the Alfv\'en wing mechanisms. For both of them, we include the case of a magnetized and an unmagnetized planet, for a total of four estimates of the expected power of magnetic star-planet interaction.
 
 First, we estimate the power of star-planet interaction generated by the stretch-and-break mechanism using the scaling relations in~\cite{lanza2012starplanet} (their Eqn. 45), where $P_{sb}$ is proportional to
 
@@ -222,14 +222,14 @@ We repeated the coherence calculation for $P_{rot}$, and found that the ratio is
 
 \subsection{Flare phase distributions}
 \label{sec:results:phasedist}
-The Anderson-Darling test we use compares the measured distribution of orbital phases of the flares to the expected distribution, and return the significance of the deviation between the two. In the expected distribution, the same number of flares would be distributed randomly across the observing time. Figures~\ref{fig:cumdist_transiting} and \ref{fig:cumdist_rv} show the flare phase distributions along with the corresponding expected distributions. The latter is not a straight line from zero to 1 because we take into account the coverage of the orbital phases by the Kepler and TESS observations, as well as the different detection thresholds in each light curve.
+The Anderson-Darling test we use compares the measured distribution of orbital phases of the flares to the expected distribution, and return the significance of the deviation between the two. In the expected distribution, the same number of flares would be distributed randomly across the observing time. Figures~\ref{fig:cumdist_transiting} and \ref{fig:cumdist_rv} show the flare phase distributions along with the corresponding expected distributions. The latter usually deviate from a straight line from zero to 1 because we take into account the coverage of the orbital phases by the Kepler and TESS observations, as well as the different detection thresholds in each light curve.
 
 \begin{figure*}[ht!]
     \script{paper_cumdist_individual_transiting.py}
     \begin{centering}
-        \includegraphics[width=.9\linewidth]{figures/PAPER_flares_phase_hist_transiting.png}
+        \includegraphics[width=.95\linewidth]{figures/PAPER_flares_phase_hist_transiting.png}
         \caption{
-            Cumulative distributions of orbital phases of flares in the transiting planet hosts observed by Kepler and TESS with 4 or more flares each. Phase zero corresponds to the transit mid-time of the planet.
+            Cumulative distributions of orbital phases of flares in the transiting planet hosts observed by Kepler and TESS. The bisector line is dotted, the expected distribution is solid blue, and the observed distribution is solid black. Phase zero corresponds to the transit mid-time of the planet. 
         }
         \label{fig:cumdist_transiting}
     \end{centering}
@@ -238,9 +238,9 @@ The Anderson-Darling test we use compares the measured distribution of orbital p
 \begin{figure*}[ht!]
     \script{paper_cumdist_individual_rv.py}
     \begin{centering}
-        \includegraphics[width=0.9\linewidth]{figures/PAPER_flares_phase_hist_rv.png}
+        \includegraphics[width=0.95\linewidth]{figures/PAPER_flares_phase_hist_rv.png}
         \caption{
-            Cumulative distributions of orbital phases of flares in the RV planet hosts observed by Kepler and TESS with 4 or more flares each. Phase zero is chosen arbitrarily.
+            Cumulative distributions of orbital phases of flares in the RV planet hosts observed by Kepler and TESS. The bisector line is dotted, the expected distribution is solid blue, and the observed distribution is solid black. Phase zero is chosen arbitrarily. 
         }
         \label{fig:cumdist_rv}
     \end{centering}
@@ -248,7 +248,7 @@ The Anderson-Darling test we use compares the measured distribution of orbital p
 
 \subsection{Flaring star-planet interaction signal}
 \label{sec:results:spi}
-We use the custom Anderson-Darling test detailed in \cite{ilin2022searching} to look for flaring SPI in all system with three flares or more. We do not find $>3\sigma$ signal of star-planet interaction in any of the star-planet systems in this sample.  
+We used the custom Anderson-Darling test introduced in  \citet{ilin2022searching} and Section~\ref{methods:adtest} to look for flaring SPI in all systems with three  or more flares detected in their Kepler and TESS observations. Table~\ref{tab:maintable_der} lists the $p$-value results for each star-planet system. We do not find any $>3\sigma$ signal of star-planet interaction in our sample. However, the significance of the deviation increases with higher expected power of interaction. Figure~\ref{fig:adtest_bp} shows that in every scenario we considered (Alfv\'en wing or stretch-and-break mechanism, with or without planetary magnetic field), the significance of the measured interaction is correlated with the expected power $P$. Table~\ref{tab:maintable_der} lists the values for the four different powers $P$, calculated with the scaling laws introduced in Section~\ref{sec:methods:pspi} and normalized to AU Mic, along with the derived parameters for these scaling laws, i.e., Rossby number R$_o$, surface magnetic field strength $B$, and relative velocity between the planet and a co-rotating magnetic field $v_{rel}$. 
 
 
 \begin{table*}
