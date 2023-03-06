@@ -319,6 +319,9 @@ if __name__ == "__main__":
     # GJ 1061
     singles = singles[singles.TIC != "79611981" ]
 
+    # sort table by p-value
+    singles = singles.sort_values(by="mean", ascending=False)
+
     fulltable = singles.copy()
 
     # convert the singles table to latex after converting the values to tex format
@@ -362,6 +365,7 @@ if __name__ == "__main__":
 
     # make a list of tuples with the two column lists
     splitcols = [("lit", lit_cols), ("der", der_cols)]
+
 
     # SPLIT TABLE IN TWO
 
