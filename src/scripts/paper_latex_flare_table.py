@@ -14,7 +14,7 @@ if __name__ == "__main__":
     flare_table = pd.read_csv(paths.data / "PAPER_flare_table.csv")
 
     # Sort the data by orbital phase
-    flare_table = flare_table.sort_values(by="orbital_phase", ascending=True)
+    flare_table = flare_table.sort_values(by="tstart", ascending=True)
 
     # Get ED with uncertainties in one expression
     flare_table[r"$ED$ [s]"] = flare_table.apply(lambda x: fr"${x.ED:.2f} \pm {x.ED_err:.2f}$",
