@@ -24,16 +24,40 @@
 % Main body with filler text
 \section{Introduction}
 \label{sec:intro}
-Star-planet system we have found so far are nothing like the Solar System.
+One of the most surprising results in exoplanet research is the diversity of star-planet system architectures. In particular, the past two decades revealed that planets can occur in orbits so close to their host star that they could be considered to live inside the stellar atmosphere. At this proximity, the planet exerts force, gravitational and magnetic, both short- and long-term, on its host -- a phenomenon unknown to the Solar System. The individual processes are typically subsumed under the term star-planet interactions that emphasizes that they are bidirectional, affecting both planet, and star. 
 
-What is SPI?
+Understanding short-term, magnetic star-planet interactions holds promise to provide important insights into the habitability of the entire system. Planets involved in such interactions can be viewed as in-situ probes of the system's space weather, and could prospectively reveal otherwise difficult to measure planetary properties such as the strength and extent of their magnetic fields.
 
-Why look for SPI? Use planets as probes stellar magnetic fields at a defined orbit, e.g., stellar wind conditions. SPI can only occur if the planet is orbiting within the Alfv\'en radius of the star for a sizable period of time. The Alfv\'en radius is the radius at which the stellar wind velocity, which increases with increasing distance from the star because of XXXX, exceed the Alfv\'en velocity of the magnetized plasma. Beyond this radius, this plasma is disconnected from the star. Alfv\'en waves cannot propagate back to the star because the wind is carrying the plasma away faster than these waves can travel.
+Magnetic star-planet interactions can only occur if the planet is orbiting within the Alfv\'en radius of the star longer than it takes for the effects of the planet to travel to the surface of the star. The Alfv\'en radius is the radius at which the stellar wind velocity, which increases with increasing distance from the star, exceed the Alfv\'en velocity of the magnetized plasma. Beyond this radius, this plasma is disconnected from the star. Alfv\'en waves set off by the planet within the magnetic field they cross cannot propagate back to the star if the wind carries the plasma away faster than these waves can travel. In the sub-Alfv\'enic regime, the wave can reach the star, and deposit its energy in some way. \citet{lanza2012starplanet, lanza2018closeby} and \citet{zarka2007plasma, saur2013magnetic} suggest different mechanisms for when and how the energy dissipation takes place, and how much energy can be transferred and dissipated at all. 
 
-Stretch and break
+One way of dissipating the energy in the magnetic field is through flares. 
+Flares are explosions in stellar atmospheres that occur in the stellar corona as a way to dissipate energy stored in the magnetic field by the motion of footpoints of coronal loops. They are strong and impulsive eruptions released by reconnection and subsequent relaxation of field lines~\citep{svestka1976solar,priest2002magnetic}. We can observe flares in nearly all electromagnetic bands -- from radio to X-ray~\citep{benz2010physical}. In contrast to solar flares, stellar flares often are extremely energetic, sometimes enhancing the stellar flux by orders of magnitude~\citep{maehara2012superflares, shibayama2013superflares, paudel2018k2}. But since they occur randomly in time, individual events can be hard to catch.
+
+In the 2010s, a wealth of flare observations from space missions like Kepler~\citep{borucki2010kepler} and K2~\citep{howell2014k2} have been catalogued~\citep{davenport2016kepler, paudel2018k2, ilin2021flares}. We now have access to long-term stellar monitoring data suitable for flare hunting. Currently, the Transiting Exoplanet Survey Satellite~\citep{ricker2015transiting} is rapidly expanding the treasury~\citep{gunther2020stellar}, which will grow even further after the launch of the PLATO mission in 2026~\citep{rauer2014plato}. As will become clear in the following paragraphs, the key advantage of these missions is their quasi uninterrupted monitoring of star-planet systems that covers all phases of their planets' orbits.
+
+The absolute power of flaring star-planet interactions is difficult to constrain, so we do not know how energetic planet-induced flares can be. The estimates of the maximum dissipated power~\citep{lanza2018closeby} are well within the regime of superflares typically observed by Kepler and TESS. However, on the one hand that power is an upper limit, so the observed energies might be lower. The planet might for instance be triggering flares prematurely, leading an overabundance of low energy flares~\citep{loyd2023flares}. On the other hand, the energy need not be dissipated continuously, particularly in the stretch-and-break mechanism, so it might be higher. We also do not know whether flares triggered by interactions with a companion would have different properties than intrinsic flares. We assume that, since they would be caused by magnetic reconnection triggered by the planet in the stellar corona, they should follow the same process as intrinsic flares. 
+
+Since planet-induced flares are not expected to look any different from intrinsic flares, and we do not know how their energies will be distributed, we require a method to distinguish them without referring to their individual properties. Instead, we can look at the statistical distribution of flares in time: 
+
+If we picture the magnetic field lines connecting the planet to the star in the sub-Alfv\'enic zone, we expect that the stellar footpoint of these lines will move along with the planet. Flares triggered by the planet will occur at a preferred orbital phase, namely whenever the footpoint is visible to the observer. Depending on the system's architecture and magnetic situation, i.e., the inclination of the rotation axis, the spin-orbit (mis-)alignment, and the extent and configuration of the large scale magnetic field -- the footpoint could be always in view, or never. In expectation, however, in star-planet systems with favorable architectures and magnetic field states, the footpoint visibility will be modulated in phase with the planetary orbit. The resulting phase preference of planet-induced flares introduces a deviation from a random distribution of flares. Space missions like Kepler and TESS provide light curves that cover all phases of the planet's orbit, so that phase-correlated planet-induced flares can be detected against a background of uncorrelated intrinsic flaring. 
+
+\citet{fischer2019timevariable} and \citet{howard2021evryflare}
+
+In this work, we searched for excess flaring in all available Kepler and TESS short cadence light curves of confirmed star-planet systems~(Section~\ref{sec:data}). We scoured the light curves for flares, and tested their observed phases for departures from a uniform distribution in phase with the innermost planet's orbit~(Section~\ref{sec:methods}). We present the catalog of all flares found in our sample of star-planet systems, and compare the test results with the expected power of interaction for each system~(Section~\ref{sec:results}). We discuss the results for the most interesting star-planet systems individually~(Section~\ref{sec:results:individualstars}, and take a look at the more general patterns emerging from our systematic analysis~(Section~\ref{sec:discussion}). Finally, we summarize our findings, and suggest future observations that could uncover the star-planet interaction mechanisms operating behind the observed trends~(Section~\ref{sec:summary}). 
 
 
-Alfven wing
+
+
+%Short intro to SaB mechanism
+
+%Short intro to AW mechanism
+
+% ----------------------------------------------------------------------------------
+
+% In both models, the radius of the perturbing body, and its proximity increase the power of interaction. Would it not be more reasonable to search for star-brown dwarf or star-star interactions? 
+
+% Flares caused by magnetic interactions in close binary systems were previously observed. Flares detected on the young eccentric binary system V 773 Tau could be attributed to colliding magnetospheres~\citep{massi2002periodic, massi2008interacting}, while other promising systems, like DQ Tau, another young equal-mass binary system in a strongly eccentric orbit, did not live up to the expectations~\citep{salter2008captured,salter2010recurring,getman2011young,getman2016search, kospal2018spots}. In these systems, it is, however, unclear whether it is mass transfer or reconnection that drive excess coronal emission and flares at periastron. Substellar objects can orbit the star much closer than a stellar companion without filling the Roche lobe. Gravitationally, a rocky planet can go unnoticed by its host even if it orbits at ultrashort periods of less than a day. 
+% Interactions in systems with brown dwarf companions are less likely than binary systems 
 
 
 
@@ -235,7 +259,9 @@ The Anderson-Darling test we use compares the measured distribution of orbital p
 
 \subsection{Flaring star-planet interaction signal}
 \label{sec:results:spi}
-We used the custom Anderson-Darling test introduced in  \citet{ilin2022searching} and Section~\ref{sec:methods:adtest} to look for flaring SPI in all systems with three or more flares with equivalent duration $ED>1\,$s, detected in their Kepler and TESS observations. Table~\ref{tab:maintable_der} lists the $p$-value results for each star-planet system. We do not find any $>3\sigma$ signal of star-planet interaction in our sample. However, overall, the significance of the deviation increases with higher expected power of interaction. 
+We used the custom Anderson-Darling test introduced in  \citet{ilin2022searching} and Section~\ref{sec:methods:adtest} to look for flaring SPI in all systems with three or more flares with equivalent duration $ED>1\,$s, detected in their Kepler and TESS observations. We choose the $ED$ cutoff to make sure that we are comparing similar flares regardless of spectral type, that is, flares with the same energy relative to stellar luminosity. We show the results that include all flares regardless of $ED$ in the appendix (XXXX TBD).
+
+Table~\ref{tab:maintable_der} lists the $p$-value results for each star-planet system. We do not find any $>3\sigma$ signal of star-planet interaction in our sample. However, overall, the significance of the deviation increases with higher expected power of interaction. 
 
 Figure~\ref{fig:adtest_bp} shows that in every scenario we considered (Alfv\'en wing or stretch-and-break mechanism, with or without planetary magnetic field), there are two branches. On one branch, the significance of the measured interaction is correlated with the expected power $P$. On the other branch, no interaction is measured regardless of the expected power $P$. 
 
@@ -295,7 +321,7 @@ The only single star system excluded is GJ 1061. The star is lacking a stellar r
 
 \subsubsection{Kepler-411}
 \label{sec:results:individualstars:kep411}
-Kepler-411 has 3 mag fainter companion~\cite{wang2014influence,ziegler2018measuring}, but we do not exclude it from the analysis. The system was observed in Kepler short cadence by \citet{jackman2021stellara} and both the planet host, and the companion star flare. \citet{jackman2021stellara} disentangle the contributions from each component on a pixel level. According to \citet{morton2016false, sun2019kepler411}, Kepler-411's planets orbit the primary companion. The fainter companion of Kepler-411 appears to cause the majority of flares (41), whereas the planet host causes only 7. Adopting the 7 flares from \cite{jackman2021stellara} in our analysis, we find that they all have equivalent duration $<1\,$s, which excludes Kepler-411 from our analysis.
+Kepler-411 has 3 mag fainter companion~\cite{wang2014influence,ziegler2018measuring}, but we do not exclude it from the analysis. The system was observed in Kepler short cadence by \citet{jackman2021stellara} and both the planet host, and the companion star flare. \citet{jackman2021stellara} disentangle the contributions from each component on a pixel level. According to \citet{morton2016false, sun2019kepler411}, Kepler-411's planets orbit the primary companion. The fainter companion of Kepler-411 appears to cause the majority of flares (41), whereas the planet host causes only 7. Adopting the 7 flares from \cite{jackman2021stellara} in our analysis, we find that they all have equivalent duration $<1\,$s, which excludes Kepler-411 from further analysis.
 
 \subsubsection{Proxima Cen}
 \label{sec:results:individualstars:proxima}
@@ -312,27 +338,25 @@ K2-25 is a multiplanet system around a fast rotating ($<2\,$d) mid-M dwarf in th
 
 In Figure~\ref{fig:adtest_bp}, TOI-540 clusters with K2-25 and AU Mic -- a fast rotating M dwarf with its innermost planet in a $1.24\,$d orbit~\citep{ment2021toi}. Compared to the other two systems, its innermost planet is not a Neptune, but a rocky planet slightly smaller than Earth~\citep{ment2021toi}. It is a relatively smaller obstacle in the host's magnetic field, yet the interaction is expected to be of a similar magnitude due to the strongest inferred magnetic field and closest orbit among the three systems. 
 
-In the scenario wherein the stretch-and-break mechanism drives the interaction, the three system cluster together most distinctly. In this scenario, most, but not all systems that do not show elevated interaction, have a weaker magnetic field~(top row in Figure\ref{fig:adtest_bp}). An excep
+In the scenario wherein the stretch-and-break mechanism drives the interaction, the three system cluster together most distinctly. In this scenario, all systems that do not show elevated interaction, have a weaker magnetic field below $2000\,$G~(top row in Figure\ref{fig:adtest_bp}). In the Alfv\'en wing scenario~(bottom row in Figure\ref{fig:adtest_bp}), the distinction is less clear, and systems with strong fields and similar expected power of interaction do not show any excess flaring. In both cases, the absence of interaction could be due to the Alfv\'en radius being within the planetary orbit (note that the scaling laws assume that the planet is sub-Alfv\'enic, but make no statement about it). All else equal, this is more likely if the stellar magnetic field strength is weaker. Another explanation is the possible intermittency, or 'on-off nature' of the interaction~\citep{shkolnik2008nature}, which may be at play here, but particularly in cases where the expected power is very strong, such as in the comparison between HIP 67522 and TAP 26 that we address in the following Section.
+
 \subsubsection{HIP 67522}
 \label{sec:results:individualstars:hip67522}
-HIP 67522 has one of the strongest expected SPI signals in our sample, and shows the clearest signs of flaring SPI, albeit with only 6 flares in the sample. These flares are distributed across two Sectors in TESS. In Sector 11, two flares occur at orbital phases $\sim 0.6$ and $\sim 0.8$. Two years later, in Sector 38, four flares occur, but this time, all of them take place at orbital phases $0.00-0.05$, that is, up to a few hours after transit.
+HIP 67522 has one of the strongest expected SPI signals in our sample, and shows the clearest sign of flaring SPI at $>2\sigma$ level, albeit with only 6 flares in the sample. These flares are distributed across two Sectors in TESS. In Sector 11, two flares occur at orbital phases $\sim 0.6$ and $\sim 0.8$. Two years later, in Sector 38, four flares occur, but this time, all of them take place at orbital phases $0.00-0.05$, that is, up to a few hours after transit.
 
-HIP 67522 is young Sun, currently contracting onto the main sequence. It is a Sco-Cen member (10-20 Myr old), which was discovered to host a close-in Jupiter, HIP 67522 b, in 2020~\citep{rizzuto2020tess}. It was found with low obliquity, consistent with XXXX~\citep{heitzmann2021obliquity}. Tentative third planet transiting.
+HIP 67522 is a young Sun, currently contracting onto the main sequence. It is a Sco-Cen member (10-20 Myr old), which was discovered to host a close-in Jupiter, HIP 67522 b, in 2020~\citep{rizzuto2020tess}. Curiously, the planet is in close spin-orbit commensurability -- $P_{rot}/P_{orb}=5/1$, closer than any other system in our sample. Therefore, we cannot completely rule out that the observed periodicity is in fact a rotational periodicity, and not related to the planet. However, if we calculate the $p$-value of AD test using the rotational period instead of the orbital period, we find HIP 67522 consistent with uniform flaring in time within $1\sigma$. Fortunately, HIP 67522 will be observed again with TESS in April 2023, which may resolve the puzzle.
 
-HIP 67522 is in close spin-orbit commensurability -- $P_{rot}/P_{orb}=5/1$. The system's $a/R_*\approx11.7$, eccentricity below .25~\cite{rizzuto2020tess}, so that  
-
-\cite{wood2021characterizing} rule out stellar companions for HIP 67522 based on RV, high-resolution imaging, and Gaia data.
-
-HIP 67522 will be observed again with TESS in spring 2023.
+%It was found with low obliquity, consistent with XXXX~\citep{heitzmann2021obliquity}. Tentative third planet transiting.
+%The system's $a/R_*\approx11.7$, eccentricity below .25~\cite{rizzuto2020tess}, so that  
+ %\cite{wood2021characterizing} rule out stellar companions for HIP 67522 based on RV, high-resolution imaging, and Gaia data.
 
 \subsubsection{TAP 26}
 \label{sec:results:individualstars:tap26}
+TAP 26 is a weak-line T-Tauri star with a strong magnetic field~\citep{yu2017hot}. \citet{lanza2018closeby} estimate that the system can release more energy in magnetic star-planet interaction than other  systems with Hot Jupiters, such as HD 179949, that has previously been detected with chromospheric variability in phase with the planet's orbit~\citep{shkolnik2008nature}. However, for TAP 26 b, the orbital period might is not well-constrained. \citet{yu2017hot} apply several methods to derive $P_{orb}$ from the radial velocity data: While the $10.8\,$d orbit we adopted is the most likely according to \citet{yu2017hot}, a $9.0\,$d orbit is also likely, and some of their applied methods favored a $13.4\,$d period. The absence of interaction could hence be a consequence of uncertain orbital period. However, intermittent interactions and the viewing geometry of TAP 26 could also explain the absence of phase-correlated flaring~(see Sections~\ref{sec:discussion:intermittency} and \ref{sec:discussion:viewing}).
 
 \subsubsection{KOI-12}
 \label{sec:results:individualstars:koi12}
-
-
-
+KOI-12, also known as Kepler-448, is a young two-planet system with an eccentric outer planet KOI-12 c, and an inner Hot Jupiter planet KOI-12 b in a $17.8\,$d orbit~\citep{masuda2017eccentric}. With respect to rotation rate, stellar and planetary radius, the KOI-12/KOI-12 b system is similar to HIP~67522 and TAP~26 (although for the those young stars the radii are large because the stars are still contracting onto the main sequence). Yet, despite its high expected power of interaction, we detect no excess flaring in phase with KOI-12 b. Here, the reason could be that KOI-12 b is in fact super-Alfv\'enic due to the relatively wide orbit compared to TAP 26 and HIP 67522. Intermittent interaction might play a role here as well, and could be favored if future observations capture episodes during which the interaction is 'on'.
 
 
 
@@ -343,29 +367,62 @@ HIP 67522 will be observed again with TESS in spring 2023.
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{Similar work that puts ours in context}
+\subsection{Rotational and synodic variability}
+\citet{fischer2019timevariable} argue that the synodic period, at which the sub-planetary point crosses the same (magnetic) surface element on the star, may result in a clearer interaction signal, because a magnetically active region that is prone to planet-induced flares, will be passed only once per period. However, this assumes that the landscape of active regions on the star is stable throughout the entire observing time, and that the number of such regions in the footpoint passageway is low enough to produce a periodic modulation. 
 
-Any indication of flaring SPI anywhere else? Any reason to think there should be any?
-Why does HIP 67522 stick out so much? -- spin-orbit alignment
+In our sample, the observing baseline is multiple years long for many systems. Even the most rigidly rotating late M dwarfs show variability in their spot modulation on such long timescales. Even if differential rotation was absent and active regions were extremely stable, we will not be able to observe the passage of the sub-planetary point over the flare-prone region every synodic period. For a fraction of the time, this will happen on the back of the star relative to the observer. The true period will therefore be additionally modulated by the visibility, resulting in an intermittency of the signal. As a consequence, to detect a modulation with the synodic period, a significantly longer observing baseline is needed than to detect a modulation with the orbital period. Additionally, if there are multiple active regions that produce flares when the sub-planetary footpoint passes across, the effect with the synodic period is further diluted. 
 
-\subsection{Rotational variability}
-Hard to measure, because it de-phases much faster than orbital variability due to differential rotation and spot evolution. We could use single light curves within which coherence is given...
+In summary: Even for the few stars, for which the rotational period is known precisely enough~(see Fig.~\ref{fig:coherence_hist}), we need to make assumptions about the number of active regions crossed by the footpoint of interaction, differential rotation, spot evolution, and a significant correlation between the location of the planet and the location of the planet-induced flare on the stellar surface. For modulation with the orbital period, we require only that last correlation between footpoint location and orbital phase. Any realistic number of active regions (one or more), a wide range of degrees of differential rotation (from rigid rotator to solar-type), and half-life duration of active regions (day to years) are acceptable, because the observed effect depends predominantly on the visibility of the footpoint, which is governed by orbital motion. And except for extreme circumstances, the latter will be much more stable over long periods of time than the intrinsically dynamic magnetic field configuration. 
 
 \subsection{Intermittency}
 \label{sec:discussion:intermittency}
-TAP 26 vs. HIP 67522, also different sectors for HIP 67522, see \cite{shkolnik2008nature}
+Magnetic star-planet interactions in a given system may sometimes be turned off for episodes of time, and turned on for others. HD 179949 is the prototype example, wherein the orbital modulation of chromospheric indicators was observable for XXXX out of XXXXX epochs~\citep{shkolnik2003evidence,shkolnik2008nature}. It is not clear how long a continuous epoch of interaction or non-interaction might be. This leaves room for many different explanations. Long-term monitoring is needed to investigate the reasons for the temporary cessation of interaction. Candidate mechanisms include: The Alfv\'en radius moving in- and outside the planet's orbit, either over the course of an activity cycle, or through short-term variations in the magnetic field and wind properties caused by, e.g., coronal mass ejections; visibility of the interacting footpoint changing as the magnetic field evolves; the active latitude moving away from the magnetic footpoints passageway, the available magnetic energy decreasing such that the flares or other magnetic interaction indicators still occur but fall below the detection threshold for a period of time.
 
-\subsection{Spin-orbit alignment}
-nother relevant factor is the geometry of the system. If we assume that the magnetic dipole axis and the rotation axis of the star are relatively well-aligned, the spin-orbit alignment may have an influence on interaction strength. 
+If the magnetic field of the planet changes or disappears, this might also reduce the intensity of interaction below the detection threshold.
+
+The location of active regions within the passageway of the magnetic footpoints may be such that the interaction occurs only when the region faces away from the observer. This could span multiple orbits of the planet, particularly when the surface is populated by few stable active regions, and the orbital and rotational periods are similar. The flip-flop behavior of active longitudes could then cause a relatively sudden quenching of interaction by moving the interacting region out of view for a period of time. 
+
+In our results in Fig.~\ref{fig:adtest_bp}, we can interpret the two branches emerging at high expected power of interaction as due to the intermittency of the phenomenon. TAP 26 and KOI-12 do not show any sign of excess flaring in our data, despite similar expected powers as in HIP 67522 with its $>2\sigma$ signal. In Sections~\ref{sec:results:individualstars:tap26} and \ref{sec:results:individualstars:koi12}, the absence of interaction in TAP 26 and KOI-12 could be explained by an uncertainty in orbital period that smears out the signal, and a super-Alfv\'enic orbit, respectively. Yet intermittency cannot be ruled out. The case HIP 67522 may be more informative. In our data, we combine the observation from two TESS Sectors that are almost 2 years apart. The four phase-correlated flares all occur in the later Sector, while the earlier one contains only two flares, both of them at orbital phases different from each other and the four phase-aligned flares. This can be interpreted as a tentative sign of intermittency of flaring star-planet interactions in this system. 
+
+\subsection{Viewing geometry}
+\label{sec:discussion:viewing}
+The visibility of the magnetic interaction footpoint is crucial for the detection of flaring star-planet interactions in our analysis. The viewing geometry of the star-planet system is therefore important to consider. Assuming for the sake of the argument that the sub-planetary point is close to the magnetic interaction footpoint in longitude, two factors will determine whether the footpoint's visibility will be modulated with the planetary orbit or not: the orbital inclination and the footpoint's latitude relative to it. If the footpoint's latitude is low, i.e., close to the orbital plane, the orbital plane can be inclined to a high degree, and the footpoint will still periodically move in and out of view. However, if the footpoint's latitude is high, we need to observe the star-planet system nearly edge-on to be able to measure a modulation of activity with the planet's orbital phase. The latter can be the case when the dipole axis of the stellar large scale field is well-aligned with the orbital axis. In that case, assuming the dipole field dominates at the distance of the planet, the footpoint will be close to the pole, similar to the hot spot created by Io and the other moons in the polar cap of Jupiter. In this scenario, many non-transiting systems may experience flaring star-planet interaction, but those would not show up as correlation of flare timing with the orbital phase in our data.
+
+Most of our systems are transiting, and for those we can expect this scenario to be a minor problem. Of the systems that have high expected power but do not show any, only TAP 26 is a planet detected in radial velocity, and is expected to have a relatively high orbital inclination of about $55\pm10$ deg inferred from Zeeman Doppler measurements~\citep{yu2017hot}. The ZD map reveals magnetic field concentrations close to the rotational pole. If the orbital plane is aligned with the stellar rotation axis, the absence of phase-correlated flaring in TAP 26 could be explained by the footpoint of interaction being always in view and therefore never modulated.
+
+\subsection{(Mis-)alignment between orbital, rotational and stellar magnetic axis}
+\label{sec:discussion:misalignment}
+Another relevant factor is the geometry of the system. If we assume that the magnetic dipole axis and the rotation axis of the star are relatively well-aligned, the spin-orbit alignment may have an influence on interaction strength. 
 
 
 or more broadly system architecture including misalignment of the magnetic axis. See HAT-P-11, or instance, and the many polar orbits in \cite{bourrier2023dream}
 
 \cite{miskovetz2022resolving}  found background stars that were not co-moving HAT-P-11. HAT-P-11 rotates nearly pole-on, and HAT-P-11 b is transiting in a near-polar orbit~\citep{bourrier2023dream}. This may be the reason for absent SPI.
+
+HD 179949 has a strong misalignment of about 70 deg between rotational and magnetic axis. Time-resolved X-ray observations~\citep{acharya2022xray} suggest that the magnetic interaction footpoint is close to the stellar rotational pole, which would be close to the magnetic equator of the strongly dipolar field of HD 179949
+
+
 \subsection{Eccentricity}
-The star-planet systems in this work do not have notably eccentric orbits.
+If the planetary orbit is highly eccentric, the difference between the semi-major and semi-minor axis can be significantly larger than the variability of the Alfv\'en radius. If then apoastron is outside this radius, and periastron within, the planet may find itself in the sub-Alfv\'enic zone only for a short amount of time, namely during the planet's rapid periastron passage. This was exploited in magnetic star-star interaction~(XXXX), and also star-planet interaction~(XXXX). In our sample, the estimates for eccentricities of the innermost planets are all moderate to low, with $e<XXXX$. There are therefore no planets where we would expect a strongly preferred orbital phase for interaction. 
+
+\subsection{Spin-orbit commensurability}
+\begin{figure}[ht!]
+    \script{paper_spin_orbit_commensurability.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_spin_orbit_commensurable.png}
+        \caption{
+           caption
+        }
+        \label{fig:spinorbit}
+    \end{centering}
+\end{figure}
+
+\subsection{Tidal or magnetic interaction?}
+
+The tight spin-orbit commensurability in some systems may give rise to spots on the star that rotate with the commensurable period~\citep{lanza2022model, lanza2022tidal}. HIP 67522 is in very close 1:5 spin-orbit commensurability with HIP 67522 b. It is possible that the periodicity seen with the orbital period in our flare data is an effect of tidally created spots that happen to produce flares.
 
 \section{Summary and Conclusions}
+\label{sec:summary}
 
 \bibliography{bib}
 
