@@ -6,7 +6,7 @@
 \begin{document}
 
 % Title
-\title{Searching for flaring star-planet interactions in star-planet systems in Kepler and TESS}
+\title{Flaring star-planet interactions in star-planet systems in Kepler and TESS}
 
 % Author list
 \author{Ekaterina Ilin}
@@ -14,11 +14,11 @@
 
 % Abstract with filler text
 \begin{abstract}
-    Star-planet system we have found so far are nothing like the Solar System. Many stars host planets in orbits much closer than Mercury, where it takes them mere days to complete a full revolution. In some of these systems, the planets are so close that they plow through the extended magnetosphere of the star, and are expected to trigger flares on their surfaces. So far, however, these flaring star-planet interactions escape our detection methods. If found, the planets and the flare they cause become localized probes of the parts of the stellar magnetosphere that extends from the location of one to the other. A measurement of these interactions constrains mass loss from the star, and potentially also the magnetic field of the planet. 
+    Star-planet system we have found so far are nothing like the Solar System. Many stars host planets in orbits much closer than Mercury, where it takes them mere days or even hours to complete a full revolution. In some of these systems, the planets are so close that they plow through the extended magnetosphere of the star, and are expected to trigger flares on their surfaces. So far, however, these flaring star-planet interactions escape our detection methods. If found, the planets and the flare they cause become localized probes of the parts of the stellar magnetosphere that extends from the location of one to the other. A measurement of these interactions constrains mass loss from the star, and potentially also the magnetic field of the planet. 
 
     In this work, we searched star-planet systems observed by Kepler and TESS for flaring star-planet interactions. We compiled a catalog of all flaring star-planet systems known to date, and characterized the detected flares detected. We then searched for flares in excess of the intrinsic flaring of the star, i.e., flares triggered by the interaction with the planet in phase with its orbit. 
 
-    We find XXXX star-planet systems with > XXXX flares. For XXXX of them, we can calculate the expected amplitude of interaction based on the system's magnetic field strength, orbital parameters, rotation and planet radius. We find that the trend of higher interaction signal agrees with the expected strength, but also shows signs of intermittency, both for individual systems, and in comparison between ones with similar expected amplitude. HIP 67522, a 17 Myr young Sun with a Jupiter in a 9 day orbit, shows both one of the highest expected and the highest measured interaction amplitudes, albeit only at the $2.5\sigma$ level. 
+    We find XXXX star-planet systems with > XXXX flares. For XXXX of them, we can quantify both the intensity of excess flaring, and the expected amplitude of interaction based on the system's magnetic field strength, orbital parameters, rotation and planet radius. Most systems are neither expected to show interactions, nor do they show any excess flaring. Among those systems that have high expected power of interaction, we see two branches. An inactive one, where no signs of excess flaring appear, and an active one %We find that the trend of higher interaction signal agrees with the expected strength, but also shows signs of intermittency, both for individual systems, and in comparison between ones with similar expected amplitude. HIP 67522, a 17 Myr young Sun with a Jupiter in a 9 day orbit, shows both one of the highest expected and the highest measured interaction amplitudes, albeit only at the $2.5\sigma$ level. 
 \end{abstract}
 
 % Main body with filler text
@@ -336,6 +336,8 @@ For a detailed discussion of AU Mic and its flaring star-planet interaction, we 
  
 K2-25 is a multiplanet system around a fast rotating ($<2\,$d) mid-M dwarf in the Hyades open cluster, that is, 600-800 Myr old~\citep{stefansson2020habitable}. Both the expected power of interaction, and the measured deviation, are remarkably similar to the AU Mic system. Moreover, K2-25 b is in a presumably similar environment to GJ 436 b, but does not show the atmospheric escape in Ly$\alpha$ that the latter famously exhibits~\citep{rockcliffe2021lya}. This might at least in part be due to the stellar wind conditions around K2-25 b. Further investigation of magnetic star-planet interactions, flaring or otherwise, in this system could add an important constraint on K2-25's wind properties by clarifying whether the planet orbits in- or outside the Alfv\'en radius.
 
+K2-25 is eccentric, see Eike Günther?
+
 In Figure~\ref{fig:adtest_bp}, TOI-540 clusters with K2-25 and AU Mic -- a fast rotating M dwarf with its innermost planet in a $1.24\,$d orbit~\citep{ment2021toi}. Compared to the other two systems, its innermost planet is not a Neptune, but a rocky planet slightly smaller than Earth~\citep{ment2021toi}. It is a relatively smaller obstacle in the host's magnetic field, yet the interaction is expected to be of a similar magnitude due to the strongest inferred magnetic field and closest orbit among the three systems. 
 
 In the scenario wherein the stretch-and-break mechanism drives the interaction, the three system cluster together most distinctly. In this scenario, all systems that do not show elevated interaction, have a weaker magnetic field below $2000\,$G~(top row in Figure\ref{fig:adtest_bp}). In the Alfv\'en wing scenario~(bottom row in Figure\ref{fig:adtest_bp}), the distinction is less clear, and systems with strong fields and similar expected power of interaction do not show any excess flaring. In both cases, the absence of interaction could be due to the Alfv\'en radius being within the planetary orbit (note that the scaling laws assume that the planet is sub-Alfv\'enic, but make no statement about it). All else equal, this is more likely if the stellar magnetic field strength is weaker. Another explanation is the possible intermittency, or 'on-off nature' of the interaction~\citep{shkolnik2008nature}, which may be at play here, but particularly in cases where the expected power is very strong, such as in the comparison between HIP 67522 and TAP 26 that we address in the following Section.
@@ -366,8 +368,15 @@ KOI-12, also known as Kepler-448, is a young two-planet system with an eccentric
 
 \section{Discussion}
 \label{sec:discussion}
+Eccentricity is almost controlled for in our sample~(Section~\ref{sec:discussion:eccentricity}), while rotation is not well enough constrained to investigate the presence of flaring modulation with $P_{rot}$, or the synodic period~(Section~\ref{sec:discussion:rotsyn}). In the remainder of the discussion, we lay out different reasons for the emerging shape of the distribution in our results in Fig.~\ref{fig:adtest_bp}, in particular the inactive and active branches at high expected power of interaction. We begin with the possible intermittency of the interaction that could be caused by the planet regularly moving in and out of the sub-Alfv\'enic zone for extended periods of time~(Section~\ref{sec:discussion:intermittency}). In Section~\ref{sec:discussion:viewing}, we suggest that the absence of interaction at high expected power could be due to unfavorable viewing geometry of the system, e.g., a face-on orbital plane. In Section~\ref{sec:discussion:misalignment}, we discuss whether (mis-)alignment between spin, orbit and magnetic dipole can increase or decrease the chances of flaring star-planet interaction. In Section~\ref{sec:discussion:commensurability}, we note that systems on the inactive branch are further away from spin-orbit commensurability than stars on the active branch. This leads us to conjecture a possible influence of tidal interactions on the occurrence of orbital phase correlated flaring. We conclude our discussion by following this line of reasoning, and consider ways to disentangle tidal from magnetic interactions~(Section~\ref{sec:discussion:tidalmagnetic}).
+
+\subsection{Eccentricity}
+\label{sec:discussion:eccentricity}
+If the planetary orbit is highly eccentric, the difference between the semi-major and semi-minor axis can be significantly larger than the variability of the Alfv\'en radius. If then apoastron is outside this radius, and periastron within, the planet may find itself in the sub-Alfv\'enic zone only for a short amount of time, namely during the planet's rapid periastron passage. This was exploited in magnetic star-star interaction~(XXXX), and also star-planet interaction~(XXXX). In our sample, the estimates for eccentricities of the innermost planets are all moderate to low, with $e<XXXX$. The exception is K2-25, with a moderate $e=0.45$, which may contribute to the increased contrast of excess flares. All else equal, closer proximity increases the strength of interaction. Perhaps, K2-25 even moves in and out of the sub-Alfv\'enic zone between periastron and apoastron, turning interaction on and off every single orbit. Otherwise, there are therefore no planets where we would expect a strongly preferred orbital phase for interaction. 
+
 
 \subsection{Rotational and synodic variability}
+\label{sec:discussion:rotsyn}
 \citet{fischer2019timevariable} argue that the synodic period, at which the sub-planetary point crosses the same (magnetic) surface element on the star, may result in a clearer interaction signal, because a magnetically active region that is prone to planet-induced flares, will be passed only once per period. However, this assumes that the landscape of active regions on the star is stable throughout the entire observing time, and that the number of such regions in the footpoint passageway is low enough to produce a periodic modulation. 
 
 In our sample, the observing baseline is multiple years long for many systems. Even the most rigidly rotating late M dwarfs show variability in their spot modulation on such long timescales. Even if differential rotation was absent and active regions were extremely stable, we will not be able to observe the passage of the sub-planetary point over the flare-prone region every synodic period. For a fraction of the time, this will happen on the back of the star relative to the observer. The true period will therefore be additionally modulated by the visibility, resulting in an intermittency of the signal. As a consequence, to detect a modulation with the synodic period, a significantly longer observing baseline is needed than to detect a modulation with the orbital period. Additionally, if there are multiple active regions that produce flares when the sub-planetary footpoint passes across, the effect with the synodic period is further diluted. 
@@ -402,24 +411,57 @@ or more broadly system architecture including misalignment of the magnetic axis.
 HD 179949 has a strong misalignment of about 70 deg between rotational and magnetic axis. Time-resolved X-ray observations~\citep{acharya2022xray} suggest that the magnetic interaction footpoint is close to the stellar rotational pole, which would be close to the magnetic equator of the strongly dipolar field of HD 179949
 
 
-\subsection{Eccentricity}
-If the planetary orbit is highly eccentric, the difference between the semi-major and semi-minor axis can be significantly larger than the variability of the Alfv\'en radius. If then apoastron is outside this radius, and periastron within, the planet may find itself in the sub-Alfv\'enic zone only for a short amount of time, namely during the planet's rapid periastron passage. This was exploited in magnetic star-star interaction~(XXXX), and also star-planet interaction~(XXXX). In our sample, the estimates for eccentricities of the innermost planets are all moderate to low, with $e<XXXX$. There are therefore no planets where we would expect a strongly preferred orbital phase for interaction. 
 
 \subsection{Spin-orbit commensurability}
-\begin{figure}[ht!]
+\label{sec:discussion:commensurability}
+In Fig.~\ref{fig:spinorbit}, we split our sample into three categories. The first contains the systems where the expected interaction is lower than that in TOI-540. The second includes the systems where a high power of interaction is expected, but none is measured (e.g., TAP 26, KOI-12). The final third category contains all system where the data suggest a correlation between expected power of interaction and measured flaring star-planet interaction signal (e.g., HIP 67522, AU Mic). We search for spin-orbit commensurability with integers $<10$ in each system, and plot the relative difference between the closest ratio and the actual spin-orbit ratio. Systems with low expected power of interaction span both very close spin-orbit commensurability to none. 
+Systems with high expected power are divided: Stars that show a correlation between excess flaring and expected power tend to have closer spin-orbit commensurability than systems that are far away from any low-integer ratio between rotational and orbital period.
+
+While chance alignment is possible, the division invokes the idea that spin-orbit commensurability and magnetic star-planet interaction are related. Either something about our observing method favors the measurement of excess flaring in systems with close spin-orbit commensurability, or there is physical causation at play. In the latter case, the spin-orbit commensurability could be either an effect, or a cause, of measured magnetic star-planet interaction.
+
+Our method favors systems in which the deviation from uniform flare timing is concentrated in a narrow phase bracket of the planet's orbit. This might be the case in HIP 67522. Due to its low-order, 5:1 resonance, the sub-planetary point passes the same magnetic features at the same orbital phase each orbit. This is no longer the case for m:n ratios, where $n>1$. In those systems, the same surface feature is passed by the sub-planetary point at the same orbital phase every $m \cdot n$ orbits, if $m>n$ (which is true for all our systems with high expected power of interaction). For HIP 67522, the interaction signal may therefore be more strongly confined to certain orbital phases, while for systems with less and less commensurability, this effect dilutes. 
+
+There could also be physical reasons for increased flaring interaction-in systems with close spin-orbit commensurability.  \citet{lanza2022model} suggest that tidal torque of the planet on the star excites resonant oscillations in the interior stellar magnetic field, which in turn leads to a resonance between stellar spin and planetary orbit. These oscillations can lead to a surface pattern of emerging magnetic field that rotates with the spin-orbit commensurable period. This can explain the clearer interaction signal in the systems with spin-orbit resonance, because it would stabilize the pattern of regions with strong magnetic field that favor planet-induced flaring, and thereby counterbalance the diluting effect of differential rotation. This model requires tidal interaction, which may be too weak in systems like AU Mic, where the planet is too small and distant for the proposed effect~\citet{lanza2022model}, but that still show spin-orbit commensurability and signs of flaring star-planet interaction. 
+However, for systems with $m=1$, like HIP~67522, or $\tau$ Boo~\citep[which is not in our sample]{walker2008nature, cauley2019magnetic}, this model would directly favor active regions that rotate with the orbital period instead of the rotational one.
+
+While in~\citet{lanza2022model}, resonant oscillations favor flaring star-planet interaction observability, there might also be physical effects where the magnetic torque causes the spin-orbit resonance in the first place. The connection here is: Where there is strong enough magnetic torque to cause spin-orbit resonance, there would also be flaring star-planet interaction. 
+
+\citet{szabo2021changing} note that many systems within the sparsely populated region of close-in planets around rapid rotators~\citep{mcquillan2013stellar} seem close to low-integer spin-orbit resonance. The systems with consistently high expected power of interaction (TAP 26, TOI-540, KOI-12, HIP 67522, K2-25, and AU Mic) are all found within that region, even if KOI-12 and AU Mic lie rather close to its edge. Of these six systems, those that show signs of star-planet interaction, are also in close-spin orbit resonance. We may speculate, that at least some of the mechanisms that explain the dearth of close-in planets around rapidly rotating stars also explain the presence of star-planet magnetic interaction in those systems that are still found there. One may think that planets that remain in the desert are held there by being trapped in the resonance, while for the others, the magnetic torque cause rapid migration out of this region.
+
+
+\begin{figure}[t]
     \script{paper_spin_orbit_commensurability.py}
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/PAPER_spin_orbit_commensurable.png}
         \caption{
-           caption
+           Spin-orbit commensurability compared to flaring star-planet interaction signal. The lower the p-value of the AD test, the stronger the interaction signal. Lower relative difference between the measured spin-orbit ratio and the integer ratio closest to it indicates a tighter spin-orbit commensurability. We include only ratios of integers $<10$. \textbf{Black diamonds:} All systems with p-values lower than that of K2-25, and expected power of interaction equal or higher than TOI-540's, the active 'SPI on' branch~(see top left panel in Fig.~\ref{fig:adtest_bp}). \textbf{Red crosses:} The complementary 'SPI off' branch includes all systems with expected power of interaction above that of TOI-540, but with p-values below that of K2-25. \textbf{Blue circles:} The remaining systems include all with expected power of interaction below that of TOI-540. Among the systems with high expected power, those with higher interaction signal ('SPI on') show closer spin-orbit commensurability than those on the inactive 'SPI off' branch.
         }
         \label{fig:spinorbit}
     \end{centering}
 \end{figure}
 
 \subsection{Tidal or magnetic interaction?}
+\label{sec:discussion:tidalmagnetic}
+The tight spin-orbit commensurability in some systems may give rise to spots on the star that rotate with the commensurable period~\citep{lanza2022model}. HIP~67522 is in very close 5:1 spin-orbit commensurability with HIP~67522~b. It is possible that the periodicity seen with the orbital period in our flare data is an effect of such tidally created spots that happen to produce flares. On the other hand, magnetic interactions, wherein the direct perturbation of stellar field by the planetary obstacle cannot be ruled out~\citep{lanza2018closeby, saur2013magnetic}.
 
-The tight spin-orbit commensurability in some systems may give rise to spots on the star that rotate with the commensurable period~\citep{lanza2022model, lanza2022tidal}. HIP 67522 is in very close 1:5 spin-orbit commensurability with HIP 67522 b. It is possible that the periodicity seen with the orbital period in our flare data is an effect of tidally created spots that happen to produce flares.
+Both mechanisms may play a role, but to understand their respective contribution, we require approaches that can unambiguously discriminate between the two.
+
+
+While suggestive, our data are statistically insufficient to conclude whether the flaring interaction is driven only by magnetic interaction, or whether tidal effects, and more specifically spin-orbit resonances, play a role. Further monitoring of the systems in our sample will clarify whether the interaction is statistically significant for individual systems, whether the branching is caused by intrinsic intermittency of the effect. If the branching persists over time, and systems do not switch from the inactive to the active branch or vice versa, the distinction may be due to tidal effects.
+
+Another possibility is that the branching disappears in favor of a continuous distribution. This would put in question the on-off nature of magnetic interactions.
+
+Another hint is the onset of the branching. If it persists in a larger sample, it may mark the transition of star-planet systems from the super- to the sub-Alfv\'enic regime. If it disappears in favor of a more continuous distribution, tidal effects are favored because their intensity has no such threshold at a particular radius, but increases continuously with decreasing semi-major axis and increasing companion mass.
+
+
+
+Ways to investigate which mechanisms play a role using flaring:
+
+Search for flaring star-planet interactions in rapidly rotating fully convective stars with close-in planets or brown dwarfs. There are very few such systems, TOI-540 among them. These systems have only negligible differential rotation so that the rotation period of surface features can be precisely known. In those cases, we may figure out whether interaction occurs with the synodic period.
+
+Search for ECMI emission in radio from systems that have high expected power of interaction. If periodic radio emission is seen predominantly in the systems that also show flaring star-planet interactions, magnetic interaction is relevant because coherent radio emission stems from large scale fields, and not from resonantly emerging patterns of active regions as suggested by~\citet{lanza2022model}.
+
+spetral type dependence of tidal interaction
 
 \section{Summary and Conclusions}
 \label{sec:summary}

@@ -131,12 +131,12 @@ if __name__ == "__main__":
 
 
     # Make plot
-    plt.figure(figsize=(7,5.5))
+    plt.figure(figsize=(8,5.5))
 
     # plot each group
     for marker, group in df.groupby("marker"):
         plt.scatter(group["ratio_error"], group["mean"],
-                    color=group["color"], alpha=1., marker=marker)
+                    color=group["color"], alpha=1., marker=marker, s=60)
 
     # define legend
     valuelegend = [Line2D([0], [0], marker='o', color='w',
@@ -148,8 +148,8 @@ if __name__ == "__main__":
 
     # define legend labels
     valuelabels = [ r"low expected power",
-                        r"high expected power / SPI off",
-                        r"high expected power / SPI on"]
+                    r"high expected power / SPI off",
+                    r"high expected power / SPI on"]
 
     # annotate points with high expected power and SPI on
     for i, row in df.iterrows():
@@ -158,11 +158,13 @@ if __name__ == "__main__":
                         (row.ratio_error*1.1, row["mean"]*.95))
 
     # plot legend
-    plt.legend(valuelegend, valuelabels, loc=4, fontsize=12, frameon=False)
+    plt.legend(valuelegend, valuelabels, loc=4, fontsize=14, frameon=False)
 
     # label axes
-    plt.xlabel("relative difference to closest spin-orbit commensurable ratio")
-    plt.ylabel(r"$p$-value of AD test")
+    plt.xlabel("relative difference to closest spin-orbit commensurable ratio",
+               fontsize=14)
+    plt.ylabel(r"$p$-value of AD test",
+               fontsize=14)
 
     # set log scale
     plt.xscale("log")
@@ -171,3 +173,49 @@ if __name__ == "__main__":
     # save figure to figures folder
     plt.tight_layout()
     plt.savefig(paths.figures / "PAPER_spin_orbit_commensurable.png", dpi=300)
+
+
+    # Corresponding AD test vs. SPI plot
+
+    # Make plot
+    plt.figure(figsize=(8,5.5))
+
+    # plot each group
+    for marker, group in df.groupby("marker"):
+        plt.errorbar(group["p_spi_sb_bp1_norm"], group["mean"], yerr=group["std"],
+                     xerr=[group["p_spi_sb_bp1_norm"]-group["p_spi_sb_bp1_norm_low"],
+                           group["p_spi_sb_bp1_norm_high"] - group["p_spi_sb_bp1_norm"]],
+                    color=group["color"].values[0], alpha=1., fmt=marker )
+
+    # define legend
+    valuelegend = [Line2D([0], [0], marker='o', color='w',
+                    markerfacecolor='b', markersize=10),
+                    Line2D([0], [0], marker='X', color='w',
+                    markerfacecolor='red', markersize=10),
+                    Line2D([0], [0], marker='d', color='w',
+                    markerfacecolor='black', markersize=10),]
+
+    # # define legend labels
+    valuelabels = [ r"low expected power",
+                    r"high expected power / SPI off",
+                    r"high expected power / SPI on"]
+
+    # annotate points with high expected power and SPI on
+
+
+    # plot legend
+    plt.legend(valuelegend, valuelabels, loc=3, fontsize=14, frameon=False)
+
+    # label axes
+    plt.xlabel("$\sim$ expected power of magnetic star-planet interactions",
+               fontsize=14)
+    plt.ylabel(r"$p$-value of AD test",
+               fontsize=14)
+
+    # set log scale
+    plt.xscale("log")
+    plt.yscale("log")
+
+    # save figure to figures folder
+    plt.tight_layout()
+    plt.savefig(paths.figures / "TALK_spin_orbit_commensurable_marked_adtest_vs_spi.png", dpi=300)

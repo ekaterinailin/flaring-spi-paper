@@ -43,11 +43,22 @@ if __name__ == "__main__":
     tics = tics[(tics.multiple_star.isnull()) & (tics.multiple_star_source != "BD")]
     tics = tics.sort_values(by="number_of_flares", ascending=False)
 
+
+    # Add the number of flares to the TICs
+    n_flares = []
+    for tic in tics.TIC:
+        n_flares.append(pd.read_csv(paths.data / f"TIC_{tic}_cumhist.csv").shape[0])
+    
+    # sort the TICs by the number of flares
+    tics["n_flares"] = n_flares
+    tics = tics.sort_values(by="n_flares", ascending=False)
+
     # make a plot for 15 panels
     fig, ax = plt.subplots(nrows=6, ncols=3, figsize=(14,17), sharex=True)
 
     # linearize the axes
     ax = [_1 for _0 in ax for _1 in _0]
+    ax = ax[::-1]
 
     # create a subplot for each star
     for id_, row in tics.iterrows():
@@ -94,7 +105,7 @@ if __name__ == "__main__":
             a.set_xlim(0,1)
 
             # set the axis labels
-            if len(ax) >17:
+            if len(ax) <3:
                 a.set_xlabel("orbital phase")
             a.set_ylabel("number of flares")
 
