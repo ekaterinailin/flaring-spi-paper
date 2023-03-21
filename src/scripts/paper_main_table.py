@@ -391,7 +391,8 @@ if __name__ == "__main__":
 
         # layout
         string = string.replace("\citet{[*]}","[*]")
-        string = string.replace(r"$nan^{nan}_{nan}$",r"--") 
+        string = string.replace(r"$nan^{nan}_{nan}$",r"--")
+        string = string.replace(r"NaN",r"-") 
         string = string.replace("midrule","hline")
         string = string.replace("toprule","hline")
         string = string.replace("bottomrule","hline")
