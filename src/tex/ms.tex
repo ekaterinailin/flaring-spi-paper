@@ -88,10 +88,12 @@ Use transit mid-times from the same mission if possible.
 \subsection{Semi-major axes}
 \label{sec:data:a}
 The critical parameter is the distance between the star and the planet, not the semi-major axis itself. This varies if the orbit is eccentric. To account for varying distance, we adopt the mean semi-major axes from the literature, but use a custom estimate for the uncertainty that includes the eccentricity.
-If the eccentricity is known, then the range of the distance is set to either the error on the semi-major axis or half of the difference between the semi-major and semi-minor axis, as calculated from the eccentricity -- whichever is larger. If eccentricity is NOT known, then the range of the distance is either the 25\% error on the semi-major axis, that is, assuming e=0.5 or the uncertainty on the semi-major axis -- whichever is larger.
+If the eccentricity is known, then the range of the distance is set to either the error on the semi-major axis or half of the difference between the semi-major and semi-minor axis, as calculated from the eccentricity -- whichever is larger. If eccentricity is not known, then the range of the distance is either the 25\% error on the semi-major axis, that is, assuming e=0.25 or the uncertainty on the semi-major axis -- whichever is larger.
 
 \subsection{Rotation periods}
 We adopt available rotation period values from the literature. When uncertainties are not given, we assume 10\% uncertainty.% _09_
+
+Sources of rotation periods are XXXX
 
 \subsection{Planetary radii}
 NASA table, see references in table, or using the planetary mass $M_p$ or $M_p\sin i$ to calculate the radius or a lower limit for the radius using the empirical relations derived in \cite{chen2017probabilistic} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. 
@@ -372,7 +374,7 @@ Eccentricity is almost controlled for in our sample~(Section~\ref{sec:discussion
 
 \subsection{Eccentricity}
 \label{sec:discussion:eccentricity}
-If the planetary orbit is highly eccentric, the difference between the semi-major and semi-minor axis can be significantly larger than the variability of the Alfv\'en radius. If then apoastron is outside this radius, and periastron within, the planet may find itself in the sub-Alfv\'enic zone only for a short amount of time, namely during the planet's rapid periastron passage. This was exploited in magnetic star-star interaction~(XXXX), and also star-planet interaction~(XXXX). In our sample, the estimates for eccentricities of the innermost planets are all moderate to low, with $e<XXXX$. The exception is K2-25, with a moderate $e=0.45$, which may contribute to the increased contrast of excess flares. All else equal, closer proximity increases the strength of interaction. Perhaps, K2-25 even moves in and out of the sub-Alfv\'enic zone between periastron and apoastron, turning interaction on and off every single orbit. Otherwise, there are therefore no planets where we would expect a strongly preferred orbital phase for interaction. 
+If the planetary orbit is highly eccentric, the difference between the semi-major and semi-minor axis can be significantly larger than the variability of the Alfv\'en radius. If then apoastron is outside this radius, and periastron within, the planet may find itself in the sub-Alfv\'enic zone only for a short amount of time, namely during the planet's rapid periastron passage. This was previously exploited in the case of HD 189733, and also for binary interaction in the V 773 Tau system. In our sample, the estimates for eccentricities of the innermost planets are all moderate to low, with $e<XXXX$. The exception is K2-25, with a moderate $e=0.45$, which may contribute to the increased contrast of excess flares. All else equal, closer proximity increases the strength of interaction. Perhaps, K2-25 even moves in and out of the sub-Alfv\'enic zone between periastron and apoastron, turning interaction on and off every single orbit. Otherwise, there are therefore no planets where we would expect a strongly preferred orbital phase for interaction. 
 
 
 \subsection{Rotational and synodic variability}
