@@ -12,6 +12,7 @@ for the orbital period.
 import numpy as np
 import pandas as pd
 import paths
+import re
 
 def citation_from_bibkey(bibkey):
     """Create a LaTeX citation from a bibkey.
@@ -247,6 +248,7 @@ if __name__ == "__main__":
 
             ('st_lum', 'st_lumerr1', 'st_lumerr2', 'st_lum_bibkey', 'err'),
             ("pl_radj",'pl_radjerr1', 'pl_radjerr2',"pl_radj_bibkey", 'err'),
+            ("pl_orbeccen", "pl_orbeccenerr1", "pl_orbeccenerr2", "pl_orbeccen_bibkey", 'err'),
 
             ("Ro","Ro_high","Ro_low", 'high-low'),
             ("B_G","B_G_high","B_G_low", 'high-low'),
@@ -266,6 +268,7 @@ if __name__ == "__main__":
         "st_rad":"$R_{*}$ [R$_\odot$]",
         "pl_radj":"$R_{p}$ [R$_J$]",
         "a_au":"$a$ [$10^{-2}$ au]",
+        "pl_orbeccen":"$e$",
         "st_lum":"log${10} L_{*}$ [L$_\odot$]",
         "Ro":"Ro",
         "B_G":"$B$ [G]",
@@ -288,6 +291,7 @@ if __name__ == "__main__":
     sel = df[["ID","TIC",
                 'st_rotp','st_rotp_err','st_rotp_source', 
                 "orbper_d","orbper_d_err", "pl_orbper_bibkey",
+                "pl_orbeccen", "pl_orbeccenerr1", "pl_orbeccenerr2", "pl_orbeccen_bibkey",
                 "multiple_star", "multiple_star_source",
                 "st_rad","st_rad_err1", "st_rad_bibkey",
                 "pl_radj",'pl_radjerr1', 'pl_radjerr2',"pl_radj_bibkey",
@@ -349,6 +353,7 @@ if __name__ == "__main__":
     bibkeys = np.append(bibkeys, fulltable.pl_radj_bibkey.dropna().unique())
     bibkeys = np.append(bibkeys, fulltable.pl_orbsmax_bibkey.dropna().unique())
     bibkeys = np.append(bibkeys, fulltable.st_lum_bibkey.dropna().unique())
+    bibkeys = np.append(bibkeys, fulltable.pl_orbeccen_bibkey.dropna().unique())
 
     # enumerate the bibkeys
     bibkeys = np.unique(bibkeys)
@@ -358,7 +363,7 @@ if __name__ == "__main__":
 
     # literature parameters table columns
     lit_cols = ["ID", "$P_{rot}$ [d]", "$P_{orb}$ [d]", "$R_{*}$ [R$_\odot$]",
-            "$R_{p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "log${10} L_{*}$ [L$_\odot$]"]
+            "$R_{p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "$e$", "log${10} L_{*}$ [L$_\odot$]"]
 
     # derived parameters table columns
     der_cols = ["ID", "Ro", "$B$ [G]", "$v_{rel}$ [km s$^{-1}$]", "$P_{sb}$",
@@ -386,6 +391,7 @@ if __name__ == "__main__":
 
         # layout
         string = string.replace("\citet{[*]}","[*]")
+        string = string.replace(r"$nan^{nan}_{nan}$",r"--") 
         string = string.replace("midrule","hline")
         string = string.replace("toprule","hline")
         string = string.replace("bottomrule","hline")
@@ -396,6 +402,9 @@ if __name__ == "__main__":
         for key in bibkeys.keys():
             replace = "\citet{"+key+"}"
             string = string.replace(replace, "(" + str(bibkeys[key]) + ")")
+
+        # substitute "--" with any " (*)"" behind it with just "-" using regex
+        string = re.sub(r"-- \(.+?\)", "-", string)
 
         # write to file
         path = paths.output / f"table_{label}_vals.tex"
@@ -412,6 +421,7 @@ if __name__ == "__main__":
     # replace [*] with 10% error assumed
     bibstring = bibstring.replace(r"(1) \citet{[*]}","(*) $10\%$ error assumed")
     bibstring = bibstring.replace("[*]","(*)")
+    
    
     # write the bibstring to a file
     path = paths.output / "lit_table_bibstring.tex"

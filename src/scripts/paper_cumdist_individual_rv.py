@@ -43,7 +43,7 @@ if __name__ == "__main__":
     tics = [x for _,x in sorted(zip(n_flares, tics), reverse=True)]
 
     # make a plot for 15 panels
-    fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(14,7.5), sharex=True)
+    fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(14,9.5), sharex=True)
 
     # linearize the axes
     ax = [_1 for _0 in ax for _1 in _0]
