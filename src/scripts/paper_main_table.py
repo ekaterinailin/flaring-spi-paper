@@ -390,8 +390,8 @@ if __name__ == "__main__":
         string = lit_singles.to_latex(escape=False,index=False)
 
         # layout
-        string = string.replace("\citet{[*]}","[*]")
         string = string.replace(r"$nan^{nan}_{nan}$",r"--")
+        string = string.replace(r"nan",r"-")
         string = string.replace(r"NaN",r"-") 
         string = string.replace("midrule","hline")
         string = string.replace("toprule","hline")
@@ -418,10 +418,6 @@ if __name__ == "__main__":
     bibstring = ""
     for key in bibkeys.keys():
         bibstring += "(" + str(bibkeys[key]) + ") \citet{" + key + "}, "
-
-    # replace [*] with 10% error assumed
-    bibstring = bibstring.replace(r"(1) \citet{[*]}","(*) $10\%$ error assumed")
-    bibstring = bibstring.replace("[*]","(*)")
     
    
     # write the bibstring to a file
