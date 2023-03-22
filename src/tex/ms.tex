@@ -63,14 +63,16 @@ In this work, we searched for excess flaring in all available Kepler and TESS sh
 
 \section{Data}
 \label{sec:data}
+In this study, we wanted to compile the largest possible sample to search for flaring star-planet interactions, so took the entire Planetary Systems Composite Parameters Table (PSCP, Section~\ref{sec:data:sps})\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}} from the NASA Exoplanet Archive, and scanned the systems for available Kepler and TESS light curves~(Section~\ref{sec:data:photometry}). We ended up searching a total of 1812 systems and over 7200 light curves from both missions for flares. To calculate the amount of excess flaring from star-planet interaction, we then required the orbital periods of each system~(Section~\ref{sec:data:orbitalperiod}). To compare our measurements to theory, we also wanted to estimate the expected power of interaction for each system with at least three flares. For this, we required further system parameters -- distance between planet and star, stellar rotation periods, planetary radii, and stellar luminosity~(Sections~\ref{sec:data:orbitalperiod}-\ref{sec:data:lum}). We started compiling the table of system parameters with the PSCP, but verified, supplemented and updated the table from the literature. The literature parameters for the systems in the final sample of systems, for which we performed the full analysis, is shown in Table~\ref{tab:maintable_lit}.
+
 \subsection{Star-planet systems}
-
-
-ction with the Planetary Systems Composite Parameters Table (PSCP)\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}} from which we removed controversial planet detections (``pl\_controv\_flag'' set to 1), i.e. detections with existing literature questioning the result. The catalog then contained XXXX unique systems.
-
-We complemented the PSCP with the TESS TOI Table~\citep[TT][]{guerrero2021arxiv}\footnote{\url{https://tev.mit.edu/data/collection/193/}}. We filtered the catalog by requiring the confirmed planet (CP) or known planet (KP) flags to be set in the ``TOI Disposition''. This added XXXX star-planet systems to the sample.
+\label{sec:data:sps}
+We compiled our sample of star-planet systems from the PSCP, from which we removed controversial planet detections (``pl\_controv\_flag'' set to 1), i.e. detections with existing literature questioning the result. The catalog then contained 2993 transiting and 191 non-transiting systems, from which we picked the innermost known planet in each system. 
 
 \subsection{Kepler and TESS photometry}
+\label{sec:data:photometry}
+The Kepler and TESS missions are unbeatable with respect to long-term optical monitoring of stellar flares. Their excellent coverage of orbital phases makes the light curves ideal for our search for orbital phase dependent flare timing.
+
 Between 2009 and 2013, the Kepler space telescope~\citep{koch2010kepler} nearly continuously observed a patch of the sky in the Cygnus-Lyra region. Each of the 18 observing Quarters contains nearly uninterrupted $\sim 90$ days of observations, totaling over 100000 stars monitored in 2-min cadence. 
 % 100000 from here: https://exoplanetarchive.ipac.caltech.edu/docs/KeplerMission.html
 
@@ -78,31 +80,30 @@ The Transiting Exoplanet Survey Satellite~(TESS,~\cite{ricker2015transiting}) is
 % 20000 per sector does not add up, because of stars observed in multiple sectors, the 20000 and 1000 figures can be found here: https://tess.mit.edu/observations/target-lists/
 % extended TESS mission https://heasarc.gsfc.nasa.gov/docs/tess/extended.html
 
-Based on the filtered PSCP and TT tables, we queried the full Kepler archive (quarters Q0-Q17, Data Release 25) and most recent TESS catalog (July 2022) for their respective 1-min and 2-min/20-s cadence light curves, accounting for systems that appeared in both catalogs. In total, we obtained XXXX Kepler light curves and XXXX TESS light curves. XXXX systems were observed only by the primary Kepler mission, XXXX only by TESS, and XXXX by both missions.
+Based on the filtered PSCP table, we queried the full Kepler archive (quarters Q0-Q17, Data Release 25), and the most recent TESS catalog (July 2022) for their respective 1-min and 2-min/20-s cadence light curves. In total, we searched 7258 light curves for flares -- 3030 Kepler Quarters, and 4228 TESS Sectors. We found and analyzed light curves for a total of 1811 systems, 344 of which were observed only by the primary Kepler mission, 1205 only by TESS, and 262 by both missions. We did not use K2 light curves because of the many systematics, and consequently the high costs of de-trending them. But we included the flare list obtained by~\citet{paudel2018k2} for TRAPPIST-1 K2 flares, since this system is a potential candidate for sub-Alfv\'enic interactions~\citep{fischer2019timevariable}.
 
-
-\subsection{Orbital periods}
-Either Kepler/TESS or from RVs.
-\subsection{Transit mid-times}
-Use transit mid-times from the same mission if possible.
-\subsection{Semi-major axes}
+\subsection{Orbital periods and transit mid-times}
+\label{sec:data:orbitalperiod}
+We adopt the orbital periods from the PSCP, which were either obtained from Kepler or TESS transits, or from radial velocity measurements. For the transiting systems, we use the transit mid-times given in the PSCP to set orbital phase zero. If possible, we do this for each mission separately to reduce the uncertainties on orbital phase. For the non-transiting system, phase zero is set arbitrarily.
+\subsection{Semi-major axes and eccentricities}
 \label{sec:data:a}
 The critical parameter is the distance between the star and the planet, not the semi-major axis itself. This varies if the orbit is eccentric. To account for varying distance, we adopt the mean semi-major axes from the literature, but use a custom estimate for the uncertainty that includes the eccentricity.
-If the eccentricity is known, then the range of the distance is set to either the error on the semi-major axis or half of the difference between the semi-major and semi-minor axis, as calculated from the eccentricity -- whichever is larger. If eccentricity is not known, then the range of the distance is either the 25\% error on the semi-major axis, that is, assuming e=0.25 or the uncertainty on the semi-major axis -- whichever is larger.
+
+If the eccentricity is known, then the uncertainty on the distance is set to either the error on the semi-major axis, or to half of the difference between periastron and apoastron -- whichever is larger. If eccentricity is not known, then the uncertainty on the distance is either the 25\% error on the semi-major axis, that is, assuming $e=0.25$, or the uncertainty on the semi-major axis -- whichever is larger. We chose $e=0.25$ because it is both a typical value within our sample~(see Table~\ref{tab:maintable_lit}), and in the literature~\citep{eylen2019orbital}.
 
 \subsection{Rotation periods}
-We adopt available rotation period values from the literature. When uncertainties are not given, we assume 10\% uncertainty.% _09_
+\label{sec:data:rotationperiods}
+We adopt available rotation period values from the literature. Almost all stem from light curve variability~\citep{angus2018inferring, mazeh2015photometric, mcquillan2013stellar, mcquillan2014rotation, luger2017sevenplanet, stock2020carmenes, deleon202137, torres2017validation, stefansson2020habitable, zicher2022one, ment2021toi, rizzuto2020tess}, and only one from periodic variation in chromospheric lines~\citep{demangeon2021warm}. When uncertainties are not given, we conservatively assume $10\%$ uncertainty, WHERE ARE THE PERIODS FROM.
 
-Sources of rotation periods are XXXX
 
 \subsection{Planetary radii}
-NASA table, see references in table, or using the planetary mass $M_p$ or $M_p\sin i$ to calculate the radius or a lower limit for the radius using the empirical relations derived in \cite{chen2017probabilistic} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. 
-
-We note that for GJ 674, the mass estimates in \cite{bonfils2007harps} and \cite{boisse2011disentangling} do not quote uncertainties, but differ by 0.3MEarth, so we assumed that value as the uncertainty on $M_p\sin i$.
+\label{sec:data:planetradii}
+For the transiting planets, we adopt the literature values for planet radius $R_p$, and uncertainties, from the PSCP. For the non-transiting radial velocity detected planets we use the planetary mass $M_p$ or $M_p\sin i$ to calculate the radius or a lower limit for the radius using the empirical relations derived in \cite{chen2017probabilistic} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. We note that for GJ 674, the mass estimates in \cite{bonfils2007harps} and \cite{boisse2011disentangling} do not quote uncertainties, but differ by 0.3MEarth, so we assumed that value as the uncertainty on $M_p\sin i$.
 
 \subsection{Bolometric luminosity}
+\label{sec:data:lum}
 
-We take bolometric luminosity values as given in the NASA Table if given with uncertainties, and supplement missing values and entries without quoted uncertainties with Gaia DR3 FLAME~\citep{fouesneau2022gaia} solutions. 
+We take bolometric luminosity values as given in the PSCP whenever they are given with uncertainties. We supplement missing values, and replace entries without quoted uncertainties with Gaia DR3 FLAME~\citep{fouesneau2022gaia} solutions~(\texttt{lum\_flame}). 
 
 \section{Methods}
 \label{sec:methods}
@@ -133,11 +134,6 @@ For each star-planet system with three or more flares in their Kepler and/or TES
 The only adjustment to the procedure in \cite{ilin2022searching} is that we use four equidistant start phases (i.e., 0, 0.25, 0.5 and 0.75) compared to the 20 used in~\cite{ilin2022searching} to save time, and because the range of derived $p$-values is already well-sampled using four. We adopt the standard deviation of these four $p$-values as the uncertainty on the flaring SPI measurement.
 
 
-% \subsection{Orbital phase}
-% \label{methods:orbitalphase}
-
-% For the star-planet system that have transiting innermost planets, we use the transit mid-time to signify orbital phase zero. For non-transiting planets, we use arbitrary phase zero. The inferior conjunction time from the orbital parameters of planets that only have radial velocity measurements is usually either very uncertain, of the order of $10\%$ of the orbital duration~(XXXX), or cannot be derived because the eccentricity is poorly constrained~(XXXX). 
-
 
 \subsection{Relative velocity}
 \label{sec:methods:relvel}
@@ -158,7 +154,7 @@ We derive the average magnetic field strength $B$ from $Ro$ using the empirical 
     B &= 2050\,\text{G} \cdot Ro^{-0.11\pm 0.03} \;(\text{if}\; Ro < 0.13) 
 \end{eqnarray}
 
-The estimate is consistent with existing Zeeman broadening for, e.g. AU Mic (3010 G~\cite{reiners2022magnetism})
+The estimate is consistent with existing Zeeman broadening for, e.g. AU Mic (3010 G~\cite{reiners2022magnetism}).
 \subsection{Power of star-planet interaction}
 \label{sec:methods:pspi}
 We consider two theories for the mechanism behind flaring star-planet interactions, the stretch-and-break and the Alfv\'en wing mechanisms. For both of them, we include the case of a magnetized and an unmagnetized planet, for a total of four estimates of the expected power of magnetic star-planet interaction.
@@ -444,17 +440,14 @@ While in~\citet{lanza2022model}, resonant oscillations favor flaring star-planet
 
 \subsection{Tidal or magnetic interaction?}
 \label{sec:discussion:tidalmagnetic}
-The tight spin-orbit commensurability in some systems may give rise to spots on the star that rotate with the commensurable period~\citep{lanza2022model}. HIP~67522 is in very close 5:1 spin-orbit commensurability with HIP~67522~b. It is possible that the periodicity seen with the orbital period in our flare data is an effect of such tidally created spots that happen to produce flares. On the other hand, magnetic interactions, wherein the direct perturbation of stellar field by the planetary obstacle cannot be ruled out~\citep{lanza2018closeby, saur2013magnetic}.
+The tight spin-orbit commensurability in some systems may give rise to stable spot patterns on the star that rotate with the commensurable period~\citep{lanza2022model}, and perhaps appear preferentially in the orbital plane of the tidally interacting planet. It is possible that the enhanced periodicity seen with the orbital period in systems close to a low integer spin-orbit commensurability is an effect of such tidally created spots that lie along the passageway of the planet's magnetic footpoint.% On the other hand, magnetic interactions, wherein the direct perturbation of stellar field by the planetary obstacle cannot be ruled out~\citep{lanza2018closeby, saur2013magnetic}.
 
 Both mechanisms may play a role, but to understand their respective contribution, we require approaches that can unambiguously discriminate between the two.
 
 
-While suggestive, our data are statistically insufficient to conclude whether the flaring interaction is driven only by magnetic interaction, or whether tidal effects, and more specifically spin-orbit resonances, play a role. Further monitoring of the systems in our sample will clarify whether the interaction is statistically significant for individual systems, whether the branching is caused by intrinsic intermittency of the effect. If the branching persists over time, and systems do not switch from the inactive to the active branch or vice versa, the distinction may be due to tidal effects.
+While suggestive, our data are statistically insufficient to conclude whether the flaring interaction is driven only by magnetic interaction, or whether tidal effects, and more specifically spin-orbit resonances, play a role. Further monitoring of the systems in our sample will clarify whether the interaction is statistically significant for individual systems, or whether the branching is caused by intrinsic intermittency of the effect. If the branching persists over time, and systems do not switch from the inactive to the active branch or vice versa, the distinction may more likely be due to spin-orbit resonance.
 
 Another possibility is that the branching disappears in favor of a continuous distribution. This would put in question the on-off nature of magnetic interactions.
-
-Another hint is the onset of the branching. If it persists in a larger sample, it may mark the transition of star-planet systems from the super- to the sub-Alfv\'enic regime. If it disappears in favor of a more continuous distribution, tidal effects are favored because their intensity has no such threshold at a particular radius, but increases continuously with decreasing semi-major axis and increasing companion mass.
-
 
 
 Ways to investigate which mechanisms play a role using flaring:
