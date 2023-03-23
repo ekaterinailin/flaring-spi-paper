@@ -95,6 +95,9 @@ if __name__ == "__main__":
     # GJ 1061 because rotation is unclear
     df = df[df.TIC != "79611981" ]
 
+    # pick only single systems
+    df = df[df["multiple_star"].isnull()]
+
     # set tolerance to ratios with values <10 each
     tol = 0.01
 
@@ -199,3 +202,6 @@ if __name__ == "__main__":
     fig.savefig(paths.figures / "PAPER_spin_orbit_commensurable.png", dpi=300)
 
 
+    # save table to data folder
+
+    df.to_csv(paths.data / "results_spin_orbit_commensurable.csv", index=False)
