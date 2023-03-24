@@ -338,6 +338,9 @@ if __name__ == "__main__":
     # the old Kepler-411 instance
     df = df[df.TIC != "399954349(c)" ]
 
+    # remove multiple stars
+    df = df[df["multiple_star"].isnull()]
+
     # FOUR SCENARIO PLOTS
 
     columns = ["p_spi_sb_bp1_norm", "p_spi_sb_bp0_norm",
