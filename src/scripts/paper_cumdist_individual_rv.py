@@ -53,7 +53,7 @@ if __name__ == "__main__":
     for tic in tics:
 
         # print(g.shape)
-        g = flares[flares.TIC.astype(str) == tic]
+        g = flares[(flares.TIC.astype(str) == tic)]
         print(tic, g.shape, len(ax))
         # pick only stars with more than 0 flares
         if ((g.shape[0]>3) & (len(ax)>0)):

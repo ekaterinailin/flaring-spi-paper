@@ -116,90 +116,99 @@ if __name__ == "__main__":
 
     # Color-code the points
 
-    # baseline color coding
-    df["color"] = "blue"
-    df["marker"] = "o"
+
+    power_names = ["p_spi_sb_bp1_norm", "p_spi_sb_bp0_norm", 
+                   "p_spi_aw_bp1_norm", "p_spi_aw_bp0_norm"]
 
 
-    # label all that are expected with higher power than TOI-540 but SPI off
-    toi540 = df.loc[df.ID=="TOI-540","p_spi_sb_bp1_norm"].values[0]
-    cond = ((df["p_spi_sb_bp1_norm"]>toi540) & (df["mean"]>.3))
-    df.loc[cond, "color"] = "red"
-    df.loc[cond, "marker"] = "X"
+    for power_name in power_names:
 
-    # label all that are expected with higher power than TOI-540 and SPI on
-    cond = df["mean"] < .2
-    df.loc[cond, "color"] = "k"
-    df.loc[cond, "marker"] = "d"
+        # baseline color coding
+        df["color"] = "blue"
+        df["marker"] = "o"
 
 
-    # Make plot
-    fig, (ax2, ax1) = plt.subplots(nrows=2, ncols=1, figsize=(8,10.5))
+        # label all that are expected with higher power than lowest for low p-values
+        #  but SPI off
+        cutoff = df.loc[df["mean"] < 0.2 , power_name].min()
+        cond = ((df[power_name]>cutoff) & (df["mean"]>.2))
+        df.loc[cond, "color"] = "red"
+        df.loc[cond, "marker"] = "X"
 
-    # plot each group
-    for marker, group in df.groupby("marker"):
-        ax1.scatter(group["ratio_error"], group["mean"],
-                    color=group["color"], alpha=1., marker=marker, s=60)
-
-    # annotate points with high expected power and SPI on
-    for i, row in df.iterrows():
-        if (row["mean"] < 2e-1):
-            ax1.annotate(f"{row.ID} ({row.closest_ratio_den}:{row.closest_ratio_num})",
-                        (row.ratio_error*1.1, row["mean"]*.95))
-
-    # label axes
-    ax1.set_xlabel("relative difference to closest spin-orbit commensurable ratio",
-               fontsize=14)
-    ax1.set_ylabel(r"$p$-value of AD test",
-               fontsize=14)
-
-    # set log scale
-    ax1.set_xscale("log")
-    ax1.set_yscale("log")
-
-   
-    # Corresponding AD test vs. SPI plot
-
-    # plot each group
-    for marker, group in df.groupby("marker"):
-        ax2.errorbar(group["p_spi_sb_bp1_norm"], group["mean"], yerr=group["std"],
-                     xerr=[group["p_spi_sb_bp1_norm"]-group["p_spi_sb_bp1_norm_low"],
-                           group["p_spi_sb_bp1_norm_high"] - group["p_spi_sb_bp1_norm"]],
-                    color=group["color"].values[0], alpha=1., fmt=marker )
-
-    # define legend
-    valuelegend = [Line2D([0], [0], marker='o', color='w',
-                    markerfacecolor='b', markersize=10),
-                    Line2D([0], [0], marker='X', color='w',
-                    markerfacecolor='red', markersize=10),
-                    Line2D([0], [0], marker='d', color='w',
-                    markerfacecolor='black', markersize=10),]
-
-    # # define legend labels
-    valuelabels = [ r"low expected power",
-                    r"high expected power / SPI off",
-                    r"high expected power / SPI on"]
-
-    # annotate points with high expected power and SPI on
+        # label all that are expected with higher power than cutoff and SPI on
+        cond = df["mean"] < .2
+        df.loc[cond, "color"] = "k"
+        df.loc[cond, "marker"] = "d"
 
 
-    # plot legend
-    ax2.legend(valuelegend, valuelabels, loc=3, fontsize=14, frameon=False)
+        # Make plot
+        fig, (ax2, ax1) = plt.subplots(nrows=2, ncols=1, figsize=(8,10.5))
 
-    # label axes
-    ax2.set_xlabel("$\sim$ expected power of magnetic star-planet interactions",
-               fontsize=14)
-    ax2.set_ylabel(r"$p$-value of AD test",
-               fontsize=14)
+        # plot each group
+        for marker, group in df.groupby("marker"):
+            ax1.scatter(group["ratio_error"], group["mean"],
+                        color=group["color"], alpha=1., marker=marker, s=60)
 
-    # set log scale
-    ax2.set_xscale("log")
-    ax2.set_yscale("log")
+        # annotate points with high expected power and SPI on
+        for i, row in df.iterrows():
+            if (row["mean"] < 2e-1):
+                ax1.annotate(f"{row.ID} ({row.closest_ratio_den}:{row.closest_ratio_num})",
+                            (row.ratio_error*1.1, row["mean"]*.95))
 
-    plt.tight_layout()
+        # label axes
+        ax1.set_xlabel("relative difference to closest spin-orbit commensurable ratio",
+                fontsize=14)
+        ax1.set_ylabel(r"$p$-value of AD test",
+                fontsize=14)
 
-    # save figure to figures folder
-    fig.savefig(paths.figures / "PAPER_spin_orbit_commensurable.png", dpi=300)
+        # set log scale
+        ax1.set_xscale("log")
+        ax1.set_yscale("log")
+        # ax1.set_xlim(0,.1)
+
+    
+        # Corresponding AD test vs. SPI plot
+
+        # plot each group
+        for marker, group in df.groupby("marker"):
+            ax2.errorbar(group[power_name], group["mean"], yerr=group["std"],
+                        xerr=[group[power_name]-group[f"{power_name}_low"],
+                            group[f"{power_name}_high"] - group[power_name]],
+                        color=group["color"].values[0], alpha=1., fmt=marker )
+
+        # define legend
+        valuelegend = [Line2D([0], [0], marker='o', color='w',
+                        markerfacecolor='b', markersize=10),
+                        Line2D([0], [0], marker='X', color='w',
+                        markerfacecolor='red', markersize=10),
+                        Line2D([0], [0], marker='d', color='w',
+                        markerfacecolor='black', markersize=10),]
+
+        # # define legend labels
+        valuelabels = [ r"low expected power",
+                        r"high expected power / SPI off",
+                        r"high expected power / SPI on"]
+
+        # annotate points with high expected power and SPI on
+
+
+        # plot legend
+        ax2.legend(valuelegend, valuelabels, loc=3, fontsize=14, frameon=False)
+
+        # label axes
+        ax2.set_xlabel("$\sim$ expected power of magnetic star-planet interactions",
+                fontsize=14)
+        ax2.set_ylabel(r"$p$-value of AD test",
+                fontsize=14)
+
+        # set log scale
+        ax2.set_xscale("log")
+        ax2.set_yscale("log")
+
+        plt.tight_layout()
+
+        # save figure to figures folder
+        fig.savefig(paths.figures / f"PAPER_spin_orbit_commensurable_{power_name}.png", dpi=300)
 
 
     # save table to data folder
