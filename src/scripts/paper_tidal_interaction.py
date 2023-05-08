@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
         # add the ID of the systems with low p-values
         texts = []
-        _ = res[(res['mean']<.19)]
+        _ = res[(res['mean']<.19) | (res["torque_conv"]>1e-15)]
         for i, row in _.iterrows():
             texts.append(ax.annotate(row["ID"], (row[model], row["mean"]), 
                                      fontsize=10,))
