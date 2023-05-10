@@ -23,6 +23,12 @@ if __name__ == "__main__":
     # sort by p-value
     df = df.sort_values(by="mean", ascending=False)
 
+    # take absolute value of pl_bmassjerr2
+    df.pl_bmassjerr2 = np.abs(df.pl_bmassjerr2)
+
+    # take absolute value of st_masserr2
+    df.st_masserr2 = np.abs(df.st_masserr2)
+
     # convert to latex readable entries 
     new_cols =  [r"$M_*$ [$M_\odot$]",
                 r"$M_p$ [$M_\oplus$]",
