@@ -29,12 +29,16 @@ if __name__ == "__main__":
     # take absolute value of st_masserr2
     df.M_star_low_err = np.abs(df.M_star_low_err)
 
+    # take absolute value of torque_conv_up_err and torque_conv_low_err
+    df.torque_conv_up_err = np.abs(df.torque_conv_up_err)
+    df.torque_conv_low_err = np.abs(df.torque_conv_low_err)
+
     # convert to latex readable entries 
     new_cols =  [r"$M_*$ [$M_\odot$]",
                 r"$M_p$ [$M_\oplus$]",
                 r"$10^{-8} \Delta g / g$",
                 r"$\tau_{\rm tide}$ [Gyr]",
-                r"$10^{-20} \partial L_{conv}/\partial t$"
+                r"$10^{-20} \frac{\partial L_{conv}}{\partial t}$"
                 r" $\left[M_\odot \left(\frac{km}{s}\right)^2\right]$",
                 ]
 
@@ -90,8 +94,8 @@ if __name__ == "__main__":
     string = string.replace(r"nan",r"-")
     string = string.replace(r"NaN",r"-") 
     string = string.replace("e+00",r"")
-    string = string.replace("e-",r"\text{e-}")
-    string = string.replace("e+",r"\text{e}")
+    string = string.replace("e-0",r"\text{e-}")
+    string = string.replace("e+0",r"\text{e}")
     string = string.replace("midrule","hline")
     string = string.replace("toprule","hline")
     string = string.replace("bottomrule","hline")
