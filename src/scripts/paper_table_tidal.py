@@ -84,6 +84,8 @@ if __name__ == "__main__":
     string = string.replace(r"nan",r"-")
     string = string.replace(r"NaN",r"-") 
     string = string.replace("e+00",r"")
+    string = string.replace("e-",r"\text{e-}")
+    string = string.replace("e+",r"\text{e+}")
     string = string.replace("midrule","hline")
     string = string.replace("toprule","hline")
     string = string.replace("bottomrule","hline")
