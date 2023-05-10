@@ -24,10 +24,10 @@ if __name__ == "__main__":
     df = df.sort_values(by="mean", ascending=False)
 
     # take absolute value of pl_bmassjerr2
-    df.pl_bmassjerr2 = np.abs(df.pl_bmassjerr2)
+    df.M_pl_low_err = np.abs(df.M_pl_low_err)
 
     # take absolute value of st_masserr2
-    df.st_masserr2 = np.abs(df.st_masserr2)
+    df.M_star_low_err = np.abs(df.M_star_low_err)
 
     # convert to latex readable entries 
     new_cols =  [r"$M_*$ [$M_\odot$]",
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     string = string.replace(r"NaN",r"-") 
     string = string.replace("e+00",r"")
     string = string.replace("e-",r"\text{e-}")
-    string = string.replace("e+",r"\text{e+}")
+    string = string.replace("e+",r"\text{e}")
     string = string.replace("midrule","hline")
     string = string.replace("toprule","hline")
     string = string.replace("bottomrule","hline")
