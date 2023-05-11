@@ -53,11 +53,15 @@ if __name__ == "__main__":
         # plot the data
         # torque conv is the model, use appropriate color, otherwise grey
         if model == "torque_conv":
-            ax.scatter(res[model],res["mean"], label=model, 
-                       color=res["color_conv"], marker="x", s=50)
+            for color, g in res.groupby("color_conv"):
+                ax.errorbar(g[model],g["mean"], xerr=(g[model + "_up_err"], g[model + "_low_err"]),
+                            yerr=g["std"], label=color, 
+                        color=color, fmt="x", markersize=10)
+          
         else:
-            ax.scatter(res[model],res["mean"], label=model, 
-                       color="grey", marker="x", s=50)
+            ax.errorbar(res[model],res["mean"], xerr=(res[model + "_up_err"], res[model + "_low_err"]),
+                        yerr=res["std"], label=model, 
+                       color="grey", fmt="x", markersize=10)
 
         # add the ID of the systems with low p-values
         texts = []

@@ -62,6 +62,8 @@ if __name__ == "__main__":
     g = lambda row: f"{row['mean']:.2f} [{row['std']:.2f}]"  
     df[r"$p$-value"] = df.apply(g, axis=1)
 
+    print(df)
+
     # add ID column and p-value column
     new_cols.insert(0, "ID")
     new_cols.append(r"$p$-value")
