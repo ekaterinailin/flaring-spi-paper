@@ -29,14 +29,21 @@ if __name__ == "__main__":
 
     # blue when convective envelope is spinning faster, and transferring angular momentum to the planet
     res["color_conv"] = ["blue" if np.sign(torque)==1 else "grey" for torque in res["torque_conv"].values]
-    res["torque_conv"] = res["torque_conv"].abs()
+    
+    models = ["grav_pert", "tidal_disip_timescale", "torque_conv"]
+
+    # convert all values and _err to absolute values
+    for model in models:
+        res[model] = np.abs(res[model])
+        res[model + "_up_err"] = np.abs(res[model + "_up_err"])
+        res[model + "_low_err"] = np.abs(res[model + "_low_err"])
 
     # initialize the figure
     fig, axes = plt.subplots(1,3, figsize=(15,5), sharey=True)
     axes = list(axes) 
 
     # define the models and labels
-    models = ["grav_pert", "tidal_disip_timescale", "torque_conv"]
+    
     labels = [r"gravitational perturbation $\Delta g / g$",
             r"tidal dissipation timescale $\tau_{\rm tide}$ [yr]",
             r"tidal torque $\partial L_{conv}/\partial t$ $\left[M_\odot \left(\frac{km}{s}\right)^2\right]$"]
