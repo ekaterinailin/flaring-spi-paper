@@ -17,7 +17,7 @@ def round_to_1(x):
     if x == 0:
         return 0
     else:
-        return np.round(x, -int(1 + np.floor(np.log10(np.abs(x)))))
+        return np.round(x, -int(np.floor(np.log10(np.abs(x)))))
 
 
 
@@ -57,11 +57,11 @@ if __name__ == "__main__":
 
     for ocol, fac, n, f,  ncol in zip(old_cols, factor, n, fs, new_cols):
         print(ncol)
-        df[ncol] = df.apply(lambda row: f"${round_to_1(row[ocol] * fac):.0{f}}" + 
+        df[ncol] = df.apply(lambda row: f"${round_to_1(row[ocol] * fac)}" + 
                                         r"^{" + 
-                                        f"{round_to_1(row[ocol + '_up_err'] * fac):.0{f}}" + 
+                                        f"{round_to_1(row[ocol + '_up_err'] * fac)}" + 
                                         r"}_{" + 
-                                        f" {round_to_1(row[ocol + '_low_err'] * fac):.0{f}}" + 
+                                        f" {round_to_1(row[ocol + '_low_err'] * fac)}" + 
                                         r"}$", 
                                         axis=1)
     
