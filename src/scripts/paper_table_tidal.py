@@ -57,11 +57,21 @@ if __name__ == "__main__":
 
     for ocol, fac, n, f,  ncol in zip(old_cols, factor, n, fs, new_cols):
         print(ncol)
-        df[ncol] = df.apply(lambda row: f"${round_to_1(row[ocol] * fac)}" + 
+
+        if f == "f":
+            df[ncol] = df.apply(lambda row: f"${row[ocol] * fac:.{n}{f}}" + 
                                         r"^{" + 
-                                        f"{round_to_1(row[ocol + '_up_err'] * fac)}" + 
+                                        f"{row[ocol + '_up_err'] * fac:.{n}{f}}" + 
                                         r"}_{" + 
-                                        f" {round_to_1(row[ocol + '_low_err'] * fac)}" + 
+                                        f" {row[ocol + '_low_err'] * fac:.{n}{f}}" + 
+                                        r"}$", 
+                                        axis=1)
+        if f == "e":
+            df[ncol] = df.apply(lambda row: f"${round_to_1(row[ocol] * fac):.0e}" + 
+                                        r"^{" + 
+                                        f"{round_to_1(row[ocol + '_up_err'] * fac):.0e}" + 
+                                        r"}_{" + 
+                                        f" {round_to_1(row[ocol + '_low_err'] * fac):.0e}" + 
                                         r"}$", 
                                         axis=1)
     
