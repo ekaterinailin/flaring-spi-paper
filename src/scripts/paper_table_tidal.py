@@ -13,6 +13,12 @@ import pandas as pd
 import numpy as np
 import paths
 
+def round_to_1(x):
+    if x == 0:
+        return 0
+    else:
+        return np.round(x, -int(np.floor(np.log10(np.abs(x)))))
+
 
 
 if __name__ == "__main__":
@@ -50,11 +56,12 @@ if __name__ == "__main__":
 
 
     for ocol, fac, n, f,  ncol in zip(old_cols, factor, n, fs, new_cols):
-        df[ncol] = df.apply(lambda row: f"${row[ocol] * fac:.{n}{f}}" + 
+        print(ncol)
+        df[ncol] = df.apply(lambda row: f"${round_to_1(row[ocol] * fac):.0{f}}" + 
                                         r"^{" + 
-                                        f"{row[ocol + '_up_err'] * fac:.{n}{f}}" + 
+                                        f"{round_to_1(row[ocol + '_up_err'] * fac):.0{f}}" + 
                                         r"}_{" + 
-                                        f" {row[ocol + '_low_err'] * fac:.{n}{f}}" + 
+                                        f" {round_to_1(row[ocol + '_low_err'] * fac):.0{f}}" + 
                                         r"}$", 
                                         axis=1)
     

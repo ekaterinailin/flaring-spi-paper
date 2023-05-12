@@ -54,14 +54,20 @@ if __name__ == "__main__":
         # torque conv is the model, use appropriate color, otherwise grey
         if model == "torque_conv":
             for color, g in res.groupby("color_conv"):
-                ax.errorbar(g[model],g["mean"], xerr=(g[model + "_up_err"], g[model + "_low_err"]),
+                xerr = np.abs(np.asarray([g[model + "_low_err"], np.abs(g[model + "_up_err"])]))
+                print(xerr)
+                ax.errorbar(g[model],g["mean"], xerr=xerr,
                             yerr=g["std"], label=color, 
-                        color=color, fmt="x", markersize=10)
+                        color=color, fmt="X", markersize=7, elinewidth=0.3)
           
         else:
-            ax.errorbar(res[model],res["mean"], xerr=(res[model + "_up_err"], res[model + "_low_err"]),
+            xerr = np.abs(np.asarray([res[model + "_low_err"], np.abs(res[model + "_up_err"])]))
+            print(model)
+            print(xerr)
+
+            ax.errorbar(res[model],res["mean"], xerr=xerr,
                         yerr=res["std"], label=model, 
-                       color="grey", fmt="x", markersize=10)
+                       color="grey", fmt="X", markersize=7, elinewidth=0.3)
 
         # add the ID of the systems with low p-values
         texts = []
@@ -76,13 +82,13 @@ if __name__ == "__main__":
 
         minx, maxx = res[model].min(), res[model].max()
 
-        ax.set_xlim(minx*0.8, maxx*1.3)
+        ax.set_xlim(minx*0.1, maxx*10)
 
         # add the sigma lines
         sigmas, sigma_label = get_sigma_values()
         for sigma, l in zip(sigmas, sigma_label):
             ax.axhline(sigma, color="k", linestyle="--", alpha=.5)
-            ax.text(maxx*1.4, sigma, l, fontsize=10)
+            ax.text(maxx*12, sigma, l, fontsize=10)
 
         # adjust label positions
         adjust_text(texts, ax=ax)
