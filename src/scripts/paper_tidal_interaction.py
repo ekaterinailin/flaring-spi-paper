@@ -62,8 +62,6 @@ if __name__ == "__main__":
           
         else:
             xerr = np.abs(np.asarray([res[model + "_low_err"], np.abs(res[model + "_up_err"])]))
-            print(model)
-            print(xerr)
 
             ax.errorbar(res[model],res["mean"], xerr=xerr,
                         yerr=res["std"], label=model, 

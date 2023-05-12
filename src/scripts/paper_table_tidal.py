@@ -17,7 +17,7 @@ def round_to_1(x):
     if x == 0:
         return 0
     else:
-        return np.round(x, -int(np.floor(np.log10(np.abs(x)))))
+        return np.round(x, -int(1 + np.floor(np.log10(np.abs(x)))))
 
 
 
