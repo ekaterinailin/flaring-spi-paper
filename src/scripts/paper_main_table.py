@@ -163,9 +163,9 @@ def tex_up_low(val, err, err2):
     return ("$" +
             convert_to_scinote(val) +
             "^{" + 
-            convert_to_scinote(err) + 
+            convert_to_scinote(err - val) + 
             "}_{" +
-            convert_to_scinote(err2) + "}$")
+            convert_to_scinote(val - np.abs(err2)) + "}$")
 
 def tex_one_err(val, err):
     """Convert a value and one error into a LaTeX string.

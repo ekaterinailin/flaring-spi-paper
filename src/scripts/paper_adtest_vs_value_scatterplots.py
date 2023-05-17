@@ -68,6 +68,40 @@ def colorcode_dist(dist):
 
     return color, symbol
 
+
+def colorcode_rossby(ro):
+    """Define color code and symbol marker for rotation period.
+
+    Parameters
+    ----------
+    ro : float
+        Rossby number.
+
+    Returns
+    -------
+    color : str
+        Color code.
+    marker : str
+        Symbol marker.
+    """
+    if ro < 1e-2:
+        color = "green"
+        symbol = "o"
+
+    elif (ro >= 1e-2) & (ro < 0.3):
+        color = "blue"
+        symbol = "x"
+
+    elif (ro >= 0.3) & (ro < 1.):
+        color = "black"
+        symbol = "d"
+
+    elif (ro >= 1.):
+        color = "lightgrey"
+        symbol = "s"
+
+    return color, symbol
+
 def colorcode_rotation(st_rotp):
     """Define color code and symbol marker for rotation period.
 
@@ -425,6 +459,47 @@ if __name__ == "__main__":
 
     # save the figure
     plt.savefig(paths.figures / f"PAPER_ADtest_bg.png", dpi=300)
+
+
+
+
+    # ------------------------------------------------------------
+    # ROSSBY NUMBER
+    # ------------------------------------------------------------
+
+    # define the colors and symbols for the different distance bins
+    df["color"], df["symbol"] = zip(*df.Ro.apply(colorcode_rossby))
+    
+    valuelegend = [Line2D([0], [0], marker='o', color='w',
+                   markerfacecolor='green', markersize=10),
+                   Line2D([0], [0], marker='X', color='w',
+                   markerfacecolor='blue', markersize=10),
+                   Line2D([0], [0], marker='d', color='w',
+                   markerfacecolor='black', markersize=10),
+                   Line2D([0], [0], marker='s', color='w',
+                   markerfacecolor='lightgrey', markersize=10),]
+
+    valuelabels = [ "Ro < .01","0.01 < Ro < 0.3","0.3 < Ro < 1","Ro > 1",]
+
+    # set up figure
+    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 10))
+
+    # make one list of all axes
+    axes = axes.flatten()
+
+    for value, valuelabel, ax in list(zip(columns, xlabels, axes)):
+        if value=="p_spi_sb_bp1_norm":
+            leg = True
+        else:
+            leg = False
+        make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, f"{value}_ro", ax, leg=leg)
+
+    
+    # layout the figure
+    plt.tight_layout()
+
+    # save the figure
+    plt.savefig(paths.figures / f"PAPER_ADtest_Ro.png", dpi=300)
 
     # ------------------------------------------------------------
     # MULTIPICITY
