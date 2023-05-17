@@ -23,6 +23,9 @@ if __name__ == "__main__":
     # read in flare table
     flares = pd.read_csv(paths.data / "PAPER_flare_table.csv")
 
+    # pick only flares above 1 s in ED
+    flares = flares[flares.ED > 1]
+
     # pick only real flares
     flares = flares[(~flares.tstart.isnull()) & (flares.orbital_phase==-1)]
 
@@ -30,17 +33,18 @@ if __name__ == "__main__":
     res = pd.read_csv(paths.data / "results.csv")
 
     tics = res[(res.multiple_star.isnull()) & (res.multiple_star_source != "BD") & (res.TIC != "399954349(c)")]
-    tics = tics.sort_values(by="number_of_flares", ascending=False).TIC.astype(str)
+    tics = tics.sort_values(by="number_of_flares", ascending=False)
 
-    tics = tics.values
 
     # Add the number of flares to the TICs
     n_flares = []
-    for tic in tics:
-        n_flares.append(pd.read_csv(paths.data / f"TIC_{tic}_cumhist.csv").shape[0])
+    for tic in tics.TIC:
+        n_flares.append(flares[flares.TIC.astype(str) == str(tic)].shape[0])
+    
     
     # sort the TICs by the number of flares
-    tics = [x for _,x in sorted(zip(n_flares, tics), reverse=True)]
+    tics["n_flares"] = n_flares
+    tics = tics.sort_values(by="n_flares", ascending=False)
 
     # make a plot for 15 panels
     fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(14,9.5), sharex=True)
@@ -50,7 +54,7 @@ if __name__ == "__main__":
     ax = ax[::-1]
 
     # create a subplot for each star
-    for tic in tics:
+    for tic in tics.TIC:
 
         # print(g.shape)
         g = flares[(flares.TIC.astype(str) == tic)]

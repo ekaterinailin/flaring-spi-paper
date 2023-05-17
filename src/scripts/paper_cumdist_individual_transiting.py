@@ -23,6 +23,9 @@ if __name__ == "__main__":
     # read in flare table
     flares = pd.read_csv(paths.data / "PAPER_flare_table.csv")
 
+    # pick only flares above 1 s in ED
+    flares = flares[flares.ED > 1]
+
     # pick only real flares
     flares = flares[flares.orbital_phase != -1]
 
@@ -47,7 +50,7 @@ if __name__ == "__main__":
     # Add the number of flares to the TICs
     n_flares = []
     for tic in tics.TIC:
-        n_flares.append(pd.read_csv(paths.data / f"TIC_{tic}_cumhist.csv").shape[0])
+        n_flares.append(flares[flares.TIC.astype(str) == str(tic)].shape[0])
     
     # sort the TICs by the number of flares
     tics["n_flares"] = n_flares
