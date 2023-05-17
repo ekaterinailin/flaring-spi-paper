@@ -196,6 +196,19 @@ The convective turnover time $\tau$ in  $R \rm o=P_{rot}/\tau$ is derived using 
     \tau = 12.3\, \rm d \cdot (L_{\rm bol}/L_\odot)^{-1/2}
 \end{equation}
 
+We compared our derived values for $Ro$ and $B$ with existing estimates of coronal emission from~\citet{foster2022exoplanet}. We show $L_X/L_{\rm bol}$ as a function of $Ro$ and $B$ in Fig.~\ref{fig:lx}. The X-ray emission relation to Rossby number in our sample follows that of stars that are not known to host close-in planets~\citep{wright2011stellaractivityrotation}, spanning both the saturated and unsaturated regime. The X-ray emission and our estimated magnetic field closely follow each other, also consistent with stars without known close-in planets~(XXXX). There are two exceptions: GJ 3082 appears underluminous in X-ray compared to its Rossby number and expected magnetic field strength. AU Mic is slightly overluminous, falling somewhat above the saturated level of $L_X/L_{\rm bol}$. However, the star still follows the $B-L_X/L_{\rm bol}$ relation.  
+
+\begin{figure}[ht!]
+    \script{paper_lxl_plots.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_lxlbol.png}
+        \caption{
+           X-ray luminosity over bolometric luminosity compared to Rossby number (\textbf{upper panel}), and surface magnetic field strength (\textbf{lower panel}). Both relations follow those of stars not selected for hosting close-in planets, except for GJ 3323, which is underluminous for its Rossby number, and hence also its estimated magnetic field strength.
+        }
+        \label{fig:coherence_hist}
+    \end{centering}
+\end{figure}
+
 \subsection{Power of star-planet interaction}
 \label{sec:methods:pspi}
 We consider two theories for the mechanism behind flaring star-planet interactions, the stretch-and-break and the Alfv\'en wing mechanisms. For both of them, we include the case of a magnetized and an unmagnetized planet, for a total of four estimates of the expected power of magnetic star-planet interaction.
@@ -566,9 +579,21 @@ All analysis script can be found under https://github.com/ekaterinailin/flaring-
 \subsection{Proxima Cen}
 Although Proxima Cen is part of a triple stellar system, we treat it a single star in this work because of the large angular separation to its two companions. Proxima Cen b has an eccentricity upper limit of 0.35~\cite{anglada-escude2016terrestrial}.
 
-
 \subsection{K2-354}
 We note that we found K2-354 under EPIC 211314705 and K2-329(!) in \cite{bouma2020cluster}, who refer to the detection paper \cite{pope2016transiting}, and also under TIC 468989066.
+
+\section{Expected power vs. AD test, colorcoded by Rossby number}
+\begin{figure*}[ht!]
+    \script{paper_adtest_vs_value_scatterplots.py}
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/PAPER_ADtest_bg.png}
+        \caption{
+        Expected power of SPI vs. AD test results, assuming the same four different scenarios as in Fig.~\ref{fig:adtest_bp}, color-coded by Rossby number. $R\rm o=0.3$ is chosen to mark the transition from the saturated ($R\rm o < 0.3$) to the unsaturated ($R\rm o > 0.3$) activity regime. 
+        }
+        \label{fig:adtest_bp}
+    \end{centering}
+\end{figure*}
+
 \end{document}
 
 
