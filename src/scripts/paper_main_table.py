@@ -420,6 +420,7 @@ if __name__ == "__main__":
     for key in bibkeys.keys():
         bibstring += "(" + str(bibkeys[key]) + ") \citet{" + key + "}, "
     
+    bibstring = bibstring[:-2] + "."
    
     # write the bibstring to a file
     path = paths.output / "lit_table_bibstring.tex"

@@ -27,6 +27,8 @@ if __name__ == "__main__":
     multiples = multiples.ID + multiples.multiple_star_source
     multiples = ", ".join(multiples)
 
+    multiples = multiples[:-2] + "."
+
     # write to file
     print("Write to file ", paths.output / "multiples_string.tex")
     with open(paths.output / "multiples_string.tex", "w") as f:
