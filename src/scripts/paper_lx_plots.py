@@ -109,7 +109,7 @@ if __name__ == "__main__":
     ax1.set_yscale('log')
 
     # add legend
-    ax1.legend(loc='lower left', fontsize=13)
+    ax1.legend(loc='lower left', fontsize=13, frameon=False)
 
     # adjust text positions
     aT.adjust_text(txts, arrowprops=dict(arrowstyle="-", color='k', lw=0.5),
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     ax2.set_yscale('log')
 
     # add legend
-    ax2.legend(loc='lower right', fontsize=13)
+    ax2.legend(loc='lower right', fontsize=13, frameon=False)
 
     # adjust text positions
     aT.adjust_text(txts, arrowprops=dict(arrowstyle="-", color='k', lw=0.5),
