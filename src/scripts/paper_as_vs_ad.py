@@ -62,4 +62,4 @@ if __name__ == "__main__":
 
     plt.tight_layout()
 
-    plt.savefig(paths.figures / 'paper_AS_vs_AD.png', dpi=300)
+    plt.savefig(paths.figures / 'PAPER_AS_vs_AD.png', dpi=300)
