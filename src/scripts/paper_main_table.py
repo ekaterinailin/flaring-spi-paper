@@ -14,6 +14,12 @@ import pandas as pd
 import paths
 import re
 
+def round_to_1(x):
+    if x == 0:
+        return 0
+    else:
+        return np.round(x, -int(np.floor(np.log10(np.abs(x)))))
+
 def citation_from_bibkey(bibkey):
     """Create a LaTeX citation from a bibkey.
     
@@ -260,6 +266,9 @@ if __name__ == "__main__":
             ("v_rel_km_s", 'v_rel_err_km_s', 'err'),
 
             ("mean", "std","err")]
+    
+    f_or_e = ["f","f","f","f",
+              "f","f",""]
 
     # define the latex column names
     map_col_names = {
