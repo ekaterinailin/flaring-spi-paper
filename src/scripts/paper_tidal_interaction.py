@@ -49,7 +49,7 @@ if __name__ == "__main__":
             r"tidal torque $\partial L_{conv}/\partial t$ $\left[M_\odot \left(\frac{km}{s}\right)^2\right]$"]
 
     # define shared axis label
-    axes[0].set_ylabel("p-value of AD test", fontsize=12)
+    axes[0].set_ylabel("p-value of AD test", fontsize=13)
 
     # loop over the models
     for model, label in zip(models, labels):
@@ -79,11 +79,11 @@ if __name__ == "__main__":
         _ = res[(res['mean']<.19) | (res["torque_conv"]>1e-15)]
         for i, row in _.iterrows():
             texts.append(ax.annotate(row["ID"], (row[model], row["mean"]), 
-                                     fontsize=10,))
+                                     fontsize=11,))
         # layout
         ax.set_xscale("log")
         ax.set_yscale("log")
-        ax.set_xlabel(label, fontsize=12)
+        ax.set_xlabel(label, fontsize=13)
 
         minx, maxx = res[model].min(), res[model].max()
 

@@ -287,7 +287,7 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
         for star, row in group.iterrows():
             if (row["mean"]<=.2) :# | (row[value]>=1.):
                 texts.append(ax.text(x=row[value], y=row["mean"], s=row["ID"],
-                        fontsize=11, ha="right", va="top", rotation=0))
+                        fontsize=12, ha="right", va="top", rotation=0))
 
     # log scale
     ax.set_yscale("log")
@@ -300,8 +300,8 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
                 color="k", verticalalignment="center")
 
     # labels
-    ax.set_ylabel("p-value of AD test")
-    ax.set_xlabel(valuelabel)
+    ax.set_ylabel("p-value of AD test", fontsize=13)
+    ax.set_xlabel(valuelabel, fontsize=13)
 
     # legend
     if leg == True:

@@ -110,7 +110,7 @@ if __name__ == "__main__":
             # set the axis labels
             if len(ax) <3:
                 a.set_xlabel("orbital phase")
-            a.set_ylabel("number of flares")
+            a.set_ylabel("fraction of flares")
 
     # layout the figure
     plt.tight_layout(h_pad=0.1)
