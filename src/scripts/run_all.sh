@@ -8,5 +8,4 @@ python paper_cumdist_individual_transiting.py
 python paper_flare_table_values.py 
 python paper_latex_flare_table.py 
 python paper_main_table.py 
-python paper_spin_orbit_commensurability.py
 python paper_tidal_interaction.py
