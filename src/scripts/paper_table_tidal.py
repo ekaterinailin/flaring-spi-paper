@@ -39,7 +39,7 @@ def g(row, col, oneerr=False):
         """
 
         try:
-            v = np.min([row[col[1]],row[col[2]]])
+            v = np.min([abs(row[col[0]]),abs(row[col[1]]),abs(row[col[2]])])
             n  = -int(np.floor(np.log10(np.abs(v))))
          
         except:
@@ -97,7 +97,7 @@ if __name__ == "__main__":
                 r"$M_p$ [$M_\oplus$]",
                 r"log$_{10} 10^{-8} \Delta g / g$",
                 r"log$_{10} \tau_{\rm tide}$ [Gyr]",
-                r"log$_{10}  10^{-20} \frac{\partial L_{conv}}{\partial t}$"
+                r"$10^{-20} \frac{\partial L_{conv}}{\partial t}$"
                 r" $\left[M_\odot \left(\frac{km}{s}\right)^2\right]$",
                 ]
 
@@ -108,9 +108,9 @@ if __name__ == "__main__":
     df["tidal_disip_timescale"] = np.log10(df["tidal_disip_timescale"] * 1e-9)
     df["tidal_disip_timescale_up_err"] = np.log10(df["tidal_disip_timescale_up_err"] * 1e-9)
     df["tidal_disip_timescale_low_err"] = np.log10(df["tidal_disip_timescale_low_err"]  * 1e-9)
-    df["torque_conv"] = np.log10(np.abs(df["torque_conv"] * 1e20)) * np.sign(df["torque_conv"])
-    df["torque_conv_up_err"] = np.log10(np.abs(df["torque_conv_up_err"] * 1e20)) * np.sign(df["torque_conv_up_err"])
-    df["torque_conv_low_err"] = np.log10(np.abs(df["torque_conv_low_err"]  * 1e20)) * np.sign(df["torque_conv_low_err"])
+    df["torque_conv"] = df["torque_conv"] * 1e20
+    df["torque_conv_up_err"] = df["torque_conv_up_err"] * 1e20
+    df["torque_conv_low_err"] = df["torque_conv_low_err"] * 1e20
 
     # multiply M_pl and errors by 317.907 to get Earth masses
     df["M_pl"] = df["M_pl"] * 317.907
