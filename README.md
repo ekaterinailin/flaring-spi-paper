@@ -18,6 +18,6 @@
 This is an open source scientific article created using the [showyourwork](https://github.com/showyourwork/showyourwork) workflow. --
 
 
-Please find the data analysis scripts and modules over at [this other Github repository](https://github.com/ekaterinailin/flaring-spi-paper).
+Please find the data analysis scripts and modules over at [this other Github repository](https://github.com/ekaterinailin/flaring-spi). 
 
 The scripts producing tables and plots in the UPCOMING PAPER are under ``src/scripts/``. Put the required input data into ``src/data`` to make the scripts run. You can find the input data under ZENODO LINK.
