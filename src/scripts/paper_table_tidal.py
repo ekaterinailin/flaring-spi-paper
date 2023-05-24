@@ -45,6 +45,8 @@ def g(row, col, oneerr=False):
         except:
             n = 1
      
+        if n==0:
+            n=1
         if n < 0:
             # convert values in row to int
             
@@ -85,8 +87,11 @@ if __name__ == "__main__":
     # take absolute value of pl_bmassjerr2
     # df.M_pl_low_err = np.abs(df.M_pl_low_err)
 
-    # take absolute value of st_masserr2
-    # df.M_star_low_err = np.abs(df.M_star_low_err)
+    # take neg value of st_masserr2
+    df.M_star_low_err = - df.M_star_low_err
+
+    # take neg value of pl_bmassjerr2
+    df.M_pl_low_err = - df.M_pl_low_err
 
     # take absolute value of torque_conv_up_err and torque_conv_low_err
     # df.torque_conv_up_err = np.abs(df.torque_conv_up_err)
@@ -97,20 +102,27 @@ if __name__ == "__main__":
                 r"$M_p$ [$M_\oplus$]",
                 r"log$_{10} 10^{-8} \Delta g / g$",
                 r"log$_{10} \tau_{\rm tide}$ [yr]",
-                r"$10^{-20} \frac{\partial L_{conv}}{\partial t}$"
+                r"$10^{-18} \frac{\partial L_{conv}}{\partial t}$"
                 r" $\left[M_\odot \left(\frac{km}{s}\right)^2\right]$",
                 ]
 
-    # convert "grav_pert",  "tidal_disip_timescale", "torque_conv" and errors to log10
-    df["grav_pert"] = np.log10(df["grav_pert"] * 1e8)
-    df["grav_pert_up_err"] = np.log10(df["grav_pert_up_err"] * 1e8)
-    df["grav_pert_low_err"] = np.log10(df["grav_pert_low_err"] * 1e8)
+    
+
+    df["grav_pert"] = df["grav_pert"] * 1e8
+    df["grav_pert_up_err"] = df["grav_pert_up_err"] * 1e8
+    df["grav_pert_low_err"] = df["grav_pert_low_err"] * 1e8
+    df["grav_pert_up_err"] = np.log10(df["grav_pert"] + df["grav_pert_up_err"]) - np.log10(df["grav_pert"])
+    df["grav_pert_low_err"] = np.log10(df["grav_pert"] - df["grav_pert_low_err"]) - np.log10(df["grav_pert"])
+    df["grav_pert"] = np.log10(df["grav_pert"])                                                        
+
+    df["tidal_disip_timescale_up_err"] = np.log10(df["tidal_disip_timescale"] + df["tidal_disip_timescale_up_err"]) - np.log10(df["tidal_disip_timescale"])
+    df["tidal_disip_timescale_low_err"] = np.log10(df["tidal_disip_timescale"] - df["tidal_disip_timescale_low_err"]) - np.log10(df["tidal_disip_timescale"])
     df["tidal_disip_timescale"] = np.log10(df["tidal_disip_timescale"])
-    df["tidal_disip_timescale_up_err"] = np.log10(df["tidal_disip_timescale_up_err"] )
-    df["tidal_disip_timescale_low_err"] = - np.log10(df["tidal_disip_timescale_low_err"] )
-    df["torque_conv"] = df["torque_conv"] * 1e20
-    df["torque_conv_up_err"] = df["torque_conv_up_err"] * 1e20
-    df["torque_conv_low_err"] = - df["torque_conv_low_err"] * 1e20
+
+    
+    df["torque_conv"] = df["torque_conv"] * 1e18
+    df["torque_conv_up_err"] = df["torque_conv_up_err"] * 1e18
+    df["torque_conv_low_err"] = - df["torque_conv_low_err"] * 1e18
 
     # multiply M_pl and errors by 317.907 to get Earth masses
     df["M_pl"] = df["M_pl"] * 317.907
