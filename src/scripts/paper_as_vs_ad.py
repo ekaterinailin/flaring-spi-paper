@@ -10,6 +10,7 @@ than the planet's orbit.
 
 
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import paths
 
@@ -27,13 +28,19 @@ if __name__ == "__main__":
     df = df.merge(AS, on='ID')
 
     # pick only valid values
-    d = df[["ID","a_au",'a_au_err','AS_AU','mean','std']].dropna(how='any')
+    d = df[["ID", "a_au", 'a_au_err', 'AS_AU', 'AS_error_upper_AU',
+            'AS_error_lower_AU', 'mean', 'std']].dropna(how='any')
+
+    print(d.shape)
 
     # plot
     plt.figure(figsize=(6.5,5))
 
+    d["error_up"] = np.sqrt(d.a_au_err**2 + d.AS_error_upper_AU**2)
+    d["error_low"] = np.sqrt(d.a_au_err**2 + d.AS_error_lower_AU**2)
+
     plt.errorbar(d.a_au -  d.AS_AU, d["mean"], 
-                xerr=d.a_au_err, yerr = d["std"],
+                xerr=[d.error_low, d.error_up], yerr = d["std"],
                 fmt='d', color='olive',markersize=8, elinewidth=0.5)
 
     txts = []
