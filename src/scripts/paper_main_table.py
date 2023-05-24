@@ -17,6 +17,8 @@ import re
 def round_to_1(x):
     if x == 0:
         return 0
+    elif np.isnan(x):
+        return np.nan
     else:
         return np.round(x, -int(np.floor(np.log10(np.abs(x)))))
 
@@ -252,9 +254,9 @@ if __name__ == "__main__":
             ("st_rad","st_rad_err1", "st_rad_bibkey", 'err'),
             ("a_au","a_au_err","pl_orbsmax_bibkey",'err'),
 
-            ('st_lum', 'st_lumerr1', 'st_lumerr2', 'st_lum_bibkey', 'err'),
-            ("pl_radj",'pl_radjerr1', 'pl_radjerr2',"pl_radj_bibkey", 'err'),
-            ("pl_orbeccen", "pl_orbeccenerr1", "pl_orbeccenerr2", "pl_orbeccen_bibkey", 'err'),
+            ('st_lum', 'st_lumerr1', 'st_lumerr2', 'st_lum_bibkey', 'aerr'),
+            ("pl_radj",'pl_radjerr1', 'pl_radjerr2',"pl_radj_bibkey", 'aerr'),
+            ("pl_orbeccen", "pl_orbeccenerr1", "pl_orbeccenerr2", "pl_orbeccen_bibkey", 'aerr'),
 
             ("Ro","Ro_high","Ro_low", 'high-low'),
             ("B_G","B_G_high","B_G_low", 'high-low'),
@@ -268,7 +270,14 @@ if __name__ == "__main__":
             ("mean", "std","err")]
     
     f_or_e = ["f","f","f","f",
-              "f","f",""]
+              "f","f","f",
+              "f", "f", "e", "e", "e", "e",
+              "f","f"]
+    
+    ns = [2,2,2,2,
+          1,1,1,
+          1,1,1,1,1,1,
+          1,1]
 
     # define the latex column names
     map_col_names = {
@@ -340,13 +349,90 @@ if __name__ == "__main__":
 
     # convert the singles table to latex after converting the values to tex format
     print("Converting each parameter to a latex formatted column.")
-    for col in cols:
+
+    def g(row, f):
+
+        try:
+            v = np.min([row[col[1]],row[col[2]]])
+            n  = -int(np.floor(np.log10(np.abs(v))))
+        except:
+            n = 1
+        n = np.abs(n)
+        return (f"${row[col[0]]:.{n}{f}}" + 
+                        r"^{" + 
+                        f"{row[col[1]]:.{n}{f}}" + 
+                        r"}_{" + 
+                        f" {row[col[2]]:.{n}{f}}" + 
+                        r"}$") 
+    
+    def g1(row, f):
+        try:
+            n  = -int(np.floor(np.log10(np.abs(row[col[1]]))))
+        # except ValueError or OverflowError: 
+        except:
+            n = 1
+        n = np.abs(n)
+        print(f,n)
+        return f"${row[col[0]]:.{n}{f}} [{row[col[1]]:.{n}{f}}]$"
+
+    h = lambda  row: (f"${round_to_1(row[col[0]]):.0e}" + 
+                    r"^{" + 
+                    f"{round_to_1(row[col[1]]):.0e}" + 
+                    r"}_{" + 
+                    f" {round_to_1(row[col[2]]):.0e}" + 
+                    r"}$")
+    
+
+    h1 = lambda  row: (f"${round_to_1(row[col[0]]):.0e} [{round_to_1(row[col[1]]):.0e}]$")
+    
+    for col, fe in zip(cols, f_or_e):
         print(col)
         newname = map_col_names[col[0]]
-        singles[newname] = to_tex(singles, col)
+
+        if fe == "f":
+            
+            fu = lambda row: g(row, fe)
+            fu1 = lambda row: g1(row, fe)
+            if col[-1] == "aerr":
+
+                singles[newname] = singles.apply(fu, axis=1)
+
+            elif col[-1] == "err":
+
+                singles[newname] = singles.apply(fu1, axis=1)
+
+            elif col[-1] == "high-low":
+
+                singles[col[1]] = singles[col[1]] - singles[col[0]]
+                singles[col[2]] = singles[col[0]] - singles[col[2]]
+
+                singles[newname] = singles.apply(fu, axis=1)
+
+        if fe == "e":
+
+            if col[-1] == "aerr":
+
+                singles[newname] = df.apply(h, axis=1)
+            
+            elif col[-1] == "err":
+
+                singles[newname] = df.apply(h1, axis=1)
+
+            elif col[-1] == "high-low":
+
+                singles[col[1]] = singles[col[1]] - singles[col[0]]
+                singles[col[2]] = singles[col[0]] - singles[col[2]]
+
+                singles[newname] = df.apply(h, axis=1)
+
         for c in col:
             if (c in singles.columns) & (newname != c):
                 del singles[c]
+
+        # singles[newname] = to_tex(singles, col)
+        # for c in col:
+        #     if (c in singles.columns) & (newname != c):
+        #         del singles[c]
 
     # delete some columns that are not needed
     del singles["multiple_star"]
@@ -402,6 +488,7 @@ if __name__ == "__main__":
         string = string.replace(r"$nan^{nan}_{nan}$",r"--")
         string = string.replace(r"nan",r"-")
         string = string.replace(r"NaN",r"-") 
+        string = string.replace(r"$-^{-}_{ -}$",r"-")
         string = string.replace("0.0e+00",r"0.0")
         string = string.replace("midrule","hline")
         string = string.replace("toprule","hline")
