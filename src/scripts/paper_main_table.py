@@ -269,16 +269,6 @@ if __name__ == "__main__":
 
             ("mean", "std","err")]
     
-    f_or_e = ["f","f","f","f",
-              "f","f","f",
-              "f", "f", "e", "e", "e", "e",
-              "f","f"]
-    
-    ns = [2,2,2,2,
-          1,1,1,
-          1,1,1,1,1,1,
-          1,1]
-
     # define the latex column names
     map_col_names = {
         "st_rotp":"$P_{rot}$ [d]",
@@ -290,10 +280,10 @@ if __name__ == "__main__":
         "st_lum":"log${10} L_{*}$ [L$_\odot$]",
         "Ro":"Ro",
         "B_G":"$B$ [G]",
-        "p_spi_sb_bp1_norm":"$P_{sb}$",
-        "p_spi_aw_bp1_norm":"$P_{aw}$",
-        "p_spi_sb_bp0_norm":"$P_{sb0}$",
-        "p_spi_aw_bp0_norm":"$P_{aw0}$",
+        "p_spi_sb_bp1_norm":"log$10 P_{sb}$",
+        "p_spi_aw_bp1_norm":"log$10 P_{aw}$",
+        "p_spi_sb_bp0_norm":"log$10 P_{sb0}$",
+        "p_spi_aw_bp0_norm":"log$10 P_{aw0}$",
         "v_rel_km_s":"$v_{rel}$ [km s$^{-1}$]",
         "mean":"p-value",
         }
@@ -347,92 +337,85 @@ if __name__ == "__main__":
 
     fulltable = singles.copy()
 
+    # calc log10 of the values in the list of columns
+    convtolog10 = ["p_spi_sb_bp1_norm","p_spi_sb_bp1_norm_high","p_spi_sb_bp1_norm_low",
+               'p_spi_aw_bp1_norm', 'p_spi_aw_bp1_norm_high','p_spi_aw_bp1_norm_low', 
+               "p_spi_sb_bp0_norm","p_spi_sb_bp0_norm_high","p_spi_sb_bp0_norm_low",
+               'p_spi_aw_bp0_norm', 'p_spi_aw_bp0_norm_high','p_spi_aw_bp0_norm_low']
+    
+    for col in convtolog10:
+        singles[col] = np.log10(singles[col])
+
+
+    # round B_G and errors to int
+    singles["B_G"] = (singles["B_G"].round(0).values).astype(int)
+    singles["B_G_high"] = (singles["B_G_high"].round(0).values).astype(int)
+    singles["B_G_low"] = (singles["B_G_low"].round(0).values).astype(int)
+
+    print(singles["B_G"])
     # convert the singles table to latex after converting the values to tex format
     print("Converting each parameter to a latex formatted column.")
 
-    def g(row, f):
+    def g(row):
 
         try:
             v = np.min([row[col[1]],row[col[2]]])
             n  = -int(np.floor(np.log10(np.abs(v))))
+            print(n)
         except:
             n = 1
-        n = np.abs(n)
-        return (f"${row[col[0]]:.{n}{f}}" + 
+        # n = np.abs(n)
+
+        if n < 0:
+            return (f"${np.round(row[col[0]], n):d}" +
+                        r"^{" +
+                        f"{np.round(row[col[1]], n):d}" +
+                        r"}_{" +
+                        f"{np.round(row[col[2]], n):d}" +
+                        r"}$")
+        else:
+            return (f"${row[col[0]]:.{n}f}" + 
                         r"^{" + 
-                        f"{row[col[1]]:.{n}{f}}" + 
+                        f"{row[col[1]]:.{n}f}" + 
                         r"}_{" + 
-                        f" {row[col[2]]:.{n}{f}}" + 
+                        f" {row[col[2]]:.{n}f}" + 
                         r"}$") 
     
-    def g1(row, f):
+    def g1(row):
         try:
             n  = -int(np.floor(np.log10(np.abs(row[col[1]]))))
         # except ValueError or OverflowError: 
         except:
             n = 1
         n = np.abs(n)
-        print(f,n)
-        return f"${row[col[0]]:.{n}{f}} [{row[col[1]]:.{n}{f}}]$"
+        
+        return f"${row[col[0]]:.{n}f} [{row[col[1]]:.{n}f}]$"
 
-    h = lambda  row: (f"${round_to_1(row[col[0]]):.0e}" + 
-                    r"^{" + 
-                    f"{round_to_1(row[col[1]]):.0e}" + 
-                    r"}_{" + 
-                    f" {round_to_1(row[col[2]]):.0e}" + 
-                    r"}$")
-    
-
-    h1 = lambda  row: (f"${round_to_1(row[col[0]]):.0e} [{round_to_1(row[col[1]]):.0e}]$")
-    
-    for col, fe in zip(cols, f_or_e):
+    for col in cols:
         print(col)
         newname = map_col_names[col[0]]
 
-        if fe == "f":
-            
-            fu = lambda row: g(row, fe)
-            fu1 = lambda row: g1(row, fe)
-            if col[-1] == "aerr":
+        
+        if col[-1] == "aerr":
 
-                singles[newname] = singles.apply(fu, axis=1)
+            singles[newname] = singles.apply(g, axis=1)
 
-            elif col[-1] == "err":
+        elif col[-1] == "err":
 
-                singles[newname] = singles.apply(fu1, axis=1)
+            singles[newname] = singles.apply(g1, axis=1)
 
-            elif col[-1] == "high-low":
+        elif col[-1] == "high-low":
 
-                singles[col[1]] = singles[col[1]] - singles[col[0]]
-                singles[col[2]] = singles[col[0]] - singles[col[2]]
+            singles[col[1]] = singles[col[1]] - singles[col[0]]
+            singles[col[2]] = singles[col[2]] - singles[col[0]] 
 
-                singles[newname] = singles.apply(fu, axis=1)
-
-        if fe == "e":
-
-            if col[-1] == "aerr":
-
-                singles[newname] = df.apply(h, axis=1)
-            
-            elif col[-1] == "err":
-
-                singles[newname] = df.apply(h1, axis=1)
-
-            elif col[-1] == "high-low":
-
-                singles[col[1]] = singles[col[1]] - singles[col[0]]
-                singles[col[2]] = singles[col[0]] - singles[col[2]]
-
-                singles[newname] = df.apply(h, axis=1)
+            singles[newname] = singles.apply(g, axis=1)
 
         for c in col:
             if (c in singles.columns) & (newname != c):
                 del singles[c]
 
-        # singles[newname] = to_tex(singles, col)
-        # for c in col:
-        #     if (c in singles.columns) & (newname != c):
-        #         del singles[c]
+ 
 
     # delete some columns that are not needed
     del singles["multiple_star"]
@@ -461,8 +444,8 @@ if __name__ == "__main__":
             "$R_{p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "$e$", "log${10} L_{*}$ [L$_\odot$]"]
 
     # derived parameters table columns
-    der_cols = ["ID", "Ro", "$B$ [G]", "$v_{rel}$ [km s$^{-1}$]", "$P_{sb}$",
-                "$P_{sb0}$", "$P_{aw}$", "$P_{aw0}$", "p-value",]
+    der_cols = ["ID", "Ro", "$B$ [G]", "$v_{rel}$ [km s$^{-1}$]", "log$10 P_{sb}$",
+                "log$10 P_{sb0}$", "log$10 P_{aw}$", "log$10 P_{aw0}$", "p-value",]
 
     # make a list of tuples with the two column lists
     splitcols = [("lit", lit_cols), ("der", der_cols)]
