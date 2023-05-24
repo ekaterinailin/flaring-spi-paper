@@ -96,7 +96,7 @@ if __name__ == "__main__":
     new_cols =  [r"$M_*$ [$M_\odot$]",
                 r"$M_p$ [$M_\oplus$]",
                 r"log$_{10} 10^{-8} \Delta g / g$",
-                r"log$_{10} \tau_{\rm tide}$ [Gyr]",
+                r"log$_{10} \tau_{\rm tide}$ [yr]",
                 r"$10^{-20} \frac{\partial L_{conv}}{\partial t}$"
                 r" $\left[M_\odot \left(\frac{km}{s}\right)^2\right]$",
                 ]
@@ -105,12 +105,12 @@ if __name__ == "__main__":
     df["grav_pert"] = np.log10(df["grav_pert"] * 1e8)
     df["grav_pert_up_err"] = np.log10(df["grav_pert_up_err"] * 1e8)
     df["grav_pert_low_err"] = np.log10(df["grav_pert_low_err"] * 1e8)
-    df["tidal_disip_timescale"] = np.log10(df["tidal_disip_timescale"] * 1e-9)
-    df["tidal_disip_timescale_up_err"] = np.log10(df["tidal_disip_timescale_up_err"] * 1e-9)
-    df["tidal_disip_timescale_low_err"] = np.log10(df["tidal_disip_timescale_low_err"]  * 1e-9)
+    df["tidal_disip_timescale"] = np.log10(df["tidal_disip_timescale"])
+    df["tidal_disip_timescale_up_err"] = np.log10(df["tidal_disip_timescale_up_err"] )
+    df["tidal_disip_timescale_low_err"] = - np.log10(df["tidal_disip_timescale_low_err"] )
     df["torque_conv"] = df["torque_conv"] * 1e20
     df["torque_conv_up_err"] = df["torque_conv_up_err"] * 1e20
-    df["torque_conv_low_err"] = df["torque_conv_low_err"] * 1e20
+    df["torque_conv_low_err"] = - df["torque_conv_low_err"] * 1e20
 
     # multiply M_pl and errors by 317.907 to get Earth masses
     df["M_pl"] = df["M_pl"] * 317.907
