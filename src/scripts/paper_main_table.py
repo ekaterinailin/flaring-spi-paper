@@ -14,6 +14,8 @@ import pandas as pd
 import paths
 import re
 
+
+
 def round_to_1(x):
     if x == 0:
         return 0
@@ -21,229 +23,52 @@ def round_to_1(x):
         return np.nan
     else:
         return np.round(x, -int(np.floor(np.log10(np.abs(x)))))
-
-def citation_from_bibkey(bibkey):
-    """Create a LaTeX citation from a bibkey.
     
-    Parameters
-    ----------
-    bibkey : str
-        The bibkey to use for the citation.
-    
-    Returns
-    -------
-    str
-        The LaTeX citation.
-    """
-    return r" \citet{" + bibkey + "}"
 
-def max_array(a, b):
-    """Compute the maximum of two arrays. """
-    a = a.astype(float)
-    b = b.astype(float)
-    return np.where(a > b, a, b)
+def g(row, oneerr=False):
+        """Converts a row of a dataframe to a latex formatted string.
+        
+        Parameters
+        ----------
+        row : pandas.Series
+            Row of a dataframe.
+        oneerr : bool, optional
+            If True, only one error is shown. The default is False.
 
-def min_array(a, b):
-    """Compute the minimum of two arrays. """
-    a = a.astype(float)
-    b = b.astype(float)
-    return np.where(a < b, a, b)
+        Returns
+        -------
+        str
+            Latex formatted string.
+        """
 
-def get_len_decimals(df, col, err, err2=None, typ="err"):
-    """Get the number of decimals to round to.
-    
-    Parameters
-    ----------
-    df : pd.DataFrame
-        The DataFrame containing the data.
-    col : str
-        The column name of the value.
-    err : str
-        The column name of the error.
-    err2 : str, optional    
-        The column name of the second error.
-    typ : str, optional
-        The type of error. Can be "err" or "high-low".
+        try:
+            v = np.min([row[col[1]],row[col[2]]])
+            n  = -int(np.floor(np.log10(np.abs(v))))
+         
+        except:
+            n = 1
+     
+        if n < 0:
+            if oneerr:
+                return f"${np.round(row[col[0]], n):d} [{np.round(row[col[2]], n):d}]$"
 
-    Returns
-    -------
-    int
-        The number of decimals to round to.
-    """
-    if err2 is None:
-        mr = max_array(np.abs(np.log10(np.abs(df[col])).astype(int).values)+2, 
-                        np.abs(np.log10(np.abs(df[col] / df[err]))).astype(int).values + 2)
-
-        return mr
-    else:
-    
-        if typ=="err":
-            minarr = min_array(df[err].values, -df[err2].values)
-            mr = max_array(np.abs(np.log10(np.abs(df[col])).astype(int).values)+2, 
-                         np.abs(np.log10(np.abs(df[col] / minarr)).astype(int).values) +2)
-            return mr
-        elif typ=="high-low":
-            minarr = min_array((df[err]-df[col]).values, (df[col]-df[err]).values)
-            
-            mr =  max_array(np.abs(np.log10(np.abs(df[col])).astype(int).values)+2, 
-                           np.abs(np.log10(np.abs(df[col] / minarr)).astype(int).values) + 2)
-            return mr
-
-def round_to_decimals(df, col, err, err2=None, typ="err"):
-
-    """Round to the correct number of decimals.
-
-    Parameters
-    ----------
-    df : pd.DataFrame
-        The DataFrame containing the data.
-    col : str
-        The column name of the value.
-    err : str
-        The column name of the error.
-    err2 : str, optional    
-        The column name of the second error.
-    typ : str, optional
-        The type of error. Can be "err" or "high-low".
-
-    Returns
-    -------
-    pd.Series
-        The rounded values.
-    pd.Series
-        The rounded errors.
-    pd.Series
-        The rounded second errors (optional).
-    """
-
-    df["_"] = get_len_decimals(df, col, err, err2=err2,typ=typ).astype(int)
-    val = df.apply(lambda x: np.round(x[col], x._) if np.abs(x[col])<1 else  np.round(x[col],0).astype(int), axis=1)
-    
-    if err2 is None:
-        err = df.apply(lambda x: np.round(x[err], x._) if x[err]<1 else np.round(x[err],0).astype(int), axis=1)
-        del df["_"]
-        return val, err
-    else:
-        if typ=="err":
-            err = df.apply(lambda x: np.round(x[err], x._) if x[err]<1 else np.round(x[err],0).astype(int), axis=1)
-            err2 = df.apply(lambda x: np.round(x[err2], x._) if x[err2]<1 else np.round(x[err],0).astype(int), axis=1)
-        elif typ=="high-low":
-            err = df.apply(lambda x: np.round(x[err] - x[col], x._) if x[err] - x[col]<1 else np.round(x[err]-x[col],0).astype(int), axis=1)
-            err2 = df.apply(lambda x: np.round(x[err2] - x[col], x._) if x[col] - x[err2]<1 else np.round(x[err2] - x[col],0).astype(int), axis=1)
-        del df["_"]
-        return val, err, err2
-
-def convert_to_scinote(series, rel_err=1e-2):
-    """Convert a series to scientific notation.
-
-    Parameters
-    ----------
-    series : pd.Series
-        The series to convert.
-
-    Returns
-    -------
-    pd.Series
-        The converted series of strings.
-    """
-    print(rel_err)
-    return series.apply(lambda x: f"{x:.1e}" if np.abs(x)<rel_err else f"{x:.2f}").astype(str)
-
-
-def tex_up_low(val, err, err2):
-    """Convert a value and two errors into a LaTeX string.
-
-    Parameters
-    ----------
-    val : float
-        The value.
-    err : float
-        The first error.
-    err2 : float
-        The second error.
-    
-    Returns
-    -------
-    str
-        The LaTeX string.
-    """
-
-    return ("$" +
-            convert_to_scinote(val) +
-            "^{" + 
-            convert_to_scinote(err - val) + 
-            "}_{" +
-            convert_to_scinote(val - np.abs(err2)) + "}$")
-
-def tex_one_err(val, err):
-    """Convert a value and one error into a LaTeX string.
-
-    Parameters
-    ----------
-    val : float
-        The value.
-    err : float
-        The error.
-
-    Returns
-    -------
-    str
-        The LaTeX string.
-    """
-
-    return ("$" +
-            convert_to_scinote(val) +
-            "[" +
-            convert_to_scinote(err) +
-            "]$")
-
-# for each type of value cols, define a function that
-# converts them into one list of strings for latex
-def to_tex(df, col):
-    """Convert a column into a LaTeX string.
-
-    Parameters
-    ----------
-    df : pd.DataFrame
-        The DataFrame containing the data.
-    col : list
-        A list of column names.
-
-    Returns
-    -------
-    pd.Series
-        The LaTeX strings.
-    """
-    if len(col) == 4:
-   
-        if col[2][-6:] == "bibkey":
-
-            # val, err = round_to_decimals(df, col[0], col[1],typ=col[3])
-            # tex = tex_one_err(val, err) + citation_from_bibkey(df[col[2]])
-            tex = tex_one_err(df[col[0]], df[col[1]]) + citation_from_bibkey(df[col[2]])
+            else:
+               return (f"${np.round(row[col[0]], n):d}" +
+                        r"^{" +
+                        f"{np.round(row[col[1]], n):d}" +
+                        r"}_{" +
+                        f"{np.round(row[col[2]], n):d}" +
+                        r"}$")
         else:
-   
-            # val, err, err2 = round_to_decimals(df, col[0], col[1], err2=col[2],typ=col[3])
-            # tex = tex_up_low(val, err, err2)
-            tex = tex_up_low(df[col[0]], df[col[1]], df[col[2]])
-   
-    elif len(col) == 5:
-   
-        # val, err, err2 = round_to_decimals(df, col[0], col[1], err2=col[2],typ=col[4])
+            return (f"${row[col[0]]:.{n}f}" + 
+                        r"^{" + 
+                        f"{row[col[1]]:.{n}f}" + 
+                        r"}_{" + 
+                        f" {row[col[2]]:.{n}f}" + 
+                        r"}$") 
+    
 
-        # tex = tex_up_low(val, err, err2) + citation_from_bibkey(df[col[3]])
-        tex = tex_up_low(df[col[0]], df[col[1]], df[col[2]]) + citation_from_bibkey(df[col[3]])
-    elif len(col) == 3:
-   
-        # val, err = round_to_decimals(df, col[0], col[1], typ=col[2])
-        # tex = tex_one_err(val, err)
-        tex = tex_one_err(df[col[0]], df[col[1]])
 
-    else:
-   
-        tex = df[col[0]].astype(str)
-   
-    return tex
 
 if __name__ == "__main__":
 
@@ -356,41 +181,7 @@ if __name__ == "__main__":
     # convert the singles table to latex after converting the values to tex format
     print("Converting each parameter to a latex formatted column.")
 
-    def g(row):
-
-        try:
-            v = np.min([row[col[1]],row[col[2]]])
-            n  = -int(np.floor(np.log10(np.abs(v))))
-            print(n)
-        except:
-            n = 1
-        # n = np.abs(n)
-
-        if n < 0:
-            return (f"${np.round(row[col[0]], n):d}" +
-                        r"^{" +
-                        f"{np.round(row[col[1]], n):d}" +
-                        r"}_{" +
-                        f"{np.round(row[col[2]], n):d}" +
-                        r"}$")
-        else:
-            return (f"${row[col[0]]:.{n}f}" + 
-                        r"^{" + 
-                        f"{row[col[1]]:.{n}f}" + 
-                        r"}_{" + 
-                        f" {row[col[2]]:.{n}f}" + 
-                        r"}$") 
     
-    def g1(row):
-        try:
-            n  = -int(np.floor(np.log10(np.abs(row[col[1]]))))
-        # except ValueError or OverflowError: 
-        except:
-            n = 1
-        n = np.abs(n)
-        
-        return f"${row[col[0]]:.{n}f} [{row[col[1]]:.{n}f}]$"
-
     for col in cols:
         print(col)
         newname = map_col_names[col[0]]
@@ -402,6 +193,7 @@ if __name__ == "__main__":
 
         elif col[-1] == "err":
 
+            g1 = lambda row: g(row, oneerr=True)
             singles[newname] = singles.apply(g1, axis=1)
 
         elif col[-1] == "high-low":

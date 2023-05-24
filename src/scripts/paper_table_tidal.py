@@ -16,8 +16,61 @@ import paths
 def round_to_1(x):
     if x == 0:
         return 0
+    elif np.isnan(x):
+        return np.nan
     else:
         return np.round(x, -int(np.floor(np.log10(np.abs(x)))))
+    
+
+def g(row, col, oneerr=False):
+        """Converts a row of a dataframe to a latex formatted string.
+        
+        Parameters
+        ----------
+        row : pandas.Series
+            Row of a dataframe.
+        oneerr : bool, optional
+            If True, only one error is shown. The default is False.
+
+        Returns
+        -------
+        str
+            Latex formatted string.
+        """
+
+        try:
+            v = np.min([row[col[1]],row[col[2]]])
+            n  = -int(np.floor(np.log10(np.abs(v))))
+         
+        except:
+            n = 1
+     
+        if n < 0:
+            # convert values in row to int
+            
+
+            if oneerr:
+                for c in col[:2]:
+                    row[c] = int(row[c])
+                return f"${np.round(row[col[0]], n):d} [{np.round(row[col[2]], n):d}]$"
+
+            else:
+               for c in col[:3]:
+                    row[c] = int(row[c])
+               return (f"${np.round(row[col[0]], n):d}" +
+                        r"^{" +
+                        f"{np.round(row[col[1]], n):d}" +
+                        r"}_{" +
+                        f"{np.round(row[col[2]], n):d}" +
+                        r"}$")
+        else:
+            return (f"${row[col[0]]:.{n}f}" + 
+                        r"^{" + 
+                        f"{row[col[1]]:.{n}f}" + 
+                        r"}_{" + 
+                        f" {row[col[2]]:.{n}f}" + 
+                        r"}$") 
+    
 
 
 
@@ -30,50 +83,51 @@ if __name__ == "__main__":
     df = df.sort_values(by="mean", ascending=False)
 
     # take absolute value of pl_bmassjerr2
-    df.M_pl_low_err = np.abs(df.M_pl_low_err)
+    # df.M_pl_low_err = np.abs(df.M_pl_low_err)
 
     # take absolute value of st_masserr2
-    df.M_star_low_err = np.abs(df.M_star_low_err)
+    # df.M_star_low_err = np.abs(df.M_star_low_err)
 
     # take absolute value of torque_conv_up_err and torque_conv_low_err
-    df.torque_conv_up_err = np.abs(df.torque_conv_up_err)
-    df.torque_conv_low_err = np.abs(df.torque_conv_low_err)
+    # df.torque_conv_up_err = np.abs(df.torque_conv_up_err)
+    # df.torque_conv_low_err = np.abs(df.torque_conv_low_err)
 
     # convert to latex readable entries 
     new_cols =  [r"$M_*$ [$M_\odot$]",
                 r"$M_p$ [$M_\oplus$]",
-                r"$10^{-8} \Delta g / g$",
-                r"$\tau_{\rm tide}$ [Gyr]",
-                r"$10^{-20} \frac{\partial L_{conv}}{\partial t}$"
+                r"log$_{10} 10^{-8} \Delta g / g$",
+                r"log$_{10} \tau_{\rm tide}$ [Gyr]",
+                r"log$_{10}  10^{-20} \frac{\partial L_{conv}}{\partial t}$"
                 r" $\left[M_\odot \left(\frac{km}{s}\right)^2\right]$",
                 ]
 
-    factor = [1., 317.907, 1e8, 1e-8, 1e20, 1]
-    n = [2, 1, 2, 1, 1, 3]
-    fs = ["f", "f", "f", "e", "e", "f"]
+    # convert "grav_pert",  "tidal_disip_timescale", "torque_conv" and errors to log10
+    df["grav_pert"] = np.log10(df["grav_pert"] * 1e8)
+    df["grav_pert_up_err"] = np.log10(df["grav_pert_up_err"] * 1e8)
+    df["grav_pert_low_err"] = np.log10(df["grav_pert_low_err"] * 1e8)
+    df["tidal_disip_timescale"] = np.log10(df["tidal_disip_timescale"] * 1e-9)
+    df["tidal_disip_timescale_up_err"] = np.log10(df["tidal_disip_timescale_up_err"] * 1e-9)
+    df["tidal_disip_timescale_low_err"] = np.log10(df["tidal_disip_timescale_low_err"]  * 1e-9)
+    df["torque_conv"] = np.log10(np.abs(df["torque_conv"] * 1e20)) * np.sign(df["torque_conv"])
+    df["torque_conv_up_err"] = np.log10(np.abs(df["torque_conv_up_err"] * 1e20)) * np.sign(df["torque_conv_up_err"])
+    df["torque_conv_low_err"] = np.log10(np.abs(df["torque_conv_low_err"]  * 1e20)) * np.sign(df["torque_conv_low_err"])
+
+    # multiply M_pl and errors by 317.907 to get Earth masses
+    df["M_pl"] = df["M_pl"] * 317.907
+    df["M_pl_up_err"] = df["M_pl_up_err"] * 317.907
+    df["M_pl_low_err"] = df["M_pl_low_err"] * 317.907
+
+   
     old_cols = ["M_star", "M_pl", "grav_pert", 
                 "tidal_disip_timescale", "torque_conv"]
 
 
-    for ocol, fac, n, f,  ncol in zip(old_cols, factor, n, fs, new_cols):
+    for ocol, ncol in zip(old_cols, new_cols):
         print(ncol)
+        col = [ocol, ocol + "_up_err", ocol + "_low_err"]
 
-        if f == "f":
-            df[ncol] = df.apply(lambda row: f"${row[ocol] * fac:.{n}{f}}" + 
-                                        r"^{" + 
-                                        f"{row[ocol + '_up_err'] * fac:.{n}{f}}" + 
-                                        r"}_{" + 
-                                        f" {row[ocol + '_low_err'] * fac:.{n}{f}}" + 
-                                        r"}$", 
-                                        axis=1)
-        if f == "e":
-            df[ncol] = df.apply(lambda row: f"${round_to_1(row[ocol] * fac):.0e}" + 
-                                        r"^{" + 
-                                        f"{round_to_1(row[ocol + '_up_err'] * fac):.0e}" + 
-                                        r"}_{" + 
-                                        f" {round_to_1(row[ocol + '_low_err'] * fac):.0e}" + 
-                                        r"}$", 
-                                        axis=1)
+        df[ncol] = df.apply(g, axis=1, args=(col,))
+
     
 
     g = lambda row: f"{row['mean']:.2f} [{row['std']:.2f}]"  
