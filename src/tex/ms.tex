@@ -9,13 +9,23 @@
 \title{Flaring star-planet interactions in Kepler and TESS}
 
 % Author list
-\author{Ekaterina Ilin}
-\author{Katja Poppenh\"ager}
-\author{Judy Chebly}
-\author{Nikoleta Ilic}
-\author{Juli\'an Alvarado-G\'omez}
+\author[0000-0002-6299-7542]{Ekaterina Ilin }
+\affiliation{Leibniz Insitute for Astrophysics Potsdam (AIP), An der Sternwarte 16, 14482 Potsdam, Germany}
 
+\author[0000-0003-1231-2194]{Katja Poppenh\"ager}
+\affiliation{Leibniz Insitute for Astrophysics Potsdam (AIP), An der Sternwarte 16, 14482 Potsdam, Germany}
+\affiliation{Institute for Physics and Astronomy, University of Potsdam, Karl-Liebknecht-Strasse 24/25, 14476 Potsdam, Germany}
 
+\author[0000-0003-0695-6487]{Judy Chebly}
+\affiliation{Leibniz Insitute for Astrophysics Potsdam (AIP), An der Sternwarte 16, 14482 Potsdam, Germany}
+\affiliation{Institute for Physics and Astronomy, University of Potsdam, Karl-Liebknecht-Strasse 24/25, 14476 Potsdam, Germany}
+
+\author[0000-0001-7579-3728]{Nikoleta Ilic}
+\affiliation{Leibniz Insitute for Astrophysics Potsdam (AIP), An der Sternwarte 16, 14482 Potsdam, Germany}
+\affiliation{Institute for Physics and Astronomy, University of Potsdam, Karl-Liebknecht-Strasse 24/25, 14476 Potsdam, Germany}
+
+\author[0000-0001-5052-3473]{Juli\'an D. Alvarado-G\'omez}
+\affiliation{Leibniz Insitute for Astrophysics Potsdam (AIP), An der Sternwarte 16, 14482 Potsdam, Germany}
 
 % Abstract with filler text
 \begin{abstract}
@@ -32,7 +42,7 @@
 % Main body with filler text
 \section{Introduction}
 \label{sec:intro}
-One of the most surprising results in exoplanet research is the diversity of star-planet system architectures. The past two decades revealed that planets can occur in orbits of only a few stellar radii~[e.g., ][]\citep{sanchis-ojeda2014study} that they could almost be considered to live inside the stellar atmosphere. At this proximity, the planet exerts force, tidal and magnetic, both short- and long-term, on its host -- a phenomenon largely unknown to the Solar System. These forces are typically subsumed under the term star-planet interactions (SPI) that emphasizes that they are bidirectional, affecting both planet, and star. Specifically, the effects on the star pose challenges, but also opportunities for our understanding of star-planet systems:
+One of the most surprising results in exoplanet research is the diversity of star-planet system architectures. The past two decades revealed that planets can occur in orbits of only a few stellar radii~\citep[e.g., ][]{sanchis-ojeda2014study} that they could almost be considered to live inside the stellar atmosphere. At this proximity, the planet exerts force, tidal and magnetic, both short- and long-term, on its host -- a phenomenon largely unknown to the Solar System. These forces are typically subsumed under the term star-planet interactions (SPI) that emphasizes that they are bidirectional, affecting both planet, and star. Specifically, the effects on the star pose challenges, but also opportunities for our understanding of star-planet systems:
 
 On the one hand, a close-in planet that changes the star's rotation and activity makes it more difficult for us to model the system's evolution, as it affects fundamental stellar parameters. Ages inferred from rotation will be biased, if the star is spun up or spun down relative to stars without close-in companions~\citep{tejadaarevalo2021further, brown2014discrepancies, maxted2015comparison}. Analogously, altered activity levels may mimic an older or younger host than it actually is~\citep{ilic2022tidal}. On the other hand, measuring in what ways and how much close-in planets alter their hosts' behavior can provide important insights into the habitability of the entire system~\citep{shkolnik2018signatures}. Even if they orbit far inside the habitable zone, such planets probe the system's space weather and mass loss by revealing the extent of the Alfv\'en zone through SPI~\citep{kavanagh2021planetinduced, chebly2022destination}. % Prospectively, planet-induced stellar activity could quantify otherwise difficult to measure planetary properties such as the strength and extent of their magnetic field~\citep{cauley2019magnetic}. 
 
@@ -436,20 +446,30 @@ Magnetic and tidal SPI are difficult to disentangle by their global effects on s
     \script{paper_as_vs_ad.py}
     \begin{centering}
         \includegraphics[width=\hsize]{figures/PAPER_AS_vs_AD.png}
-    \caption{ TBD.}
+    \caption{Magnetic flaring star-planet interaction strength ($p$-value of AD-test) vs. the innermost planet's location relative to the Alfv\'en surface radius. The innermost planets in the systems left of the dashed line (\textbf{shaded region}) are likely in the sub-Alfv\'enic regime. Only these planets can induce flares in the stellar atmosphere. See Section~\ref{sec:discussion:as} for the procedure we used to estimate the Alfv\'en surface radius. }
         \label{fig:as}
     \end{centering}
 \end{figure}
 
-reference \ref{sec:intro:mspi}
+Magnetic star-planet interaction can only take place if the planet spends at least a part of its orbit in the sub-Alfv\'enic regime~(see Section~\ref{sec:intro:mspi}). 
 
 Fig.~\ref{fig:as}
 
-how we estimated the AS (Judy's part)
+The average Alfv\'en surface size ($\overline{AS}_{R}$) was estimated using the power law  (Eq.~\ref{AS_estimation}) established by Chebly et al. (under revision):
+
+\begin{equation}
+    \log \overline{AS_{\rm R}} = (0.44 \pm 0.05) \log B_{\rm r}^{\rm max} + (0.54 \pm 0.08)\label{AS_estimation}
+\end{equation}
+
+This relation links the mean AS size with the maximum large-scale radial magnetic field ($B_{\rm r}^{\rm max}$) obtained in Zeeman-Doppler Imaging reconstructions  \textcolor{red}{(references here)}. The relation was derived from 3D~MHD stellar wind simulations cool main sequence stars (F, G, K, and M), which incorporated observed ZDI maps as boundary condition for the stellar radial magnetic field (for more details on the models see Chebly et al. 2023). However, the stellar magnetic field~($B$) in this work (Table XX), derived from the Rossby number of each star (Eq. XX), corresponds to the total, unsigned magnetic field strength on the stellar surface. As such, it is necessary to estimate how $B_{\rm r}^{\rm max}$ relates to $B$. 
+
+In \cite{reiners2022magnetism}, it was reported that for Sun-like stars with a total magnetic field strength of up to 2000~G, the longitudinal magnetic field derived from Stokes V spectropolarimetric observations ($B_{\rm V}$) accounts for $\sim$\,$10$\% of the total magnetic field. \textbf{add ref.} showed that this trend also holds for M-dwarfs with magnetic fields up to 4000~G. Therefore, as a first assumption, we consider that the longitudinal magnetic field of our stars would reach 15\% of the total magnetic field (i.e. $B_{\rm V} = 0.15B$), given that most systems in our sample have B~$>$~2000 G. 
+
+The second assumption is that $B_{\rm V}$ can be equal to or lower than the maximum radial magnetic field strength. This is because, unlike the maximum radial magnetic field, which is measured at a specific location on the stellar surface, $B_{\rm V}$ may suffer from cancellation as it is measured across a specific area. In this context, the maximum radial magnetic field strength can be considered as the upper limit of $B_{\rm V}$ (15\%~of~B~=~$B_{\rm r}^{\rm max}$). Under these two assumptions, we will be estimating  an upper limit on $\overline{AS}_{R}$.
 
 
 what we think about it (E and J contributions, comments from others  welcome)
-
+TAP 26 and KOI-12 appear sub-Alfv\'enic in our estimate. So it seems unlikely that the absence of interaction is caused by the planets orbiting outside the Alfv\'en radius. 
 
 \subsection{Eccentricity}
 \label{sec:discussion:eccentricity}
@@ -555,7 +575,7 @@ The third model uses the gravitational perturbation as a proxy for the interacti
 
 \subsubsection{Planetary and stellar masses}
 
-We collect the planetary and stellar masses from the literature~(Table~\ref{tab:tidal}). For missing planetary masses, the radii were known, so we used the mass-radius relations implemented in \texttt{astro-forecaster}~[Ben Cassesse's implementation of \texttt{forecaster}][]\citep{chen2017probabilistic}. GJ 3323, GJ 674 and GJ 3082 were also missing stellar mass estimates, which we obtained from the \citep{mann2015how, mann2016erratum} relations between absolute Ks magnitude~\citep{skrutskie2006two} and stellar mass for M dwarfs using the distances from \citet{bailer-jones2021estimating}. For Kepler-42 b, we used  $M_p=0.1-2.06M_\oplus$ that covers pure rock to pure iron compositions in \citet{muirhead2012characterizing}, and adopted the logarithmic mean for our estimate. Kepler-1558 c has a similar radius to Kepler-42 b, i.e., most likely a bare core planet, so we used the same density range to estimate its mass. We also adopt the upper limit of $5M_J$ for HIP 67522, but use the lower error from \citet{chen2017probabilistic}. 
+We collect the planetary and stellar masses from the literature~(Table~\ref{tab:tidal}). For missing planetary masses, the radii were known, so we used the mass-radius relations implemented in \texttt{astro-forecaster}~[Ben Cassesse's implementation of \texttt{forecaster}][]\citep{chen2017probabilistic}. GJ 3323, GJ 674 and GJ 3082 were also missing stellar mass estimates, which we obtained from the \citep{mann2015how, mann2016erratum} relations between absolute Ks magnitude~\citep{skrutskie2006two} and stellar mass for M dwarfs using the distances from \citet{bailer-jones2021estimating}. For Kepler-42 b, we used  $M_p=0.1-2.06M_\oplus$ that covers pure rock to pure iron compositions in \citet{muirhead2012characterizing}, and adopted the logarithmic mean for our estimate. Kepler-1558 c has a similar radius to Kepler-42 b, i.e., most likely a bare core planet, so we used density ranging from Earth bulk density to pure rock to estimate its mass. We also adopt the upper limit of $5M_J$ for HIP 67522, but use the lower error from \citet{chen2017probabilistic}. 
 
 \subsubsection{Tidal vs. magnetic flaring star planet interaction}
 
@@ -614,14 +634,16 @@ Our study is the first that systematically searched for flaring star-planet inte
 %Close-in planets are being explored as in-situ probes of the dynamic magnetic field~\citep{trigilio2023starplanet}, and stellar mass loss~\citep{vidotto2017exoplanets} conditions in their orbit. They are two key components of the space weather that a potentially habitable planet will encounter. The orbital distances, where sub-Alfv\'enic interaction can take place, are usually closer to the star than its habitable zone. However, in late M dwarfs like TRAPPIST-1, these two regions overlap~\citep{strugarek2021physics}, and information from closer in for earlier spectral types is still crucial to reliably model the magnetic environment of further out terrestrial planets. We only begin to uncover the invaluable information that close-in planets can provide about the ever-changing environment of habitable-zone terrestrial planets. 
 
 \section*{Acknowledgements}
+
 This paper includes data collected by the TESS mission, which are publicly available from the Mikulski Archive for Space Telescopes (MAST).
 Funding for the TESS mission is provided by NASA’s Science Mission directorate. 
 This work has made use of data from the European Space Agency (ESA) mission {\it Gaia} (\url{https://www.cosmos.esa.int/gaia}), processed by the {\it Gaia} Data Processing and Analysis Consortium (DPAC, \url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC
 has been provided by national institutions, in particular the institutions participating in the {\it Gaia} Multilateral Agreement.
 %follow instructions here https://gea.esac.esa.int/archive/documentation/GEDR3/Miscellaneous/sec_credit_and_citation_instructions/
 \section*{Data Availability}
-All analysis script can be found under https://github.com/ekaterinailin/flaring-spi/. All data and scripts used to creat the tables and figures in this paper can be found under
-
+All data used in this study are publicly available in their respective archives.
+This study used the reproducibility software \href{https://github.com/showyourwork/showyourwork}{\showyourwork}
+\citep{luger2021mappinga} to create all figures, format all tables, and compile the manuscript. Each figure links to the dataset stored on Zenodo (\url{ZENODO LINK} and XXXX integration TBD), and to the script that produced the figure in the git repository~\url{https://github.com/ekaterinailin/flaring-spi-paper}. The git repository that produces the data stored on Zenodo is publicly available at \url{https://github.com/ekaterinailin/flaring-spi}. 
 \bibliography{bib}
 
 \appendix
