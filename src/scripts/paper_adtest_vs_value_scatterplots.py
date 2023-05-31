@@ -23,9 +23,9 @@ def get_sigma_values():
     """Define the sigma values."""
 
     # define sigma values
-    onesigma = 1 - .342*2
-    twosigma = 1 - .342*2 - .136*2
-    threesigma = 1 - .342*2 - .136*2 - .021*2
+    onesigma = 0.3173
+    twosigma = 0.0455
+    threesigma = 0.0027
     
     # put them in a list
     sigmas = [onesigma, twosigma, threesigma]
@@ -305,11 +305,11 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
 
     # legend
     if leg == True:
-        ax.legend(legend, labels, loc=(0, 0.07), fontsize=15)
+        ax.legend(legend, labels, loc=(0, 0.08), fontsize=15)
 
     # limits
     ax.set_xlim(data[f"{value}_low"].min() * 0.85, data[f"{value}_high"].max() * 1.15)
-    ax.set_ylim(1.5e-3, 1)
+    ax.set_ylim(2e-3, 1)
 
     # adjust label positions
     adjust_text(texts, arrowprops=dict(arrowstyle="-", color='k', lw=0.5), ax=ax)
@@ -379,10 +379,10 @@ if __name__ == "__main__":
 
     columns = ["p_spi_sb_bp1_norm", "p_spi_sb_bp0_norm",
               "p_spi_aw_bp1_norm", "p_spi_aw_bp0_norm"]
-    xlabels = [r"$\sim$ P$_{sb}$  @ B$_p$=1G",
-              r"$\sim$ P$_{sb}$  @ B$_p$=0G",
-              r"$\sim$ P$_{aw}$  @ B$_p$=1G",
-              r"$\sim$ P$_{aw}$  @ B$_p$=0G"]
+    xlabels = [r"$\sim$ P$_{sb}$ (stretch-and-break interaction with magnetized planet)",
+              r"$\sim$ P$_{sb0}$  (stretch-and-break interaction with unmagnetized planet)",
+              r"$\sim$ P$_{aw}$  (Alfvén wing interaction with magnetized planet)",
+              r"$\sim$ P$_{aw0}$  (Alfvén wing interaction with unmagnetized planet)"]
 
     # ------------------------------------------------------------
     # DISTANCE

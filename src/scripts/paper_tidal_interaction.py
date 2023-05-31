@@ -10,16 +10,15 @@ def get_sigma_values():
     """Define the sigma values."""
 
     # define sigma values
-    onesigma = 1 - .342*2
-    twosigma = 1 - .342*2 - .136*2
-    threesigma = 1 - .342*2 - .136*2 - .021*2
+    onesigma = 0.3173
+    twosigma = 0.0455
+    threesigma = 0.0027
     
     # put them in a list
     sigmas = [onesigma, twosigma, threesigma]
     sigma_label = [r"$1\sigma$", r"$2\sigma$", r"$3\sigma$"]
 
     return sigmas, sigma_label
-
 
 if __name__ == "__main__":
 

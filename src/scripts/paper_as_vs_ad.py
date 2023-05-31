@@ -21,32 +21,45 @@ if __name__ == "__main__":
     # read results
     df = pd.read_csv(paths.data / 'results.csv')
 
+     # remove GJ 1061 because it does not have a rotation period
+    df = df[df["ID"] != "GJ 1061"]
+
+    # drop rows with TIC 67646988 and 236387002, the brown dwarfs
+    df = df[df.TIC != "67646988" ]
+    df = df[df.TIC != "236387002" ]
+
+    # the old Kepler-411 instance
+    df = df[df.TIC != "399954349(c)" ]
+
+    # remove multiple stars
+    df = df[df["multiple_star"].isnull()]
+
     # read AS
-    AS = pd.read_csv(paths.data / 'AS_estimation_table.csv')
+    AS = pd.read_csv(paths.data / 'AS_estimation.csv')
 
     # merge tables
     df = df.merge(AS, on='ID')
 
     # pick only valid values
-    d = df[["ID", "a_au", 'a_au_err', 'AS_AU', 'AS_error_upper_AU',
-            'AS_error_lower_AU', 'mean', 'std']].dropna(how='any')
+    d = df[["ID", "a_au", 'a_au_err', 'AS_au', 'AS_au_max_error',
+            'AS_au_min_error', 'mean', 'std']].dropna(how='any')
 
     print(d.shape)
 
     # plot
     plt.figure(figsize=(6.5,5))
 
-    d["error_up"] = np.sqrt(d.a_au_err**2 + d.AS_error_upper_AU**2)
-    d["error_low"] = np.sqrt(d.a_au_err**2 + d.AS_error_lower_AU**2)
+    d["error_up"] = np.sqrt(d.a_au_err**2 + d.AS_au_max_error**2)
+    d["error_low"] = np.sqrt(d.a_au_err**2 + d.AS_au_min_error**2)
 
-    plt.errorbar(d.a_au -  d.AS_AU, d["mean"], 
+    plt.errorbar(d.a_au -  d.AS_au, d["mean"], 
                 xerr=[d.error_low, d.error_up], yerr = d["std"],
                 fmt='d', color='olive',markersize=8, elinewidth=0.5)
 
     txts = []
     for i, row in d.iterrows():
-        if (row['mean'] < 0.2) | (row['a_au'] - row['AS_AU'] < -0.05):
-            txts.append(plt.annotate(row.ID, (row.a_au - row.AS_AU, row["mean"]),
+        if (row['mean'] < 0.2) | (row['a_au'] - row['AS_au'] < -0.05):
+            txts.append(plt.annotate(row.ID, (row.a_au - row.AS_au, row["mean"]),
                                     fontsize=12))
 
     # vertical dashed line at 0
