@@ -26,6 +26,13 @@ if __name__ == "__main__":
     # read the tidal interaction strength table with the AD test results
     res = pd.read_csv(paths.data / "TIS_with_ADtests.csv", index_col=0)
 
+
+    # RV IDs
+    rvs = ["Proxima Cen", "TAP 26", "GJ 3082", "GJ 3323", "GJ 687" , "YZ Cet", "GJ 674"]
+
+    # add a column that is 1 for RV stars and 0 for others
+    res["RV"] = [1 if ID in rvs else 0 for ID in res.ID.values]
+
     # blue when convective envelope is spinning faster, and transferring angular momentum to the planet
     res["color_conv"] = ["blue" if np.sign(torque)==1 else "grey" for torque in res["torque_conv"].values]
     
@@ -59,19 +66,41 @@ if __name__ == "__main__":
         # plot the data
         # torque conv is the model, use appropriate color, otherwise grey
         if model == "torque_conv":
-            for color, g in res.groupby("color_conv"):
-                xerr = np.abs(np.asarray([g[model + "_low_err"], np.abs(g[model + "_up_err"])]))
-                print(xerr)
-                ax.errorbar(g[model],g["mean"], xerr=xerr,
-                            yerr=g["std"], label=color, 
-                        color=color, fmt="X", markersize=7, elinewidth=0.3)
+            for color, h in res.groupby("color_conv"):
+                
+                # group by RV and non-RV
+                for rv, g in h.groupby("RV"):
+
+                    xerr = np.abs(np.asarray([g[model + "_low_err"], np.abs(g[model + "_up_err"])]))
+                   
+                    if rv == 1:
+                        ax.errorbar(g[model],g["mean"], xerr=xerr,
+                                    yerr=g["std"], label=color, 
+                                color=color, fmt="X", markersize=7, elinewidth=0.3)
+                    else:
+                        ax.errorbar(g[model],g["mean"], xerr=xerr,
+                                    yerr=g["std"], label=color, 
+                                color=color, fmt="o", markersize=7, elinewidth=0.3)
+                
           
         else:
-            xerr = np.abs(np.asarray([res[model + "_low_err"], np.abs(res[model + "_up_err"])]))
+            
 
-            ax.errorbar(res[model],res["mean"], xerr=xerr,
-                        yerr=res["std"], label=model, 
-                       color="grey", fmt="X", markersize=7, elinewidth=0.3)
+            # group by RV and non-RV
+            for rv, g in res.groupby("RV"):
+
+                xerr = np.abs(np.asarray([g[model + "_low_err"], np.abs(g[model + "_up_err"])]))
+                
+                if rv == 1:
+                    ax.errorbar(g[model],g["mean"], xerr=xerr,
+                                yerr=g["std"], label=model, 
+                            color="grey", fmt="X", markersize=7, elinewidth=0.3)
+                else:
+                    ax.errorbar(g[model],g["mean"], xerr=xerr,
+                                yerr=g["std"], label=model, 
+                            color="grey", fmt="o", markersize=7, elinewidth=0.3)
+
+        
 
         # add the ID of the systems with low p-values
         texts = []
