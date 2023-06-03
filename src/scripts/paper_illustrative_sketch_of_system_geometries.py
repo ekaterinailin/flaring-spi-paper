@@ -221,6 +221,7 @@ if __name__ == "__main__":
         ax.text(0., 0.97, label + ".", transform=ax.transAxes,
                 fontsize=18, fontweight='bold', va='top', ha='right')
         
+    plt.tight_layout()
 
     # --------------------------------------------------------------------------
     # SAVE
