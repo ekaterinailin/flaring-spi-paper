@@ -47,10 +47,12 @@ def g(row, oneerr=False):
          
         except:
             n = 1
+
+        print(oneerr, n)
      
         if n < 0:
             if oneerr:
-                return f"${np.round(row[col[0]], n):d} [{np.round(row[col[2]], n):d}]$"
+                return f"${np.round(row[col[0]], n):d} [{np.round(row[col[1]], n):d}]$"
 
             else:
                return (f"${np.round(row[col[0]], n):d}" +
@@ -60,7 +62,10 @@ def g(row, oneerr=False):
                         f"{np.round(row[col[2]], n):d}" +
                         r"}$")
         else:
-            return (f"${row[col[0]]:.{n}f}" + 
+            if oneerr:
+                return f"${np.round(row[col[0]], n):f} [{np.round(row[col[1]], n):f}]$"
+            else:
+                return (f"${row[col[0]]:.{n}f}" + 
                         r"^{" + 
                         f"{row[col[1]]:.{n}f}" + 
                         r"}_{" + 
