@@ -40,19 +40,26 @@ def g(row, oneerr=False):
         str
             Latex formatted string.
         """
+        if oneerr:
+            try:
+                v = np.min([np.abs(row[col[0]]),np.abs(row[col[1]])])
+                n  = -int(np.floor(np.log10(np.abs(v))))
+                print(n)
+            except:
+                n = 1
+        else:
+            
+            try:
+                v = np.min([row[col[1]],row[col[2]]])
+                n  = -int(np.floor(np.log10(np.abs(v))))
+            
+            except:
 
-        try:
-            v = np.min([row[col[1]],row[col[2]]])
-            n  = -int(np.floor(np.log10(np.abs(v))))
-         
-        except:
-            n = 1
-
-        print(oneerr, n)
+                n = 1
      
         if n < 0:
             if oneerr:
-                return f"${np.round(row[col[0]], n):d} [{np.round(row[col[1]], n):d}]$"
+                return f"${int(np.round(row[col[0]], n)):d} [{int(np.round(row[col[1]], n)):d}]$"
 
             else:
                return (f"${np.round(row[col[0]], n):d}" +
@@ -63,7 +70,8 @@ def g(row, oneerr=False):
                         r"}$")
         else:
             if oneerr:
-                return f"${np.round(row[col[0]], n):f} [{np.round(row[col[1]], n):f}]$"
+                print(n)
+                return f"${np.round(row[col[0]], n):{n}f} [{np.round(row[col[1]], n):{n}f}]$"
             else:
                 return (f"${row[col[0]]:.{n}f}" + 
                         r"^{" + 
