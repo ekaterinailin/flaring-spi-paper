@@ -70,8 +70,10 @@ def g(row, oneerr=False):
                         r"}$")
         else:
             if oneerr:
-                print(n)
-                return f"${np.round(row[col[0]], n):{n}f} [{np.round(row[col[1]], n):{n}f}]$"
+                print(n, col[0])
+                v1 = np.round(row[col[0]], n)
+                v2 = np.round(row[col[1]], n)
+                return f"${v1:.{n}f} [{v2:.{n}f}]$"
             else:
                 return (f"${row[col[0]]:.{n}f}" + 
                         r"^{" + 
