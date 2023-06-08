@@ -18,6 +18,8 @@ if __name__ == "__main__":
     # read in the tidal results
     df = pd.read_csv(paths.data / "TIS_with_ADtests.csv")
 
+    print("TIDAL INTERACTION corr-coeffs")
+
     # calculate the Spearman and Pearson correlation coefficients
     for model in ["torque_conv", "tidal_disip_timescale", "grav_pert"]:
         d = df[[model, "mean"]]
@@ -50,6 +52,8 @@ if __name__ == "__main__":
 
     # GJ 1061 because rotation is unclear
     singles = singles[singles.TIC != "79611981" ]
+
+    print("MAGNETIC INTERACTION corr-coeffs")
 
     # calculate the Spearman and Pearson correlation coefficients
     for model in ["p_spi_sb_bp1_norm","p_spi_sb_bp0_norm",

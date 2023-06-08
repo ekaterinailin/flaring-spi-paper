@@ -2,10 +2,17 @@ source /home/ekaterina/Documents/000_envs/python38forall/bin/activate
 python paper_rename_trappist.py
 python paper_string_multiple_stars.py
 python paper_adtest_vs_value_scatterplots.py
-python paper_coherence_diagram.py
+python paper_coherence_histogram.py
 python paper_cumdist_individual_rv.py
 python paper_cumdist_individual_transiting.py
 python paper_flare_table_values.py 
 python paper_latex_flare_table.py 
 python paper_main_table.py 
+python paper_table_tidal.py
 python paper_tidal_interaction.py
+python paper_illustrative_sketch_of_system_geometries.py
+python paper_lx_plots.py
+python paper_as_vs_ad.py
+python paper_correlation_coefficients.py
+
+
