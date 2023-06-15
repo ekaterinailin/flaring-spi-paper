@@ -44,7 +44,6 @@ def g(row, oneerr=False):
             try:
                 v = np.min([np.abs(row[col[0]]),np.abs(row[col[1]])])
                 n  = -int(np.floor(np.log10(np.abs(v))))
-                print(n)
             except:
                 n = 1
         else:
@@ -70,7 +69,6 @@ def g(row, oneerr=False):
                         r"}$")
         else:
             if oneerr:
-                print(n, col[0])
                 v1 = np.round(row[col[0]], n)
                 v2 = np.round(row[col[1]], n)
                 return f"${v1:.{n}f} [{v2:.{n}f}]$"
@@ -158,8 +156,7 @@ if __name__ == "__main__":
     # select only the single stars
     singles = sel[sel.multiple_star.isnull()]
 
-    # rename the column with the source of the rotation period
-    singles = singles.rename(columns={"st_rotp_source":"st_rotp_bibkey"})
+
 
     # drop rows with TIC 67646988 and 236387002, the brown dwarfs
     singles = singles[singles.TIC != "67646988" ]
@@ -172,10 +169,15 @@ if __name__ == "__main__":
     singles = singles[singles.TIC != "79611981" ]
 
 
+    # rename the column with the source of the rotation period
+    singles = singles.rename(index=str, columns={"st_rotp_source":"st_rotp_bibkey"})
+
+
     # sort table by p-value
     singles = singles.sort_values(by="mean", ascending=False)
 
     fulltable = singles.copy()
+
 
     # calc log10 of the values in the list of columns
     convtolog10 = ["p_spi_sb_bp1_norm","p_spi_sb_bp1_norm_high","p_spi_sb_bp1_norm_low",
@@ -192,16 +194,14 @@ if __name__ == "__main__":
     singles["B_G_high"] = (singles["B_G_high"].round(0).values).astype(int)
     singles["B_G_low"] = (singles["B_G_low"].round(0).values).astype(int)
 
-    print(singles["B_G"])
     # convert the singles table to latex after converting the values to tex format
     print("Converting each parameter to a latex formatted column.")
 
-    
+    print(singles.columns)
+
     for col in cols:
-        print(col)
         newname = map_col_names[col[0]]
 
-        
         if col[-1] == "aerr":
 
             singles[newname] = singles.apply(g, axis=1)
@@ -218,11 +218,12 @@ if __name__ == "__main__":
 
             singles[newname] = singles.apply(g, axis=1)
 
+        if "bibkey" in col[-2]:
+            singles[newname] = singles.apply(lambda x: str(x[newname]) + "\citet{" + str(x[col[-2]]) + "}", axis=1)
+ 
         for c in col:
             if (c in singles.columns) & (newname != c):
                 del singles[c]
-
- 
 
     # delete some columns that are not needed
     del singles["multiple_star"]
