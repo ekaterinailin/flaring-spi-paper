@@ -219,7 +219,7 @@ if __name__ == "__main__":
             singles[newname] = singles.apply(g, axis=1)
 
         if "bibkey" in col[-2]:
-            singles[newname] = singles.apply(lambda x: str(x[newname]) + "\citet{" + str(x[col[-2]]) + "}", axis=1)
+            singles[newname] = singles.apply(lambda x: str(x[newname]) + " \citet{" + str(x[col[-2]]) + "}", axis=1)
  
         for c in col:
             if (c in singles.columns) & (newname != c):
