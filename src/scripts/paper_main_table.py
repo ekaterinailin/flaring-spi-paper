@@ -285,6 +285,14 @@ if __name__ == "__main__":
         string = string.replace("midrule","hline")
         string = string.replace("toprule","hline")
         string = string.replace("bottomrule","hline")
+
+        if label == "lit":
+            note = (r"We note that we found K2-354 under EPIC 211314705 and K2-329(!)"
+                    r" in \cite{bouma2020cluster}, who refer to the detection paper"
+                    r" \cite{pope2016transiting}, and also under TIC 468989066.")
+            
+            string = string.replace(r"K2-354",r"K2-354\footnote{" + note + "}")
+
         for n in range(1,10):
             string = string.replace(fr"e-0{n}",fr"\text{{e-}}{n}")
 
