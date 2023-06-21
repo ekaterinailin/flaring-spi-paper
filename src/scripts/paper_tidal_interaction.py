@@ -45,7 +45,7 @@ if __name__ == "__main__":
         res[model + "_low_err"] = np.abs(res[model + "_low_err"])
 
     # initialize the figure
-    fig, axes = plt.subplots(1,3, figsize=(15,5), sharey=True)
+    fig, axes = plt.subplots(1,3, figsize=(15,6), sharey=True)
     axes = list(axes) 
 
     # define the models and labels
