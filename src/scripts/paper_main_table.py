@@ -116,13 +116,13 @@ if __name__ == "__main__":
         "a_au":"$a$ [$10^{-2}$ au]",
         "pl_orbeccen":"$e$",
         "st_lum":"log$_{10} L_{*}$ [L$_\odot$]",
-        "Ro":"Ro",
-        "B_G":"$B$ [G]",
-        "p_spi_sb_bp1_norm":"log$_{10} P_{\rm spi,sb}$",
-        "p_spi_aw_bp1_norm":"log$_{10} P_{\rm spi,aw}$",
-        "p_spi_sb_bp0_norm":"log$_{10} P_{\rm spi,sb0}$",
-        "p_spi_aw_bp0_norm":"log$_{10} P_{\rm spi,aw0}$",
-        "v_rel_km_s":"$v_{rel}$ [km s$^{-1}$]",
+        "Ro":r"$R$o",
+        "B_G":r"$B$ [G]",
+        "p_spi_sb_bp1_norm":r"log$_{10} P_{\rm spi,sb}$",
+        "p_spi_aw_bp1_norm":r"log$_{10} P_{\rm spi,aw}$",
+        "p_spi_sb_bp0_norm":r"log$_{10} P_{\rm spi,sb0}$",
+        "p_spi_aw_bp0_norm":r"log$_{10} P_{\rm spi,aw0}$",
+        "v_rel_km_s":r"$v_{rel}$ [km s$^{-1}$]",
         "mean":"p-value",
         }
 
@@ -252,8 +252,8 @@ if __name__ == "__main__":
             "$R_{p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "$e$", "log$_{10} L_{*}$ [L$_\odot$]"]
 
     # derived parameters table columns
-    der_cols = ["ID", "Ro", "$B$ [G]", "$v_{rel}$ [km s$^{-1}$]", "log$_{10} P_{\rm spi,sb}$",
-                "log$_{10} P_{\rm spi,sb0}$", "log$_{10} P_{\rm spi,aw}$", "log$_{10} P_{\rm spi,aw0}$", "p-value",]
+    der_cols = ["ID", r"$R$o", r"$B$ [G]", r"$v_{rel}$ [km s$^{-1}$]", r"log$_{10} P_{\rm spi,sb}$",
+                r"log$_{10} P_{\rm spi,sb0}$", r"log$_{10} P_{\rm spi,aw}$", r"log$_{10} P_{\rm spi,aw0}$", "p-value",]
 
     # make a list of tuples with the two column lists
     splitcols = [("lit", lit_cols), ("der", der_cols)]
