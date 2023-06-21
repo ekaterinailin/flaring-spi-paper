@@ -118,10 +118,10 @@ if __name__ == "__main__":
         "st_lum":"log$_{10} L_{*}$ [L$_\odot$]",
         "Ro":"Ro",
         "B_G":"$B$ [G]",
-        "p_spi_sb_bp1_norm":"log$_{10} P_{sb}$",
-        "p_spi_aw_bp1_norm":"log$_{10} P_{aw}$",
-        "p_spi_sb_bp0_norm":"log$_{10} P_{sb0}$",
-        "p_spi_aw_bp0_norm":"log$_{10} P_{aw0}$",
+        "p_spi_sb_bp1_norm":"log$_{10} P_{\rm spi,sb}$",
+        "p_spi_aw_bp1_norm":"log$_{10} P_{\rm spi,aw}$",
+        "p_spi_sb_bp0_norm":"log$_{10} P_{\rm spi,sb0}$",
+        "p_spi_aw_bp0_norm":"log$_{10} P_{\rm spi,aw0}$",
         "v_rel_km_s":"$v_{rel}$ [km s$^{-1}$]",
         "mean":"p-value",
         }
@@ -252,8 +252,8 @@ if __name__ == "__main__":
             "$R_{p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "$e$", "log$_{10} L_{*}$ [L$_\odot$]"]
 
     # derived parameters table columns
-    der_cols = ["ID", "Ro", "$B$ [G]", "$v_{rel}$ [km s$^{-1}$]", "log$_{10} P_{sb}$",
-                "log$_{10} P_{sb0}$", "log$_{10} P_{aw}$", "log$_{10} P_{aw0}$", "p-value",]
+    der_cols = ["ID", "Ro", "$B$ [G]", "$v_{rel}$ [km s$^{-1}$]", "log$_{10} P_{\rm spi,sb}$",
+                "log$_{10} P_{\rm spi,sb0}$", "log$_{10} P_{\rm spi,aw}$", "log$_{10} P_{\rm spi,aw0}$", "p-value",]
 
     # make a list of tuples with the two column lists
     splitcols = [("lit", lit_cols), ("der", der_cols)]
@@ -288,8 +288,8 @@ if __name__ == "__main__":
 
         if label == "lit":
             note = (r"We note that we found K2-354 under EPIC 211314705 and K2-329(!)"
-                    r" in \cite{bouma2020cluster}, who refer to the detection paper"
-                    r" \cite{pope2016transiting}, and also under TIC 468989066.")
+                    r" in \citet{bouma2020cluster}, who refer to the detection paper"
+                    r" \citep{pope2016transiting}, and also under TIC 468989066.")
             
             string = string.replace(r"K2-354",r"K2-354\footnote{" + note + "}")
 
