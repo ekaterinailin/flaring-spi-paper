@@ -452,7 +452,7 @@ if __name__ == "__main__":
     axes = axes.flatten()
 
     for value, valuelabel, ax in list(zip(columns, xlabels, axes)):
-        if value=="p_spi_sb_bp1_norm":
+        if value=="p_spi_sb_bp0_norm":
             leg = True
         else:
             leg = False
@@ -478,8 +478,8 @@ if __name__ == "__main__":
     fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(6.5, 13))
     axes = axes.flatten()
 
-    for value, valuelabel, ax in list(zip(columns[1:], xlabels[1:], axes)):
-        if value=="p_spi_sb_bp0_norm":
+    for value, valuelabel, ax in list(zip(np.array(columns)[[0,2,3]], np.array(xlabels)[[0,2,3]], axes)):
+        if value=="p_spi_sb_bp1_norm":
             leg = True
         else:
             leg = False
