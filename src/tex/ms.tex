@@ -29,13 +29,15 @@
 
 % Abstract with filler text
 \begin{abstract}
-    In many of the star-planet systems discovered so far, the innermost planets orbit within only a few stellar radii. In these systems, the planets become in-situ probes of the extended stellar magnetic field. As they move, they are expected to trigger flares on the stellar surface. Until recently, however, searches for such planet-induced flaring suffered from small sample sizes, and poor orbital phase coverage.
+    In many star-planet systems discovered so far, the innermost planet orbits within only a few stellar radii. In these systems, planets become in-situ probes of the extended stellar magnetic field. Because they disturb the field as they move, they are expected to trigger flares on the stellar surface. These flares are not expected to appear different from intrinsic stellar flares individually.
 
-    In this work, we used the excellent phase coverage of the archives of Kepler and the Transiting Exoplanet Survey Satellite to search for star-planet systems with flaring star-planet interactions. We compiled a catalog of all their flares, and searched for planet-induced flaring, i.e., flares clustering in phase with the planet's orbital phase. 
+    However, as we expect planet-induced flares to be associated with the planet's orbital period $P_{orb}$, we can identify their presence from a clustering of flares in phase with the planet's orbital phase. We used the excellent phase coverage obtained from Kepler and the Transiting Exoplanet Survey Satellite to find flaring star-planet systems, compile a catalog of all their flares, and measure how much they cluster in orbital phase. 
 
-    In the 1811 searched systems, we found 25 single stars with three or more flares each. We quantified the significance of their excess flaring, and compared it against the theoretically expected amplitude of magnetic interaction. As we did not select for short orbits, most systems do not show excess flaring, as expected. Those we expect to interact fall on two branches. An inactive one, without any signs of excess flaring, and an active one, where expected power and excess flaring are correlated. This trend is tentative, but consistent for several scaling laws for magnetic interaction. 
+    In the 1811 searched systems, we found 25 single stars with three or more flares each. We quantified the significance of the clustering in each system, and compared it against the theoretically expected amplitude of magnetic interaction that leads to planet-induced flaring. Most systems do not show any clustering, as expected from their relatively wide orbits. Those we expect to show planet-induced flaring fall on two branches. An inactive one, without any signs of clustering, and a tentative active one, where the clustering becomes more pronounced as the expected amplitude of interaction increases. The flares in HIP 67522, a young Hot Jupiter system, are prominently clustered ($p<0.006$), identifying it as the most promising candidate for magnetic star-planet interaction in our sample.
+
+  %  In our results, HIP 67522, a 17 Myr old solar type star with a Hot Jupiter in a 7-day orbit, shows the most pronounced clustering with only a 0.006 probability of coincidence. While short of a $3\sigma$ detection,
     
-    Finally, we searched our data for locally expressed tidal interaction, i.e., excess flaring in phase with the tidal bulges ($P_{\rm orb}/2$). We find a marginal trend with different scaling laws of tidal interaction. Our system-by-system comparison tentatively suggests that young systems can interact both tidally and magnetically, whereas old, magnetically inactive systems mostly interact tidally.
+  %  We also searched our data for locally expressed tidal interaction, i.e., flares clustering in phase with the tidal bulges ($P_{\rm orb}/2$). We find a marginal trend with different scaling laws of tidal interaction. Our system-by-system comparison tentatively suggests that young systems can interact both tidally and magnetically, whereas old, magnetically inactive systems mostly interact tidally.
     %magnetic field strength (using $Ro$-$B$ relations), orbital parameters, and planet radius.
 \end{abstract}
 
@@ -124,6 +126,8 @@ In this study, we aimed at compiling the largest possible sample to search for f
 \end{table*}
 
 
+We note that we found K2-354 under EPIC 211314705 and K2-329(!) in \cite{bouma2020cluster}, who refer to the detection paper \cite{pope2016transiting}, and also under TIC 468989066.
+
 \subsection{Star-planet systems}
 \label{sec:data:sps}
 We compiled our sample of star-planet systems from the PSCP, from which we removed controversial planet detections (``pl\_controv\_flag'' must be 0), i.e., detections with existing literature questioning the result. The resulting catalog contained 2993 transiting and 191 non-transiting systems, from which we picked the innermost known planet in each system. 
@@ -172,7 +176,7 @@ We take bolometric luminosity values as given in the PSCP whenever they are give
 \label{sec:methods}
 We measure flaring star-planet interactions (SPI) as the presence of excess flares triggered by the orbiting planet. In the absence of flaring SPI, flare peak times will be distributed randomly in orbital phase. In the presence of flaring SPI, we measure a phase dependent deviation from this randomness.
 
-The main data for this analysis are flare times. To obtain them, we gather the Kepler and TESS light curves for all star-planet systems, remove rotational variability trends, search the de-trended light curves for flares, and convert the flare times to orbital phases. We then perform a customized Anderson-Darling test on the flare peak time distribution, which yields a $p$-value for the significance of the SPI signal. Finally, we compare these results to the theoretically expected SPI power $P_{xx}$ in each system.
+The main data for this analysis are flare times. To obtain them, we gather the Kepler and TESS light curves for all star-planet systems, remove rotational variability trends, search the de-trended light curves for flares, and convert the flare times to orbital phases. We then perform a customized Anderson-Darling test on the flare peak time distribution, which yields a $p$-value for the significance of the SPI signal. Finally, we compare these results to the theoretically expected SPI power $P_{spi}$ in each system.
 
 The methods for light curve de-trending and flare finding in Kepler and TESS light curves, as well as the Anderson-Darling test, are the same as detailed in~\citet{ilin2022searching}. We briefly recap the techniques in Sections~\ref{sec:methods:flaresearch} and \ref{sec:methods:adtest}. The expected power of SPI depends on the relative velocity between the planet and the magnetic field strength in its orbit, the derivation of which we explain in 
 Sections~\ref{sec:methods:relvel} and \ref{sec:methods:bfield}, respectively. We can then combine them with stellar radius, planetary radius, and semi-major axis to estimate the power of SPI. We use the scaling laws for two different magnetic SPI models, which we introduce in Section~\ref{sec:methods:pspi}.
@@ -193,7 +197,7 @@ Equivalent duration is equal to the time during which the non-flaring star relea
 
 \subsection{Custom Anderson-Darling test}
 \label{sec:methods:adtest}
-For each star-planet system with three or more flares in its light curves, we test for deviations from a random distribution of flares with orbital phase. We use the same customized Anderson-Darling test as in \cite{ilin2022searching}. In brief, we first take the number of flares observed in the TESS and Kepler data to calculate a base flare rate for each light curve. We then calculate how often each orbital phase has been observed, also for each light curve separately, to ensure that the different detection thresholds for TESS and Kepler do not bias the base rate. With the phase coverage and base flare rate combined, we can tell how many flares we would expect to see in any given phase bin if flares were randomly distributed. We then aggregate this number of expected flares per time bin into one expected distribution by summing over all available light curves. As a last step, we compare the expected distribution to the observed one using an Anderson-Darling test. We repeat this test with different phase offsets to account for potential biases in sensitivity of the test at different phases.
+For each star-planet system with three or more flares in its light curves, we test for deviations from a random distribution of flares with orbital phase. We use the same customized Anderson-Darling test as in \cite{ilin2022searching}, which is more sensitive to deviations at both ends of the distribution than the widely used Kolmogorov-Smirnov test~\citep{feigelson2012statistical}. In brief, we first take the number of flares observed in the TESS and Kepler data to calculate a base flare rate for each light curve. We then calculate how often each orbital phase has been observed, also for each light curve separately, to ensure that the different detection thresholds for TESS and Kepler do not bias the base rate. With the phase coverage and base flare rate combined, we can tell how many flares we would expect to see in any given phase bin if flares were randomly distributed. We then aggregate this number of expected flares per time bin into one expected distribution by summing over all available light curves. As a last step, we compare the expected distribution to the observed one using an Anderson-Darling test. We repeat this test with different phase offsets to account for potential biases in sensitivity of the test at different phases.
 
 The only adjustment to the procedure in \cite{ilin2022searching} is that we use four equidistant start phases (i.e., 0, 0.25, 0.5 and 0.75) compared to the 20 used in~\cite{ilin2022searching} to save time, because the range of derived $p$-values is already well-sampled using four. We adopt the standard deviation of these four $p$-values as the uncertainty on the flaring SPI measurement.
 
@@ -231,7 +235,7 @@ We compared our derived values for $R$o and $B$ with existing estimates of coron
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/PAPER_lxlbol.png}
         \caption{
-           X-ray luminosity over bolometric luminosity compared to Rossby number (\textbf{upper panel}), and average surface magnetic field strength (\textbf{lower panel}). Both relations follow those of stars not selected for hosting close-in planets, except for GJ 3082, which is underluminous for its Rossby number, and hence also its estimated magnetic field strength.
+           X-ray luminosity over bolometric luminosity compared to Rossby number (\textbf{upper panel}), and average surface magnetic field strength (\textbf{lower panel}). Both relations follow those of stars not selected for hosting close-in planets, except for GJ 3082, which is underluminous for its Rossby number, and hence also its estimated magnetic field appears too strong for its $L_X/L_{\rm bol}$.
         }
         \label{fig:lx}
     \end{centering}
@@ -241,10 +245,10 @@ We compared our derived values for $R$o and $B$ with existing estimates of coron
 \label{sec:methods:pspi}
 We consider two theories for the mechanism behind flaring star-planet interactions, the stretch-and-break and the Alfv\'en wing mechanisms. For both of them, we include the case of a magnetized and an unmagnetized planet, for a total of four estimates of the expected power of magnetic star-planet interaction.
 
-First, we estimate the power of star-planet interaction generated by the stretch-and-break mechanism using the scaling relations in~\cite{lanza2012starplanet} (their Eqn. 45), where $P_{sb}$ is proportional to
+First, we estimate the power of star-planet interaction generated by the stretch-and-break mechanism using the scaling relations in~\cite{lanza2012starplanet} (their Eqn. 45), where $P_{spi,sb}$ is proportional to
 
 \begin{equation}
-    P_{sb} \sim B_p^{2/3} R_p^2 B_*^{4/3} R_*^4 v_{rel} a^{-4} .
+    P_{spi,sb} \sim B_p^{2/3} R_p^2 B_*^{4/3} R_*^4 v_{rel} a^{-4} .
 \end{equation}
 
 $B_p$ and $B_*$ are the planetary and stellar field strengths at their poles, respectively; $v_{rel}$ is the relative velocity between the stellar rotation and the planet's orbit at the semi-major axis $a$; and $R_*$ and $R_p$ are the stellar and planetary radii, respectively. Since the planetary fields are unknown, we ignore them in the calculation. We also do not know the stellar field strength at the pole for the vast majority of the stars, so we adopt the surface field strength~(Section~\ref{sec:methods:bfield}) as a proxy.
@@ -252,23 +256,23 @@ $B_p$ and $B_*$ are the planetary and stellar field strengths at their poles, re
 Second, we also consider the case of an unmagnetized planet with $B_p=0$, in which case Eq.~45 in~\cite{lanza2012starplanet} reduces to
 
 \begin{equation}
-    P_{sb0} \sim R_p^2 R_*^4 B_*^2 v_{rel}    a^{-4} 
+    P_{spi,sb0} \sim R_p^2 R_*^4 B_*^2 v_{rel}    a^{-4} 
 \end{equation}
 
 Third, we estimate the power of star-planet interaction generated by the Alfv\'en wing mechanism ~\citep{saur2013magnetic,kavanagh2022radio}, combining Eqns.~8~and~11 in \citet{kavanagh2022radio} to arrive at
 
 \begin{equation}
-    P_{aw} \sim B_p^{2/3} R_{p}^2    B_*^{1/3}  v_{rel}^2 a^{-2}  
+    P_{spi,aw} \sim B_p^{2/3} R_{p}^2    B_*^{1/3}  v_{rel}^2 a^{-2}  
 \end{equation}
 where we replace the stellar wind density $\rho_W$ with its proportionality to $a^{-2}$, and stellar wind magnetic field at the planetary radius $B_W$ with the surface field strength $B_* a^{-3}$, which result in the total $a^{-2}$ factor in the above equation.
 
 And fourth, we also consider the case of an unmagnetized planet with $B_p=0$, in which case Eq.~8 in \cite{kavanagh2022radio} reduces to
 
 \begin{equation}
-    P_{aw0} \sim R_p^2  B_*  v_{rel}^2  a^{-4}
+    P_{spi,aw0} \sim R_p^2  B_*  v_{rel}^2  a^{-4}
 \end{equation}
 
-Lacking $B_p$, and various additional factors that appear in $P_{sb},P_{sb0},P_{aw}$, and  $P_{aw0}$, such as the angle between the relative velocity and magnetic field of the stellar wind~\citep{kavanagh2022radio}, or the force-free parameter~\citep{lanza2012starplanet}, we restrict ourselves to differential estimates, and normalize all $P_{xx}$ to AU Mic.
+Lacking $B_p$, and various additional factors that appear in $P_{spi,sb},P_{spi,sb0},P_{spi,aw}$, and  $P_{spi,aw0}$, such as the angle between the relative velocity and magnetic field of the stellar wind~\citep{kavanagh2022radio}, or the force-free parameter~\citep{lanza2012starplanet}, we restrict ourselves to differential estimates, and normalize all $P_{spi}$ to AU Mic.
 
 \section{Results}
 \label{sec:results}
@@ -353,11 +357,17 @@ Our custom Anderson-Darling test compares the measured distribution of orbital p
 
 \subsection{Flaring star-planet interaction signal}
 \label{sec:results:spi}
-We used the custom Anderson-Darling test introduced in Section~\ref{sec:methods:adtest} to look for flaring SPI in all systems with three or more flares with equivalent duration $ED>1\,$s, detected in their Kepler and TESS observations. We choose the $ED$ cutoff to make sure that we are comparing similar flares regardless of spectral type, that is, flares above the same energy relative to stellar luminosity, without losing too many flares. In~\citet{ilin2022searching}, AU Mic appeared to be more modulated with orbital period in the high energy flares above $1\,$s than below. It is also the only star in our sample, for which this threshold makes a difference in the significance of the Anderson-Darling test. However, we note that we lose five systems by applying this threshold -- GJ 393, Kepler-411, Kepler-138, GJ 1061, and Kepler-1084. We note that the flares (with $ED<1\,$s) in all of these systems are consistent with random flare phases within $1\sigma$.
+The main result of this work is the comparison of the significance of flares clustering in orbital phase to the expected amplitude of magnetic SPI, and is shown in Figure~\ref{fig:adtest_bp}. We used the custom Anderson-Darling test introduced in Section~\ref{sec:methods:adtest} to look for flaring SPI in all systems with three or more flares with equivalent duration $ED>1\,$s, detected in their Kepler and TESS observations. 
 
-Table~\ref{tab:maintable_der} lists the $p$-values for each star-planet system. There is no star-planet system for which we find a $>3\sigma$ ($p<0.0027$) signal of star-planet interaction in our sample. However, overall, the significance of the deviation increases with higher expected power $P_{xx}$ of interaction, where the subscript denotes different scenarios introduced in Section~\ref{sec:methods:pspi}. Table~\ref{tab:maintable_der} also lists the derived parameters required in these scaling laws, i.e., Rossby number $R$o, surface-average magnetic field strength $B$, and relative velocity between the planet and a co-rotating magnetic field $v_{\rm rel}$. 
+Figure~\ref{fig:adtest_bp} shows that in every scenario we considered (Alfv\'en wing or stretch-and-break mechanism, with magnetized or unmagnetized planets), there are two branches on the high end of expected powers. On one branch, the significance of the measured interaction increases with the expected power $P_{spi}$. On the other branch, no interaction is measured regardless of $P_{spi}$. 
 
-Figure~\ref{fig:adtest_bp} shows that in every scenario we considered (Alfv\'en wing or stretch-and-break mechanism, with magnetized or unmagnetized planets), there are two branches on the high end of expected powers. On one branch, the significance of the measured interaction is correlated with the expected power $P_{xx}$. On the other branch, no interaction is measured regardless of the expected power $P_{xx}$. 
+Table~\ref{tab:maintable_der} lists the $p$-values for each star-planet system. There is no star-planet system for which we find a $>3\sigma$ ($p<0.0027$) signal of star-planet interaction in our sample. However, overall, the significance of the deviation increases with higher expected power $P_{spi}$ of interaction, where additional subscripts denote different scenarios introduced in Section~\ref{sec:methods:pspi}. Table~\ref{tab:maintable_der} also lists the derived parameters required in these scaling laws, i.e., Rossby number $R$o, surface-average magnetic field strength $B$, and relative velocity between the planet and a co-rotating magnetic field $v_{\rm rel}$. 
+
+We choose the $ED>1\,$s cutoff to make sure that we are comparing similar flares regardless of spectral type, that is, flares above the same energy relative to stellar luminosity, without losing too many flares. In~\citet{ilin2022searching}, AU Mic appeared to be more modulated with orbital period in the high energy flares above $1\,$s than below. It is also the only star in our sample, for which this threshold makes a difference in the significance of the Anderson-Darling test. However, we note that we lose five systems by applying this threshold -- GJ 393, Kepler-411, Kepler-138, GJ 1061, and Kepler-1084. We note that the flares (with $ED<1\,$s) in all of these systems are consistent with random flare phases within $1\sigma$.
+
+
+
+
 
 
 
@@ -365,7 +375,7 @@ Figure~\ref{fig:adtest_bp} shows that in every scenario we considered (Alfv\'en 
 \footnotesize
 \movetableright=-20mm
 \script{paper_main_table.py}
-\caption{Flaring star-planet interaction. $Ro$, $B$, and $v_{rel}$, are derived from literature values (Table~\ref{tab:maintable_lit}). $P_{xx}$ stands for the power of stretch-and-break ($sb$) and Alfv\'en wing ($aw$) interaction mechanisms, assuming the planet has a magnetic field strength of 1 G. $P_{xx0}$ is the same, but assuming an unmagnetized planet. All powers are normalized to AU Mic. The $p$-value of the Anderson-Darling test is lower when the system shows more flares periodic with the planetary orbit.}
+\caption{Flaring star-planet interaction. $Ro$, $B$, and $v_{rel}$, are derived from literature values (Table~\ref{tab:maintable_lit}). $P_{spi,xx}$ stands for the power of stretch-and-break ($sb$) and Alfv\'en wing ($aw$) interaction mechanisms, assuming the planet has a magnetic field strength of $1\,$G. $P_{spi,xx0}$ is the same, but assuming an unmagnetized planet. All powers are normalized to AU Mic. The $p$-value of the Anderson-Darling test is lower when the system shows more flares periodic with the planetary orbit.}
 \input{output/table_der_vals.tex}
     \label{tab:maintable_der}
 
@@ -391,26 +401,28 @@ The properties of star-planet systems in this work are diverse, including both v
 
 For our analysis, it is important to know that the observed flares indeed occurred on the planet host star. We therefore excluded some systems due to documented contamination from nearby (bound or co-moving) companions~(Section~\ref{sec:results:individualstars:excluded}). One exception to this rule is Kepler-411, a binary system for which the flare contributions from each component could be separated, but which was excluded for other reasons~(Section~\ref{sec:results:individualstars:kep411}). We also dropped GJ 1061 from the sample because its rotation period was unconstrained. Another uncertainty in our analysis is the possibility of additional planets at even shorter orbits than the currently known innermost planet, such as might be the case for Proxima Cen~(Section~\ref{sec:results:individualstars:proxima}). 
 
-The bulk of the systems in our sample are neither expected to show high power of magnetic star-planet interaction, nor do they show any deviation from intrinsic stellar flaring. In the subsample of stars with high expected power, of the order of AU Mic's and above, we first take a closer look at those that seem to follow an increase in measured flaring star-planet interaction with increasing expected power $P_{xx}$, that is AU Mic itself, K2-25, TOI-540, and HIP 67522~(Sections \ref{sec:results:individualstars:aumic} and \ref{sec:results:individualstars:hip67522}). Then we consider those systems where high power was expected in all scenarios, but not measured, i.e., TAP~26 and KOI-12~(Sections \ref{sec:results:individualstars:tap26} and \ref{sec:results:individualstars:koi12}).
+The bulk of the systems in our sample are neither expected to show high power of magnetic star-planet interaction, nor do they show any deviation from intrinsic stellar flaring. In the subsample of stars with high expected power, of the order of AU Mic's and above, we first take a closer look at those that seem to follow an increase in measured flaring star-planet interaction with increasing expected power $P_{spi}$, that is AU Mic itself, K2-25, TOI-540, and HIP 67522~(Sections \ref{sec:results:individualstars:aumic} and \ref{sec:results:individualstars:hip67522}). Then we consider those systems where high power was expected in all scenarios, but not measured, i.e., TAP~26 and KOI-12~(Sections \ref{sec:results:individualstars:tap26} and \ref{sec:results:individualstars:koi12}).
 \subsubsection{Excluded targets}
 \label{sec:results:individualstars:excluded}
 
 While they appear in the flare catalog~(Table~\ref{tab:flares}), we excluded a number of systems from further analysis. We drop all multiple stars except for Proxima Cen (whose components are well separated both physically, and on the sky), and all stars with nearby objects that contaminate our analysis, e.g., from Gaia DR2 and ground-based adaptive optics~\citep{ziegler2018measuring}: \input{output/multiples_string.tex}
 
-For instance, Kepler-808 (KOI-1300) has a $\sim0.4M_\odot$ \citep{kraus2016impact} companion that is about 1.8 mag fainter than the primary at a separation of .78 arcsec~\citep{baranec2016roboao}. TOI-837 has co-moving M dwarf a few arcsec away in the same young cluster, 5 mag fainter, but the primary is an F9-G0 star, so flares could still originate come from both stars~\citep{bouma2020cluster}. HD 41004 B, DS Tuc A, and LTT 1445 are known multiple systems where all components contribute significantly to the total flux.
+For instance, Kepler-808 (KOI-1300) has a $\sim0.4M_\odot$ \citep{kraus2016impact} companion that is about 1.8 mag fainter than the primary at a separation of $0.78\arcsec$~\citep{baranec2016roboao}. TOI-837 has co-moving M dwarf a few arcsec away in the same young cluster, 5 mag fainter, but the primary is an F9-G0 star, so flares could still originate come from both stars~\citep{bouma2020cluster}. HD 41004 B, DS Tuc A, and LTT 1445 are known multiple systems where all components contribute significantly to the total TESS flux.
 
 %The only single star system excluded is GJ 1061. The star is lacking a stellar rotation period estimate, which we need to calculate the magnetic field, and $v_{rel}$. \citet{dreizler2020reddots} estimate that it is a fairly slow rotator with a period between 50 and 200 days, so we do not expect it to have a strong magnetic field anyway. TURNS OUT IT DOES NOT HAVE ENOUGH FLARES FOR THE ANALYSIS
 
-\subsubsection{Kepler-411}
+\paragraph{Kepler-411}
 \label{sec:results:individualstars:kep411}
 Kepler-411 has a 3 mag fainter companion~\citep{wang2014influence,ziegler2018measuring}, but we do not exclude it from the analysis initially. The system was observed in Kepler short cadence by \citet{jackman2021stellara} and both the planet host, and the companion star flare. \citet{jackman2021stellara} disentangle the contributions from each component on a pixel level. According to \citet{morton2016false, sun2019kepler411}, Kepler-411's planets orbit the primary companion. The fainter companion of Kepler-411 appears to cause the majority of flares (41), whereas the planet host causes only 7. Adopting the 7 flares from \cite{jackman2021stellara} in our analysis, we find that they all have equivalent duration $ED<1\,$s, which excludes Kepler-411 from further analysis. Note that we do not find the low energy flares to cluster in orbital phase, either.
 
-\subsubsection{Proxima Cen}
+\subsubsection{Prominent systems}
+\label{sec:prominensystems}
+\paragraph{Proxima Cen}
 \label{sec:results:individualstars:proxima}
-We do not detect a deviation from intrinsic flaring on Proxima Cen, consistent with numerical models that place Proxima Cen b well outside the sub-Alfv\'enic zone~\citep{gomez2020earthlike, kavanagh2021planetinduced, garraffo2022revisiting}. However, this might not entirely exclude Proxima Cen from the search for flaring star-planet interaction. The tentatively detected Proxima Cen d, a planet further in, at 0.029 au, or 5 day orbital period~\citep{faria2022candidate, artigau2022linebyline} could still cause flaring star-planet interactions. Depending on the phase of the activity cycle, Proxima Cen d may be in the sub-Alf\'enic regime during Proxima Cen's activity maximum~\citep{gomez2020earthlike}. However, the orbital period of the tentative planet is so uncertain at this point that its coherence time~(Section~\ref{sec:results:coherence}) is shorter than the roughly 2yr observing baseline of Proxima Cen, preventing us from accurately measuring the flare phases. 
+Although Proxima Cen is part of a triple stellar system, we treat it a single star in this work because of the large angular separation of over 2 deg to its companions, $\alpha$ Cen AB. We do not detect a deviation from intrinsic flaring on Proxima Cen, consistent with numerical models that place Proxima Cen b well outside the sub-Alfv\'enic zone~\citep{gomez2020earthlike, kavanagh2021planetinduced, garraffo2022revisiting}. However, this might not entirely exclude Proxima Cen from the search for flaring star-planet interaction. The tentatively detected Proxima Cen d, a planet further in, at 0.029 au, or 5 day orbital period~\citep{faria2022candidate, artigau2022linebyline} could still cause flaring star-planet interactions. Depending on the phase of the activity cycle, Proxima Cen d may be in the sub-Alf\'enic regime during Proxima Cen's activity maximum~\citep{gomez2020earthlike}. However, the orbital period of the tentative planet is so uncertain at this point that its coherence time~(Section~\ref{sec:results:coherence}) is shorter than the roughly 2yr observing baseline of Proxima Cen, preventing us from accurately measuring the flare phases. 
 
 
-\subsubsection{AU Mic, K2-25, and TOI-540}
+\paragraph{AU Mic, K2-25, and TOI-540}
 \label{sec:results:individualstars:aumic}
 
 AU Mic is a 16-29 Myr old pre-main sequence M0-M1 dwarf with a strong magnetic field of about $3010\pm220\,$G obtained from Zeeman broadening measurements~\citep{reiners2022magnetism}. The innermost Neptune-sized planet, AU Mic b, could be both inside the sub-Alfv\'enic zone if the star's mass loss rate is relatively low at about 30 times the solar value or lower~\citep{alvarado-gomez2022simulating}. If the mass loss rate is high, exceeding the solar value by a factor of several hundreds, AU Mic b could orbit in the super-Alfv\'enic zone, and become unable to experience any planet-induced flaring. Recently, \citet{klein2022one} found tentative periodicity with the orbital period of AU Mic b in the chromospheric He I D line, which increases if the contribution from flares is included in the calculation. Overall, our marginal signal of flaring star-planet interaction in the AU Mic system supports the idea that this young, magnetically active M dwarf system with a close-in Neptune could exhibit planet-induced flaring.
@@ -422,7 +434,7 @@ In Figure~\ref{fig:adtest_bp}, K2-25 and AU Mic form a cluster with TOI-540 -- a
 
 In the scenario wherein the stretch-and-break mechanism drives the interaction, the three systems cluster together most distinctly~(top row in Figure~\ref{fig:adtest_bp}). In the Alfv\'en wing scenario~(bottom row in Figure~\ref{fig:adtest_bp}), the distinction is less clear. In both cases, the low level (or possible absence) of interaction could be due to the Alfv\'en radius being within the planetary orbit. It is important to note that the scaling laws introduced in Section~\ref{sec:methods:pspi} assume that the planet is sub-Alfv\'enic, but make no statement about it, because the mass loss of these stars is largely unconstrained. All else equal, a planet is more likely sub-Alfv\'enic if the stellar magnetic field is strong. Another explanation is the possible intermittency, or 'on-off nature' of the interaction~\citep{shkolnik2008nature}, which may be at play here, but particularly in cases where the expected power is very strong, such as in the comparison between HIP 67522 and TAP 26 that we address in the following two Sections.
 
-\subsubsection{HIP 67522}
+\paragraph{HIP 67522}
 \label{sec:results:individualstars:hip67522}
 HIP 67522 has one of the strongest expected SPI signals in our sample, and shows the clearest sign of flaring SPI at $>2.5\sigma$ level, with 12 flares in the sample, distributed across three Sectors in TESS. In our original sample from July 2022, HIP 67522 was observed for two Sectors with a total of 6 flares, which yielded a $p$-value of $0.015$. In June 2023, observations from Sector 64 were released, which we used to follow up on this interesting target, increasing the number of flares by another 6, reducing the $p$-value further to $0.0057$. 
 
@@ -432,11 +444,11 @@ HIP 67522 is a young Sun, currently contracting onto the main sequence. It is a 
 %The system's $a/R_*\approx11.7$, eccentricity below .25~\cite{rizzuto2020tess}, so that  
  %\cite{wood2021characterizing} rule out stellar companions for HIP 67522 based on RV, high-resolution imaging, and Gaia data.
 
-\subsubsection{TAP 26}
+\paragraph{TAP 26}
 \label{sec:results:individualstars:tap26}
 TAP 26 is a weak-line T-Tauri star with a strong magnetic field~\citep{yu2017hot}. \citet{lanza2018closeby} estimate that the system can release more energy in magnetic star-planet interaction than other  systems with Hot Jupiters, such as HD 179949, that has previously been detected with chromospheric variability in phase with the planet's orbit~\citep{shkolnik2008nature}. However, for TAP 26 b, the orbital period might not be well-constrained. \citet{yu2017hot} apply several methods to derive $P_{\rm orb}$ from the radial velocity data: While the $10.8\,$d orbit we adopted is the most likely according to \citet{yu2017hot}, a $9.0\,$d orbit is also likely, and some of their applied methods favored a $13.4\,$d period. The absence of interaction could hence be a consequence of uncertain orbital period. However, intermittent interactions and the viewing geometry of TAP 26 could also explain the absence of phase-correlated flaring~(see Sections~\ref{sec:discussion:intermittency} and \ref{sec:discussion:viewing}).
 
-\subsubsection{KOI-12}
+\paragraph{KOI-12}
 \label{sec:results:individualstars:koi12}
 KOI-12, also known as Kepler-448, is a two-planet system with an eccentric outer planet KOI-12 c, and an inner Warm Jupiter planet KOI-12 b in a $17.8\,$d orbit~\citep{masuda2017eccentric}. With respect to rotation rate, stellar and planetary radius, the KOI-12 system is similar to HIP~67522 and TAP~26 (although for the those young stars the radii are large because the stars are still contracting onto the main sequence). In constrast, KOI-12 is $1.4\pm0.3\,$Gyr old~\citep{bourrier2015sophie}, an F5 subgiant~\citep{frasca2016activity}, which is already evolving off the main sequence. Yet, despite its high expected power of interaction, we detect no excess flaring in phase with KOI-12 b. The reason could be that KOI-12 b is in fact super-Alfv\'enic due to the relatively wide orbit compared to TAP 26 and HIP 67522. However, our estimate of the Alf\'en radius place KOI-12 b in the sub-Alfv\'enic regime~(see Fig.~\ref{fig:as}), although the scaling law applied there may be inaccurate for post-main sequence stars. Intermittent interaction might play a role here as well, and could be favored if future observations capture episodes during which the interaction is 'on'.
 
@@ -477,7 +489,7 @@ The second assumption is that $B_{\rm V}$ will match the maximum radial magnetic
 
 We show the difference between star-planet distance and $\overline{AS}_{R}$ in Fig.~\ref{fig:as}. HIP 67522 b falls most deeply into the sub-Alfv\'enic regime, consistent with the strongest signal of magnetic SPI in our sample. K2-25, TOI-540 and AU Mic also fulfil the condition of sub-Alfv\'enic orbit of the innermost planet, consistent with their observed marginal deviation from uniform flaring with orbital phase. 
 
-TAP 26 and KOI-12 also appear sub-Alfv\'enic, despite absent signal of magnetic SPI. From this follows that the absence of interaction is not caused by the planets orbiting outside the Alfv\'en radius. Location inside $\overline{AS}_{R}$ is a required but not sufficient condition for magnetic SPI, as we will see in the following Sections. %\textcolor{red}{JDAG: Thats a good point. However, I think being inside the AS is a required but not sufficient condition for the type of SPI that you are looking for. Because you are searching for flares, you need reconnection + particle acceleration (which are the precursors/drivers of the flare emission observed on different wavelengths). While the coronal material is expected to provide the particles (at least in closed-field Active Regions -- if the reconnection takes place in open-field line regions, the plasma density there is usually low which would also yield weak EM signatures as those are typically a function of $\rho$), one of the difficulties I see is that in the star-planet system, the reconnection of the magnetic field is more likely to occur in the planet end rather than on the stellar end (simply because the AR field strength is probably larger than the planetary field). As such, the field topology will be more 'resistant' closer to the star than to the planet, facilitating the re-organization in the latter case compared to the former. Planetary outflows falling back to the star could help to trigger some instabilities, but those would depend on whether the planet is losing any significant mass (which we probably don't know for these targets). There's of course more to it than just field strength or accretion, with things like the torsion and helicity of the field among others (which is why the likelihood of a solar AR to host a flare is not only determined by field strength but also by its topology/complexity), but all of that is too complicated or even impossible to estimate here. The bottom line is that there are multiple reasons that could explain why those two stars that lie deep in the sub-Alfv\'enic regime show no signs of flaring SPI which, without a better characterization of each individual system + some 3D modelling, are very hard to ascertain.}  
+TAP 26 and KOI-12 also appear sub-Alfv\'enic, despite absent signal of magnetic SPI. From this follows that the absence of interaction is not caused by the planets orbiting outside the Alfv\'en radius. Location inside $\overline{AS}_{R}$ is a required but not sufficient condition for magnetic SPI, as we will see in the following subsections. %\textcolor{red}{JDAG: Thats a good point. However, I think being inside the AS is a required but not sufficient condition for the type of SPI that you are looking for. Because you are searching for flares, you need reconnection + particle acceleration (which are the precursors/drivers of the flare emission observed on different wavelengths). While the coronal material is expected to provide the particles (at least in closed-field Active Regions -- if the reconnection takes place in open-field line regions, the plasma density there is usually low which would also yield weak EM signatures as those are typically a function of $\rho$), one of the difficulties I see is that in the star-planet system, the reconnection of the magnetic field is more likely to occur in the planet end rather than on the stellar end (simply because the AR field strength is probably larger than the planetary field). As such, the field topology will be more 'resistant' closer to the star than to the planet, facilitating the re-organization in the latter case compared to the former. Planetary outflows falling back to the star could help to trigger some instabilities, but those would depend on whether the planet is losing any significant mass (which we probably don't know for these targets). There's of course more to it than just field strength or accretion, with things like the torsion and helicity of the field among others (which is why the likelihood of a solar AR to host a flare is not only determined by field strength but also by its topology/complexity), but all of that is too complicated or even impossible to estimate here. The bottom line is that there are multiple reasons that could explain why those two stars that lie deep in the sub-Alfv\'enic regime show no signs of flaring SPI which, without a better characterization of each individual system + some 3D modelling, are very hard to ascertain.}  
 
 \subsection{Eccentricity}
 \label{sec:discussion:eccentricity}
@@ -650,19 +662,19 @@ This paper includes data collected by the TESS mission, which are publicly avail
 Funding for the TESS mission is provided by NASA’s Science Mission directorate. 
 This work has made use of data from the European Space Agency (ESA) mission {\it Gaia} (\url{https://www.cosmos.esa.int/gaia}), processed by the {\it Gaia} Data Processing and Analysis Consortium (DPAC, \url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC
 has been provided by national institutions, in particular the institutions participating in the {\it Gaia} Multilateral Agreement.
+KP, JC and NI acknowledge funding from the German \textit{Leibniz Community} under grant P67/2018.
 %follow instructions here https://gea.esac.esa.int/archive/documentation/GEDR3/Miscellaneous/sec_credit_and_citation_instructions/
 \section*{Data Availability}
 All data used in this study are publicly available in their respective archives.
 This study used the reproducibility software \href{https://github.com/showyourwork/showyourwork}{\showyourwork}
-\citep{luger2021mappinga} to create all figures, format all tables, and compile the manuscript. Each figure links to the dataset stored on Zenodo (\url{ZENODO LINK} and XXXX integration TBD), and to the script that produced the figure in the git repository~\url{https://github.com/ekaterinailin/flaring-spi-paper}. The git repository that produces the data stored on Zenodo is publicly available at \url{https://github.com/ekaterinailin/flaring-spi}. 
+\citep{luger2021mappinga} to create all figures, format all tables, and compile the manuscript. Each figure links to the dataset stored on Zenodo (link to be added after acceptance), and to the script that produced the figure in the git repository~\url{https://github.com/ekaterinailin/flaring-spi-paper}. The git repository that produces the data stored on Zenodo is publicly available at \url{https://github.com/ekaterinailin/flaring-spi}. 
 \bibliography{bib}
 
 \appendix
-\section{Notes on individual stars}
-\subsection{Proxima Cen}
-Although Proxima Cen is part of a triple stellar system, we treat it a single star in this work because of the large angular separation of over 2 deg to its companions, $\alpha$ Cen AB.
 
-\subsection{K2-354}
+
+
+%\subsection{K2-354}
 We note that we found K2-354 under EPIC 211314705 and K2-329(!) in \cite{bouma2020cluster}, who refer to the detection paper \cite{pope2016transiting}, and also under TIC 468989066.
 
 \section{Expected power vs. AD test, color-coded by Rossby number}
