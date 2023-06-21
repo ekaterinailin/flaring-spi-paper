@@ -233,7 +233,8 @@ def colorcode_B_G(bg):
     return color, symbol
 
 
-def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False):
+def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False,
+                       fontsize=13):
     """Create an AD test vs. value figure.
     
     Parameters
@@ -252,6 +253,10 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
         Extension for the figure name.
     ax : matplotlib.axes._subplots.AxesSubplot
         Axes to plot on.
+    leg : bool
+        Whether to plot the legend.
+    fontsize : int
+        Font size for the x and y labels.
     
     Returns
     -------
@@ -300,8 +305,8 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
                 color="k", verticalalignment="center")
 
     # labels
-    ax.set_ylabel("p-value of AD test", fontsize=13)
-    ax.set_xlabel(valuelabel, fontsize=13)
+    ax.set_ylabel("p-value of AD test", fontsize=fontsize)
+    ax.set_xlabel(valuelabel, fontsize=fontsize)
 
     # legend
     if leg == True:
@@ -379,10 +384,10 @@ if __name__ == "__main__":
 
     columns = ["p_spi_sb_bp1_norm", "p_spi_sb_bp0_norm",
               "p_spi_aw_bp1_norm", "p_spi_aw_bp0_norm"]
-    xlabels = [r"$\sim$ P$_{sb}$ (stretch-and-break interaction with magnetized planet)",
-              r"$\sim$ P$_{sb0}$  (stretch-and-break interaction with unmagnetized planet)",
-              r"$\sim$ P$_{aw}$  (Alfvén wing interaction with magnetized planet)",
-              r"$\sim$ P$_{aw0}$  (Alfvén wing interaction with unmagnetized planet)"]
+    xlabels = [r"$\sim$ $P_{\rm spi,sb}$ (stretch-and-break interaction with magnetized planet)",
+              r"$\sim$ $P_{\rm spi,sb0}$  (stretch-and-break interaction with unmagnetized planet)",
+              r"$\sim$ $P_{\rm spi,aw}$  (Alfvén wing interaction with magnetized planet)",
+              r"$\sim$ $P_{\rm spi,aw0}$  (Alfvén wing interaction with unmagnetized planet)"]
 
     # ------------------------------------------------------------
     # DISTANCE
@@ -451,7 +456,7 @@ if __name__ == "__main__":
             leg = True
         else:
             leg = False
-        make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, f"{value}_dist", ax, leg=leg)
+        make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, f"{value}_bp", ax, leg=leg)
 
     
     # layout the figure
@@ -461,6 +466,27 @@ if __name__ == "__main__":
     plt.savefig(paths.figures / f"PAPER_ADtest_bg.png", dpi=300)
 
 
+    # ADD ONE PANEL AS THE MAIN PLOT
+    fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(8, 5))
+    value = columns[0]
+    valuelabel = xlabels[0]
+    make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, f"{value}_bp", ax, leg=True)
+    plt.tight_layout()
+    plt.savefig(paths.figures / f"PAPER_ADtest_bg_main.png", dpi=300)
+
+    # ADD THREE PANELS FOR THE REMAINING PLOTS
+    fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(6.5, 13))
+    axes = axes.flatten()
+
+    for value, valuelabel, ax in list(zip(columns[1:], xlabels[1:], axes)):
+        if value=="p_spi_sb_bp0_norm":
+            leg = True
+        else:
+            leg = False
+        make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, f"{value}_bp", ax, leg=leg, fontsize=11)
+
+    plt.tight_layout()
+    plt.savefig(paths.figures / f"PAPER_ADtest_bg_rest.png", dpi=300)
 
 
     # ------------------------------------------------------------
