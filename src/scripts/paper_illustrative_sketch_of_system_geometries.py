@@ -217,12 +217,7 @@ if __name__ == "__main__":
 
     axes = [ax1, ax3]
     for ax in axes:
-        # right to the small circle draw a small arrow to the right
-        arr = ax.arrow(2, 3, 0.7, 0, head_width=0.3,
-                    head_length=0.1, fc='k', ec='k')
 
-        # annotate the arrow with LOS
-        ax.annotate('LOS', xy=(2, 3), xytext=(2, 3.4), fontsize=16)
 
         # set axis extent correctly
         ax.set_xlim(-3, 3)
@@ -231,9 +226,27 @@ if __name__ == "__main__":
         # remove axes
         ax.set_axis_off()
 
+    # right to the small circle draw a small arrow to the right
+    arr = ax1.arrow(1.8, 1.6, 0.5, 0, head_width=0.1,
+                head_length=0.07, fc='k', ec='k')
+
+    # annotate the arrow with LOS
+    ax1.annotate('LOS', xy=(1.8, 1.8), xytext=(1.8, 1.7), fontsize=16)
+
+    # right to the small circle draw a small arrow to the right
+    arr = ax3.arrow(2, 1.9, 0.6, 0, head_width=0.15,
+                head_length=0.07, fc='k', ec='k')
+
+    # annotate the arrow with LOS
+    ax3.annotate('LOS', xy=(2, 2.1), xytext=(2, 2), fontsize=17)
+
+    # set axis extent correctly
+    ax1.set_xlim(-2.5, 2.5)
+    ax1.set_ylim(-2.5, 2.5)
+
     # label each panel with letter in upper left corner
-    for label, ax in zip(list("abc"), axes):
-        ax.text(0., 0.97, label + ".", transform=ax.transAxes,
+    for label, ax in zip(list("ab"), axes):
+        ax.text(0., 0.95, label + ".", transform=ax.transAxes,
                 fontsize=18, fontweight='bold', va='top', ha='right')
         
     plt.tight_layout()
