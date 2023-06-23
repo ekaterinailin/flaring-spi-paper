@@ -33,13 +33,25 @@ import paths
 if __name__ == "__main__":
 
     # init two figure panels next to each other
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
+    fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(10, 5))
 
     # Central star
-    for ax in [ax1, ax2, ax3]:
+    for ax in [ax1, ax3]:
         ax.add_patch(plt.Circle((0, 0), 1.0, color='w', fill=True))
         ax.add_patch(plt.Circle((0, 0), 1.03, color='k', fill=False))
         ax.add_patch(plt.Circle((0, 0), 1, color='grey', fill=True, alpha=0.5))
+
+        # hatch the right half of the star
+        # Create an array of angles from 0 to pi
+        theta = np.linspace(-np.pi/2, np.pi/2, 100)
+
+        # Compute the x and y coordinates of the points on the semi-circle
+        x = np.cos(theta)
+        y = np.sin(theta)
+
+
+        # Fill the semi-circle with hatching
+        ax.fill_between(x, y, color="grey", alpha=0.5, hatch='//', edgecolor="k")
 
 
     # -----------------------------------------------------------------------------
@@ -85,64 +97,64 @@ if __name__ == "__main__":
     # -----------------------------------------------------------------------------
     # PANEL 2
 
-    inc = -1 # inclination angle of orbital plane in radians
+#     inc = -1 # inclination angle of orbital plane in radians
 
-    # add vertical axis
-    ax2.arrow(0, -1.2, 0, 2.4, head_width=0.15, head_length=0.3, fc='k', ec='k')
+#     # add vertical axis
+#     ax2.arrow(0, -1.2, 0, 2.4, head_width=0.15, head_length=0.3, fc='k', ec='k')
 
-    # calculate r for theta=inc for the dipole
-    req_new = aplanet / np.sin(np.pi/2 - inc)**2
+#     # calculate r for theta=inc for the dipole
+#     req_new = aplanet / np.sin(np.pi/2 - inc)**2
 
-    # convert to cartesian coordinates
-    xnew = req_new * np.cos(inc)
-    ynew = req_new * np.sin(inc)
+#     # convert to cartesian coordinates
+#     xnew = req_new * np.cos(inc)
+#     ynew = req_new * np.sin(inc)
 
-    rnew = req_new * np.sin(theta)**2
-    ydipnew = rnew * np.cos(theta)
-    xdipnew = rnew * np.sin(theta)
+#     rnew = req_new * np.sin(theta)**2
+#     ydipnew = rnew * np.cos(theta)
+#     xdipnew = rnew * np.sin(theta)
 
-    # plot new dipole
-    ax2.plot(xdipnew, ydipnew, color='olive', zorder=-10, linestyle='--')
-    ax2.plot(xdipnew, -ydipnew, color='olive', zorder=-10, linestyle='--')
+#     # plot new dipole
+#     ax2.plot(xdipnew, ydipnew, color='olive', zorder=-10, linestyle='--')
+#     ax2.plot(xdipnew, -ydipnew, color='olive', zorder=-10, linestyle='--')
 
-    # plot old dipole
-    ax2.plot(x, y, color='olive',  zorder=-10, linestyle='--')
-    ax2.plot(x, -y, color='olive', zorder=-10, linestyle='--')
+#     # plot old dipole
+#     ax2.plot(x, y, color='olive',  zorder=-10, linestyle='--')
+#     ax2.plot(x, -y, color='olive', zorder=-10, linestyle='--')
 
-    # plot the small circle at new position
-    ax2.add_patch(plt.Circle((aplanet * np.cos(inc), aplanet * np.sin(inc)),
-                            0.15, color='k', fill=True))
-    ax2.add_patch(plt.Circle((aplanet * np.cos(inc), aplanet * np.sin(inc)),
-                            0.1, color='teal', fill=True))
+#     # plot the small circle at new position
+#     ax2.add_patch(plt.Circle((aplanet * np.cos(inc), aplanet * np.sin(inc)),
+#                             0.15, color='k', fill=True))
+#     ax2.add_patch(plt.Circle((aplanet * np.cos(inc), aplanet * np.sin(inc)),
+#                             0.1, color='teal', fill=True))
 
-    # define line through zero at inclination angle
-    x2 = np.linspace(-aplanet * np.cos(inc), aplanet * np.cos(inc), 100)
-    y2 = np.tan(inc) * x2
+#     # define line through zero at inclination angle
+#     x2 = np.linspace(-aplanet * np.cos(inc), aplanet * np.cos(inc), 100)
+#     y2 = np.tan(inc) * x2
 
-    # plot line
-    ax2.plot(x2, y2, color='k', linewidth=0.5)
+#     # plot line
+#     ax2.plot(x2, y2, color='k', linewidth=0.5)
 
-    # define perpendicular arrow through zero
-    def y3(x): return -1/np.tan(inc) * x
+#     # define perpendicular arrow through zero
+#     def y3(x): return -1/np.tan(inc) * x
 
-    # rotated arrow
-    extent = 1
-    ax2.arrow(-extent, y3(-extent), 2 * extent, np.abs(2 * y3(-extent)),
-            head_width=0.15, head_length=0.3, fc='k', ec='k')
+#     # rotated arrow
+#     extent = 1
+#     ax2.arrow(-extent, y3(-extent), 2 * extent, np.abs(2 * y3(-extent)),
+#             head_width=0.15, head_length=0.3, fc='k', ec='k')
 
 
-    # where is r=1
-    theta_2 = np.arcsin(np.sqrt(1 / req_new))
-    xup = np.sin(theta_1)
-    yup = np.cos(theta_1)
+#     # where is r=1
+#     theta_2 = np.arcsin(np.sqrt(1 / req_new))
+#     xup = np.sin(theta_1)
+#     yup = np.cos(theta_1)
 
-    # fill black area between x1, xup, y1, yup
-    for y_ in np.linspace(np.cos(theta_1),np.cos(theta_2),10):
-        t_ = np.arccos(y_)
-        x_ = np.sin(t_)
+#     # fill black area between x1, xup, y1, yup
+#     for y_ in np.linspace(np.cos(theta_1),np.cos(theta_2),10):
+#         t_ = np.arccos(y_)
+#         x_ = np.sin(t_)
         
-        ax2.plot([-x_, x_], [y_, y_], color='k', alpha=1)
-        ax2.plot([0, x_], [y_, y_], color='r', alpha=1)
+#         ax2.plot([-x_, x_], [y_, y_], color='k', alpha=1)
+#         ax2.plot([0, x_], [y_, y_], color='r', alpha=1)
 
 
     # ----------------------------------------------------------------------------
@@ -200,14 +212,14 @@ if __name__ == "__main__":
     # -----------------------------------------------------------------------------
     # LAYOUT
 
-    axes = [ax1, ax2, ax3]
+    axes = [ax1, ax3]
     for ax in axes:
         # right to the small circle draw a small arrow to the right
         arr = ax.arrow(2, 3, 0.7, 0, head_width=0.3,
                     head_length=0.1, fc='k', ec='k')
 
         # annotate the arrow with LOS
-        ax.annotate('LOS', xy=(2, 3), xytext=(2, 3.4))
+        ax.annotate('LOS', xy=(2, 3), xytext=(2, 3.4), fontsize=16)
 
         # set axis extent correctly
         ax.set_xlim(-4, 4)
