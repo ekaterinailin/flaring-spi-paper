@@ -67,15 +67,15 @@ In the 2010s, a wealth of flare observations from space missions like Kepler~\ci
 \subsection{Flaring star-planet interactions}
 \label{sec:intro:fspi}
 
-\begin{figure*}[ht!]
+\begin{figure}[ht!]
 \script{paper_illustrative_sketch_of_system_geometries.py}
     \begin{centering}
-        \includegraphics[width=0.7\linewidth]{figures/system_geometries.png}
+        \includegraphics[width=0.9\linewidth]{figures/system_geometries.png}
         \caption{
          Simple magnetic star-planet interaction (SPI) viewing geometries. \textbf{a.: system aligned along the line of sight (LOS). } The interaction footpoint moves along the black line, and is on the visible hemisphere (hatched area) for $50\%$ of the  orbit (red line). Flaring SPI can be observed as modulation of flare occurrence times. \textbf{b.: Inclined system.} The interaction latitude is visible $100\%$ of the time, so no modulation can be observed. Interaction is shown on one hemisphere, but may appear on both. Complex geometries arise when orbital, rotational and magnetic axis are misaligned. The panels also illustrate how a planet in a closer orbit (a.) interacts at a lower latitude than a farther out planet (b.). }
         \label{fig:sketch}
     \end{centering}
-\end{figure*}
+\end{figure}
 
 
 The absolute power of flaring SPI is difficult to constrain. We do not know how energetic planet-induced flares can be. The estimates for dissipated energy~\citep{lanza2018closeby} are in the ballpark of the regime of superflares observed by Kepler and TESS. However, on the one hand, the planet might be triggering flares prematurely, which would be of lower energy~\citep{loyd2023flares}, and end up below our detection threshold. On the other hand, the energy need not be dissipated continuously, particularly in the stretch-and-break mechanism proposed by~\citep{lanza2012starplanet}, so an individual flare's energy might be higher. We also do not know whether flares triggered by interactions with a companion would have different properties than intrinsic flares. We will assume that, since they would be caused by magnetic reconnection triggered by the planet in the stellar corona, they should still have the same physics as intrinsic flares. 
@@ -115,9 +115,10 @@ In this study, we aimed at compiling the largest possible sample to search for f
 
 
 \begin{table*}
+\script{paper_main_table.py}
 \movetableright=-20mm
 
-    \script{paper_main_table.py}
+    
     \caption{Flaring single star-planet system parameters.}
     
     \input{output/table_lit_vals.tex}
@@ -574,9 +575,9 @@ However, alignment between orbital, rotational and magnetic dipole axis is not g
 \end{figure*}
 
 \begin{table*}
+\script{paper_table_tidal.py}
 \footnotesize
 \movetableright=-20mm
-\script{paper_table_tidal.py}
 \caption{Flaring tidal star-planet interaction parameters and $p$-value of the custom Anderson-Darling test. }
 \input{output/table_tidal.tex}
     \label{tab:tidal}
