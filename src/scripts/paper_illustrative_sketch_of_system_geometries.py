@@ -33,7 +33,7 @@ import paths
 if __name__ == "__main__":
 
     # init two figure panels next to each other
-    fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(10, 5))
+    fig, (ax1, ax3) = plt.subplots(2, 1, figsize=(5, 9))
 
     # Central star
     for ax in [ax1, ax3]:
@@ -231,7 +231,7 @@ if __name__ == "__main__":
                 head_length=0.07, fc='k', ec='k')
 
     # annotate the arrow with LOS
-    ax1.annotate('LOS', xy=(1.8, 1.8), xytext=(1.8, 1.7), fontsize=16)
+    ax1.annotate('LOS', xy=(1.8, 1.8), xytext=(1.8, 1.7), fontsize=16.5)
 
     # right to the small circle draw a small arrow to the right
     arr = ax3.arrow(2, 1.9, 0.6, 0, head_width=0.15,
