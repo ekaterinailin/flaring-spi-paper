@@ -99,7 +99,7 @@ if __name__ == "__main__":
 
     # convert to latex readable entries 
     new_cols =  [r"$M_*$ [$M_\odot$]",
-                r"$M_p$ [$M_\oplus$]",
+                r"$M_p (\sin i)$ [$M_\oplus$]",
                 r"log$_{10} 10^{-8} \Delta g / g$",
                 r"log$_{10} \tau_{\rm tide}$ [yr]",
                 r"$10^{-18} \frac{\partial L_{conv}}{\partial t}$"

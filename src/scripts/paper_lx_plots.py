@@ -109,7 +109,7 @@ if __name__ == "__main__":
     ax1.set_yscale('log')
 
     # add legend
-    ax1.legend(loc='lower left', fontsize=13, frameon=False)
+    ax1.legend(loc='lower left', fontsize=13, frameon=True)
 
     # adjust text positions
     aT.adjust_text(txts, arrowprops=dict(arrowstyle="-", color='k', lw=0.5),
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     ax2.scatter(reiners2022["<B>"].astype(float),
                 10**reiners2022["logLX/Lbol"].astype(float), 
                 label="Reiners et al. 2022",
-                c="grey", zorder=-10, marker="x", alpha=0.4)
+                c="grey", zorder=-10, marker="x", alpha=0.55)
 
     ax2.errorbar(df.B_G, lxlbol, markersize=8, 
                 xerr=[df.B_G - df.B_G_low, df.B_G_high - df.B_G],
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     ax2.set_yscale('log')
 
     # add legend
-    ax2.legend(loc='lower right', fontsize=13, frameon=False)
+    ax2.legend(loc='lower right', fontsize=13, frameon=True)
 
     # adjust text positions
     aT.adjust_text(txts, arrowprops=dict(arrowstyle="-", color='k', lw=0.5),

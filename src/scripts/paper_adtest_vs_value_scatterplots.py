@@ -290,7 +290,7 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
 
         # # add the label to each star
         for star, row in group.iterrows():
-            if (row["mean"]<=.2) :# | (row[value]>=1.):
+            if (row["mean"]<=.2) | (row[value]>=10.):
                 texts.append(ax.text(x=row[value], y=row["mean"], s=row["ID"],
                         fontsize=12, ha="right", va="top", rotation=0))
 
@@ -468,8 +468,8 @@ if __name__ == "__main__":
 
     # ADD ONE PANEL AS THE MAIN PLOT
     fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(8, 5))
-    value = columns[0]
-    valuelabel = xlabels[0]
+    value = columns[1]
+    valuelabel = xlabels[1]
     make_adtest_figure(df, value, valuelabel, valuelegend, valuelabels, f"{value}_bp", ax, leg=True)
     plt.tight_layout()
     plt.savefig(paths.figures / f"PAPER_ADtest_bg_main.png", dpi=300)
