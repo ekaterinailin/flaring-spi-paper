@@ -38,7 +38,7 @@ if __name__ == "__main__":
     # Central star
     for ax in [ax1, ax3]:
         ax.add_patch(plt.Circle((0, 0), 1.0, color='w', fill=True))
-        ax.add_patch(plt.Circle((0, 0), 1.03, color='k', fill=False))
+        ax.add_patch(plt.Circle((0, 0), 1.01, color='k', fill=False))
         ax.add_patch(plt.Circle((0, 0), 1, color='grey', fill=True, alpha=0.5))
 
         # hatch the right half of the star
@@ -49,9 +49,11 @@ if __name__ == "__main__":
         x = np.cos(theta)
         y = np.sin(theta)
 
-
         # Fill the semi-circle with hatching
-        ax.fill_between(x, y, color="grey", alpha=0.5, hatch='//', edgecolor="k")
+        ax.fill_between(x, y, color="none", alpha=0.5, hatch='//', 
+                        edgecolor="k", linewidth=0.0)
+        
+        plt.plot([0, 0], [-1., 1.], color='k', linewidth=0.5)
 
 
     # -----------------------------------------------------------------------------
@@ -77,21 +79,22 @@ if __name__ == "__main__":
     ax1.plot(x, -y, color='olive', zorder=-10, linestyle='--')
 
     # plot a vertical arrow through the middle of the big circle, that is slightly longer than the big circle
-    ax1.arrow(0, -1.2, 0, 2.4, head_width=0.15, head_length=0.3, fc='k', ec='k')
+    ax1.arrow(0, -1.2, 0, 2.4, head_width=0.15, head_length=0.3, fc='k', ec='k', linewidth=1)
 
     # plot a small circle in the apex of the dipole field line
-    ax1.add_patch(plt.Circle((aplanet, 0), 0.15, color='k', fill=True))
-    ax1.add_patch(plt.Circle((aplanet, 0), 0.1, color='teal', fill=True))
+    ax1.add_patch(plt.Circle((aplanet, 0), 0.15, color='k', fill=True, zorder=8))
+    ax1.add_patch(plt.Circle((aplanet, 0), 0.1, color='teal', fill=True, zorder=9))
 
     # plot a horizontal line between the centers of the two circles
     ax1.plot([-aplanet, aplanet], [0, 0], color='k', linewidth=0.5)
-
+    
+  
     # plot a horizontal line at the latitude where the dipole field touches the big circle
-    ax1.plot([-x1, x1], [y1, y1], color='k')
+    ax1.plot([-x1, x1], [y1, y1], color='k', linewidth=2.5)
 
     # plot a horizontal line at the latitude where the dipole field touches the big circle
     # but now only on the side of the circle where the small circle is
-    ax1.plot([0, x1], [y1, y1], color='r')
+    ax1.plot([0, x1], [y1, y1], color='r', linewidth=2.5)
 
 
     # -----------------------------------------------------------------------------
@@ -191,9 +194,9 @@ if __name__ == "__main__":
 
     # plot a small circle in the apex of the dipole field line
     ax3.add_patch(plt.Circle((rot_x(aplanet, 0), rot_y(aplanet, 0)),
-                            0.15, color='k', fill=True))
+                            0.15, color='k', fill=True, zorder=8))
     ax3.add_patch(plt.Circle((rot_x(aplanet, 0), rot_y(aplanet, 0)),
-                            0.1, color='teal', fill=True))
+                            0.1, color='teal', fill=True, zorder=9))
 
     # plot a horizontal line between the centers of the two circles
     ax3.plot([rot_x(-aplanet, 0), rot_x(aplanet, 0)],
@@ -201,13 +204,13 @@ if __name__ == "__main__":
 
     # plot a horizontal line at the latitude where the dipole field touches the big circle
     ax3.plot([rot_x(-x1, y1), rot_x(x1, y1)],
-            [rot_y(-x1, y1), rot_y(x1, y1)], color='r')
+            [rot_y(-x1, y1), rot_y(x1, y1)], color='r', linewidth=2.5)
 
     # plot rotated arrow to indicate the rotational/magnetic/orbital axis
     x0 = rot_x(0, -1.1)
     y0 = rot_y(0, -1.1)
     ax3.arrow(x0, y0, -2 * x0, -2*y0,
-            head_width=0.15, head_length=0.3, fc='k', ec='k')
+            head_width=0.15, head_length=0.3, fc='k', ec='k', linewidth=1)
 
     # -----------------------------------------------------------------------------
     # LAYOUT
@@ -222,8 +225,8 @@ if __name__ == "__main__":
         ax.annotate('LOS', xy=(2, 3), xytext=(2, 3.4), fontsize=16)
 
         # set axis extent correctly
-        ax.set_xlim(-4, 4)
-        ax.set_ylim(-4, 4)
+        ax.set_xlim(-3, 3)
+        ax.set_ylim(-3, 3)
 
         # remove axes
         ax.set_axis_off()
