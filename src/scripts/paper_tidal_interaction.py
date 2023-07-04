@@ -45,7 +45,7 @@ if __name__ == "__main__":
         res[model + "_low_err"] = np.abs(res[model + "_low_err"])
 
     # initialize the figure
-    fig, axes = plt.subplots(1,3, figsize=(15,6), sharey=True)
+    fig, axes = plt.subplots(1,3, figsize=(13,5), sharey=True)
     axes = list(axes) 
 
     # define the models and labels
@@ -76,7 +76,7 @@ if __name__ == "__main__":
                     if rv == 1:
                         ax.errorbar(g[model],g["mean"], xerr=xerr,
                                     yerr=g["std"], label=color, 
-                                color=color, fmt="X", markersize=7, elinewidth=0.3)
+                                color=color, fmt="x", markersize=7, elinewidth=0.3)
                     else:
                         ax.errorbar(g[model],g["mean"], xerr=xerr,
                                     yerr=g["std"], label=color, 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                 if rv == 1:
                     ax.errorbar(g[model],g["mean"], xerr=xerr,
                                 yerr=g["std"], label=model, 
-                            color="grey", fmt="X", markersize=7, elinewidth=0.3)
+                            color="grey", fmt="x", markersize=7, elinewidth=0.3)
                 else:
                     ax.errorbar(g[model],g["mean"], xerr=xerr,
                                 yerr=g["std"], label=model, 
@@ -112,6 +112,7 @@ if __name__ == "__main__":
         ax.set_xscale("log")
         ax.set_yscale("log")
         ax.set_xlabel(label, fontsize=13)
+        ax.tick_params(axis='both', which='major', labelsize=11)
 
         minx, maxx = res[model].min(), res[model].max()
 
@@ -121,7 +122,7 @@ if __name__ == "__main__":
         sigmas, sigma_label = get_sigma_values()
         for sigma, l in zip(sigmas, sigma_label):
             ax.axhline(sigma, color="k", linestyle="--", alpha=.5)
-            ax.text(maxx*12, sigma, l, fontsize=10)
+            ax.text(maxx*12, sigma, l, fontsize=12)
 
         # adjust label positions
         adjust_text(texts, ax=ax)
