@@ -20,7 +20,7 @@
 \affiliation{Leibniz Insitute for Astrophysics Potsdam (AIP), An der Sternwarte 16, 14482 Potsdam, Germany}
 \affiliation{Institute for Physics and Astronomy, University of Potsdam, Karl-Liebknecht-Strasse 24/25, 14476 Potsdam, Germany}
 
-\author[0000-0001-7579-3728]{Nikoleta Ilic}
+\author[0000-0001-7579-3728]{Nikoleta Ili\'c}
 \affiliation{Leibniz Insitute for Astrophysics Potsdam (AIP), An der Sternwarte 16, 14482 Potsdam, Germany}
 \affiliation{Institute for Physics and Astronomy, University of Potsdam, Karl-Liebknecht-Strasse 24/25, 14476 Potsdam, Germany}
 
@@ -29,11 +29,9 @@
 
 % Abstract with filler text
 \begin{abstract}
-    In many star-planet systems discovered so far, the innermost planet orbits within only a few stellar radii. In these systems, planets become in-situ probes of the extended stellar magnetic field. Because they disturb the field as they move, they are expected to trigger flares on the stellar surface. These flares are not expected to appear different from intrinsic stellar flares individually.
+    In many star-planet systems discovered so far, the innermost planet orbits within only a few stellar radii. In these systems, planets become in-situ probes of the extended stellar magnetic field. Because they disturb the field as they move, they are expected to trigger flares on the stellar surface. These flares are not expected to appear different from intrinsic stellar flares individually. However, as we expect planet-induced flares to be associated with the planet's orbital period $P_{orb}$, we can identify their presence from a clustering of flares in phase with the planet's orbital phase. We used the excellent phase coverage obtained from Kepler and the Transiting Exoplanet Survey Satellite to find flaring star-planet systems, compile a catalog of all their flares, and measure how much they cluster in orbital phase. 
 
-    However, as we expect planet-induced flares to be associated with the planet's orbital period $P_{orb}$, we can identify their presence from a clustering of flares in phase with the planet's orbital phase. We used the excellent phase coverage obtained from Kepler and the Transiting Exoplanet Survey Satellite to find flaring star-planet systems, compile a catalog of all their flares, and measure how much they cluster in orbital phase. 
-
-    In the 1811 searched systems, we found 25 single stars with three or more flares each. We quantified the significance of the clustering in each system, and compared it against the theoretically expected power of magnetic interaction that leads to planet-induced flaring. Most systems do not show any clustering, as expected from their relatively wide orbits. Those we expect to show planet-induced flaring fall on two branches. An inactive one, without any signs of clustering, and a tentative active one, where the clustering becomes more pronounced as the expected power of interaction increases. The flares in HIP 67522, a young Hot Jupiter system, are prominently clustered ($p<0.006$), identifying it as the most promising candidate for magnetic star-planet interaction in our sample.
+    In the 1811 searched systems, we found 25 single stars with three or more flares each. We quantified the significance of the clustering in each system, and compared it against the theoretically expected power of magnetic interaction that leads to planet-induced flaring. Most systems do not show any clustering, in accordance with low expected power. Those we expect to show planet-induced flaring fall on two branches. An inactive one, without any signs of clustering, and a tentative active one, where the clustering becomes more pronounced as the expected power of interaction increases. The flares in HIP 67522, a young Hot Jupiter system, are prominently clustered ($p<0.006$), identifying it as the most promising candidate for magnetic star-planet interaction in our sample.
 
   %  In our results, HIP 67522, a 17 Myr old solar type star with a Hot Jupiter in a 7-day orbit, shows the most pronounced clustering with only a 0.006 probability of coincidence. While short of a $3\sigma$ detection,
     
@@ -120,7 +118,7 @@ In this study, we aimed at compiling the largest possible sample to search for f
 
     
     \caption{Flaring single star-planet system parameters.}
-    
+\scriptsize
     \input{output/table_lit_vals.tex}
         \label{tab:maintable_lit}
     \tablerefs{\input{output/lit_table_bibstring.tex}}
@@ -568,7 +566,7 @@ However, alignment between orbital, rotational and magnetic dipole axis is not g
     \script{paper_tidal_interaction.py}
     \begin{centering}
         \includegraphics[width=\hsize]{figures/PAPER_tidal_AD_test.png}
-    \caption{Deviation from random flare times in phase with $P_{\rm orb}/2$, i.e., in phase with tidal bulges raised on the star, compared to different models of tidal interaction~(Section~\ref{sec:discussion:tidal}). \textbf{Cross symbols} mark planets with $M_p \sin i$ measurements. \textbf{Round symbols} mark planets with measured  or estimated $M_p$ (see Section~\ref{sec:discussion:mpms}). 
+    \caption{Deviation from random flare times in phase with $P_{\rm orb}/2$, i.e., in phase with the two tidal bulges raised on the star, compared to different models of tidal interaction~(Section~\ref{sec:discussion:tidal}). \textbf{Cross symbols} mark planets with $M_p \sin i$ measurements. \textbf{Round symbols} mark planets with measured  or estimated $M_p$ (see Section~\ref{sec:discussion:mpms}). 
            \textbf{Left panel}: Tidal torque in the system for stars with a convective envelope. Blue color indicates that the star rotates slower than the planet orbits, so that angular momentum is transferred from the orbit to the spin of the star. Grey color is the reverse. \textbf{Middle panel}: The tidal dissipation timescale. \textbf{Right panel}:  Relative gravitational perturbation in the star.}
         \label{fig:tidal}
     \end{centering}
@@ -688,7 +686,7 @@ This study used the reproducibility software \href{https://github.com/showyourwo
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/PAPER_ADtest_Ro.png}
         \caption{
-        Expected power of flaring SPI vs. AD test results, assuming the same four different scenarios as in Figures~\ref{fig:adtest_bp} and \ref{fig:adtest_bp_rest}, here color-coded by Rossby number. $R\rm o=0.3$ is chosen to mark the transition from the saturated ($R\rm o < 0.3$) to the unsaturated ($R\rm o > 0.3$) activity regime. 
+        Expected power of flaring SPI vs. AD test results, assuming the same four scenarios as in Figures~\ref{fig:adtest_bp} and \ref{fig:adtest_bp_rest}, here color-coded by Rossby number. $R\rm o=0.3$ is chosen to mark the transition from the saturated ($R\rm o < 0.3$) to the unsaturated ($R\rm o > 0.3$) activity regime. 
         }
         \label{fig:adtest_ro}
     \end{centering}
