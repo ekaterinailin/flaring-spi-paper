@@ -29,6 +29,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import paths
 
+# plt.style.use('dark_background')
 
 if __name__ == "__main__":
 
@@ -228,14 +229,14 @@ if __name__ == "__main__":
 
     # right to the small circle draw a small arrow to the right
     arr = ax1.arrow(1.8, 1.6, 0.5, 0, head_width=0.1,
-                head_length=0.07, fc='k', ec='k')
+                head_length=0.07, fc='grey', ec='grey')
 
     # annotate the arrow with LOS
     ax1.annotate('LOS', xy=(1.8, 1.8), xytext=(1.8, 1.7), fontsize=16.5)
 
     # right to the small circle draw a small arrow to the right
     arr = ax3.arrow(2, 1.9, 0.6, 0, head_width=0.15,
-                head_length=0.07, fc='k', ec='k')
+                head_length=0.07, fc='grey', ec='grey')
 
     # annotate the arrow with LOS
     ax3.annotate('LOS', xy=(2, 2.1), xytext=(2, 2), fontsize=17)
