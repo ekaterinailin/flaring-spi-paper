@@ -21,10 +21,10 @@ if __name__ == "__main__":
     aumicspi = df.loc[df.TIC == "441420236"]
 
     # select SPI scenarios
-    vals = [("p_spi_erg_s", r"P_{\rm spi,sb}$", "stretch-and-break, magnetized planet"),
-            ("p_spi_erg_s_bp0", r"P_{\rm spi,sb0}$", "stretch-and-break, unmagnetized planet"),
-            ("p_spi_kav22", r"P_{\rm spi,aw}$", r"Alfv\'en wing, magnetized planet"),
-            ("p_spi_kav22_bp0", r"P_{\rm spi,aw0}$", r"Alfv\'en wing, unmagnetized planet")]
+    vals = [("p_spi_erg_s", r"$P_{\rm spi,sb}$", "stretch-and-break, magnetized planet"),
+            ("p_spi_erg_s_bp0", r"$P_{\rm spi,sb0}$", "stretch-and-break, unmagnetized planet"),
+            ("p_spi_kav22", r"$P_{\rm spi,aw}$", r"Alfv\'en wing, magnetized planet"),
+            ("p_spi_kav22_bp0", r"$P_{\rm spi,aw0}$", r"Alfv\'en wing, unmagnetized planet")]
 
     # init SPI tab
     aumictab = pd.DataFrame(columns=["SPI scenario","abbrev.","AU Mic power [erg/s]"])
