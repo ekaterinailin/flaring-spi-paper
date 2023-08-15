@@ -14,5 +14,6 @@ python paper_illustrative_sketch_of_system_geometries.py
 python paper_lx_plots.py
 python paper_as_vs_ad.py
 python paper_correlation_coefficients.py
+python paper_aumic_table.py
 
 
