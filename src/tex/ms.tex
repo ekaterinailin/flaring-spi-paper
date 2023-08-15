@@ -33,10 +33,7 @@
 
     In the 1811 searched systems, we found 25 single stars with three or more flares each. We quantified the significance of the clustering in each system, and compared it against the theoretically expected power of magnetic interaction that leads to planet-induced flaring. Most systems do not show any clustering, in accordance with low expected power. Those we expect to show planet-induced flaring fall on two branches. An inactive one, without any signs of clustering, and a tentative active one, where the clustering becomes more pronounced as the expected power of interaction increases. The flares in HIP 67522, a young Hot Jupiter system, are prominently clustered ($p<0.006$), identifying it as the most promising candidate for magnetic star-planet interaction in our sample.
 
-  %  In our results, HIP 67522, a 17 Myr old solar type star with a Hot Jupiter in a 7-day orbit, shows the most pronounced clustering with only a 0.006 probability of coincidence. While short of a $3\sigma$ detection,
-    
-  %  We also searched our data for locally expressed tidal interaction, i.e., flares clustering in phase with the tidal bulges ($P_{\rm orb}/2$). We find a marginal trend with different scaling laws of tidal interaction. Our system-by-system comparison tentatively suggests that young systems can interact both tidally and magnetically, whereas old, magnetically inactive systems mostly interact tidally.
-    %magnetic field strength (using $Ro$-$B$ relations), orbital parameters, and planet radius.
+ 
 \end{abstract}
 
 % Main body with filler text
@@ -181,7 +178,7 @@ Equivalent duration is equal to the time during which the non-flaring star relea
 
 \subsection{Custom Anderson-Darling test}
 \label{sec:methods:adtest}
-For each star-planet system with three or more flares in its light curves, we test for deviations from a random distribution of flares with orbital phase. We use the same customized Anderson-Darling test as in \cite{ilin2022searching}, which is more sensitive to deviations at both ends of the distribution than the widely used Kolmogorov-Smirnov test~\citep{feigelson2012modern}. In brief, we first take the number of flares observed in the TESS and Kepler data to calculate a base flare rate for each light curve. We then calculate how often each orbital phase has been observed, also for each light curve separately, to ensure that the different detection thresholds for TESS and Kepler do not bias the base rate. With the phase coverage and base flare rate combined, we can tell how many flares we would expect to see in any given phase bin if flares were randomly distributed. We then aggregate this number of expected flares per time bin into one expected distribution by summing over all available light curves. As a last step, we compare the expected distribution to the observed one using an Anderson-Darling test. We repeat this test with different phase offsets to account for remaining biases in sensitivity of the test at different phases.
+For each star-planet system with three or more flares in its light curves, we test for deviations from a random distribution of flares with orbital phase. We use the same customized Anderson-Darling test as in \cite{ilin2022searching}, which is more sensitive to deviations at both ends of the distribution than the widely used Kolmogorov-Smirnov test~\citep{feigelson2012modern}. In brief, we first take the number of flares observed in the TESS and Kepler data to calculate a base flare rate for each light curve. We then calculate how often each orbital phase has been observed, also for each light curve separately, to ensure that the different detection thresholds for TESS and Kepler do not bias the base rate. With the phase coverage and base flare rate combined, we can tell how many flares we would expect to see in any given phase bin if flares were randomly distributed. We then aggregate this number of expected flares per time bin into one expected distribution by summing over all available light curves. As a last step, we compare the expected distribution to the observed one using an Anderson-Darling test. \textcolor{red}{For this, we sample 10000 times from the expected distribution the same number of flares we observe in each system, e.g., for HIP 67522, we sample 12 flares distributed according to the blue curve in Fig.~\ref{fig:cumdist_transiting}. For each of the 10000 samples, we compute the Anderson-Darling statistic $A^2$, which yields a distribution of $A^2$ values. In a last step, we compute $A^2$ for the observed distribution, and compute the $p$-value.} We repeat this test with different phase offsets to account for remaining biases in sensitivity of the test at different phases.
 
 The only adjustment to the procedure in \cite{ilin2022searching} is that we use four equidistant start phases (i.e., 0, 0.25, 0.5 and 0.75) compared to the 20 used in~\cite{ilin2022searching} to save time, because the range of derived $p$-values is already well-sampled using four. We adopt the standard deviation of these four $p$-values as the uncertainty on the flaring SPI measurement.
 
@@ -246,17 +243,17 @@ Second, we also consider the case of an unmagnetized planet with $B_p=0$, in whi
 Third, we estimate the power of SPI generated by the Alfv\'en wing mechanism ~\citep{saur2013magnetic,kavanagh2022radio}, combining Eqns.~8~and~11 in \citet{kavanagh2022radio} to arrive at
 
 \begin{equation}
-    P_{\rm spi,aw} \sim B_p^{2/3} R_{p}^2    B_*^{1/3}  v_{rel}^2 a^{-2}  
+    P_{\rm spi,aw} \sim B_p^{2/3} R_{p}^2  R_*^2  B_*^{1/3}  v_{rel}^2 a^{-2} \rho_*^{1/2} \sin^2 \theta
 \end{equation}
-where we replace the stellar wind density $\rho_W$ with its proportionality to $a^{-2}$, and stellar wind magnetic field at the planetary radius $B_W$ with the surface field strength $B_* a^{-3}$, which result in the total $a^{-2}$ factor in the above equation.
+\textcolor{red}{where we replace the stellar wind density $\rho_W$ with its proportionality to $\rho_* (R_* / a)^{2}$, and stellar wind magnetic field at the planetary radius $B_W$ with the surface field strength $B_* (R_* / a)^{3}$, which result in the total $R_*^2 a^{-2}$ factor in the above equation. Since the stellar wind density at the stellar surface $\rho_*$ is poorly constrained empirically~\citep{vidotto2021evolution}, we follow~\citet{alvarado-gomez2020tuning,kavanagh2021planetinduced}, and fix $\rho_*=2\cdot10^{-10}\rm{cm}^{-3}$. The angle between the wind magnetic field vector and the velocity vector of the planet $\theta$ is also unknown, so we set $\sin\theta=1$ to obtain an upper limit. In reality, $\theta$ will vary both between systems, and over time in any individual system. Omitting $\rho_*$ assumes that all stellar wind densities are the same in our sample, which is not true in reality. The dependence on $\rho_*$ is stronger than that on $B_*$, but weaker than on every other parameter, so it may dominate the magnetic field dependence.}
 
 And fourth, we also consider the case of an unmagnetized planet with $B_p=0$, in which case Eq.~8 in \cite{kavanagh2022radio} reduces to
 
 \begin{equation}
-    P_{\rm spi,aw0} \sim R_p^2  B_*  v_{rel}^2  a^{-4}
+    P_{\rm spi,aw0} \sim R_p^2 R_*^4 B_*  v_{rel}^2 a^{-4} \rho_*^{1/2} \sin^2 \theta
 \end{equation}
 
-Lacking $B_p$, and various additional factors that appear in $P_{\rm spi,sb},P_{\rm spi,sb0},P_{\rm spi,aw}$, and  $P_{\rm spi,aw0}$, such as the angle between the relative velocity and magnetic field of the stellar wind~\citep{kavanagh2022radio}, or the force-free parameter~\citep{lanza2012starplanet}, we restrict ourselves to differential estimates, and normalize all $P_{\rm spi}$ to AU Mic.
+Lacking $B_p$, and various additional factors that appear in $P_{\rm spi,sb},P_{\rm spi,sb0},P_{\rm spi,aw}$, and  $P_{\rm spi,aw0}$, such as the angle between the relative velocity and magnetic field of the stellar wind~\citep{kavanagh2022radio}, or the force-free parameter~\citep{lanza2012starplanet}, we restrict ourselves to differential estimates, and normalize all $P_{\rm spi}$ to AU Mic\textcolor{red}{'s value of $XXXX$.}
 
 \section{Results}
 \label{sec:results}
@@ -456,13 +453,13 @@ Magnetic and tidal SPI are difficult to disentangle by their global effects on s
     \end{centering}
 \end{figure}
 
-Magnetic SPI can only take place if the planet spends at least a part of its orbit in the sub-Alfv\'enic regime~(see Section~\ref{sec:intro:mspi}). We estimated the average Alfv\'en surface size ($\overline{AS}_{R}$) using the power law established by \citet{Chebly2023}:
+Magnetic SPI can only take place if the planet spends at least a part of its orbit in the sub-Alfv\'enic regime~(see Section~\ref{sec:intro:mspi}). We estimated the average Alfv\'en surface size ($\overline{AS}_{R}$) using the power law established by \citet{chebly2023numerical}:
 
 \begin{equation}
     \log \overline{AS_{\rm R}} = (0.44 \pm 0.05) \log B_{\rm r}^{\rm max} + (0.54 \pm 0.08)\label{AS_estimation}
 \end{equation}
 
-This relation links the mean AS size with the maximum large-scale radial magnetic field ($B_{\rm r}^{\rm max}$) obtained in Zeeman-Doppler Imaging reconstructions (\citealt{donati2006surprising, morin2008largescale, fares2009magnetic, alvarado-gomez2015activity, hussain2016spectropolarimetric, kochukhov2020mapping}). The relation was derived from 3D~MHD stellar wind simulations of cool main sequence stars (F, G, K, and M), which used observed ZDI maps as boundary condition for the stellar radial magnetic field (for more details on the models see \citealt{Chebly2023}). However, the stellar magnetic field~($B$, Table~\ref{tab:maintable_der}), derived from the Rossby number (Eq.~\ref{Eq3}, \ref{Eq4}), corresponds to the total, unsigned magnetic field strength on the stellar surface, so that it is necessary to estimate how $B_{\rm r}^{\rm max}$ is related to $B$. 
+This relation links the mean AS size with the maximum large-scale radial magnetic field ($B_{\rm r}^{\rm max}$) obtained in Zeeman-Doppler Imaging reconstructions (\citealt{donati2006surprising, morin2008largescale, fares2009magnetic, alvarado-gomez2015activity, hussain2016spectropolarimetric, kochukhov2020mapping}). The relation was derived from 3D~MHD stellar wind simulations of cool main sequence stars (F, G, K, and M), which used observed ZDI maps as boundary condition for the stellar radial magnetic field (for more details on the models see \citealt{chebly2023numerical}). However, the stellar magnetic field~($B$, Table~\ref{tab:maintable_der}), derived from the Rossby number (Eq.~\ref{Eq3}, \ref{Eq4}), corresponds to the total, unsigned magnetic field strength on the stellar surface, so that it is necessary to estimate how $B_{\rm r}^{\rm max}$ is related to $B$. 
 
 \citet{reiners2022magnetism} report that for Sun-like stars with a total magnetic field strength of up to 2000~G, the longitudinal magnetic field derived from Stokes V spectropolarimetric observations ($B_{\rm V}$) accounts for $\sim$\,$10$\% of the total magnetic field. \cite{kochukhov2020hidden} showed that this trend also holds for M-dwarfs with magnetic fields up to 4000~G. In this case, however, the recovered longitudinal magnetic field accounts for about $20\%$ of the total magnetic field. Moreover, our star sample covers a wide range of magnetic fields, the weakest being 100~G and the strongest $3800\,$G. Therefore, as a first assumption, we consider that the longitudinal magnetic field of our stars would reach 15\% of the total magnetic field (i.e. $B_{\rm V} = 0.15B$), given that most systems in our sample have $B>2000\,$G. 
 
