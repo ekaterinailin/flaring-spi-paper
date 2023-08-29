@@ -27,7 +27,7 @@ if __name__ == "__main__":
             ("p_spi_kav22_bp0", r"$P_{\rm spi,aw0}$", r"Alfv\'en wing", "0")]
 
     # init SPI tab
-    aumictab = pd.DataFrame(columns=["SPI scenario","abbrev.", "$B_p$ [G]", "AU Mic power [erg/s]"])
+    aumictab = pd.DataFrame(columns=["SPI scenario","abbrev.", r"$B_{\rm p}$ [G]", "AU Mic power [erg/s]"])
 
     # convert to latex vals and add to tab
     for val, symb, expl, bp in vals:
@@ -41,7 +41,7 @@ if __name__ == "__main__":
         valstr = fr"${v:.1f}" + r"^{" + fr"{uperr:.1f}" + r"}_{" + fr"{lowerr:.1f}" + r"} \times 10" +r"^{" + f"{log10:.0f}" +"}$"
         # print(symb, expl, valstr)
         aumictab = pd.concat([aumictab, pd.DataFrame({"SPI scenario": [expl],
-                                                      "$B_p$ [G]":[bp], 
+                                                      "r$B_{\rm p}$ [G]":[bp], 
                                                       "abbrev.": [symb], 
                                                       "AU Mic power [erg/s]": [valstr]})], 
                                                       ignore_index=True)

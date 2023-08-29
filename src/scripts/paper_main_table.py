@@ -123,7 +123,7 @@ if __name__ == "__main__":
         "p_spi_sb_bp0_norm":r"log$_{10} P_{\rm spi,sb0}$",
         "p_spi_aw_bp0_norm":r"log$_{10} P_{\rm spi,aw0}$",
         "v_rel_km_s":r"$v_{\mathrm{rel}}$ [km s$^{-1}$]",
-        "mean":"p-value",
+        "mean":r"$p$-value",
         }
 
     # read table to texify
@@ -253,7 +253,7 @@ if __name__ == "__main__":
 
     # derived parameters table columns
     der_cols = ["ID", r"$R$o", r"$B$ [G]", r"$v_{\mathrm{rel}}$ [km s$^{-1}$]", r"log$_{10} P_{\rm spi,sb}$",
-                r"log$_{10} P_{\rm spi,sb0}$", r"log$_{10} P_{\rm spi,aw}$", r"log$_{10} P_{\rm spi,aw0}$", "p-value",]
+                r"log$_{10} P_{\rm spi,sb0}$", r"log$_{10} P_{\rm spi,aw}$", r"log$_{10} P_{\rm spi,aw0}$", r"$p$-value",]
 
     # make a list of tuples with the two column lists
     splitcols = [("lit", lit_cols), ("der", der_cols)]
