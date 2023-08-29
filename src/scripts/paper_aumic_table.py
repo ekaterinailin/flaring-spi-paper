@@ -21,16 +21,16 @@ if __name__ == "__main__":
     aumicspi = df.loc[df.TIC == "441420236"]
 
     # select SPI scenarios
-    vals = [("p_spi_erg_s", r"$P_{\rm spi,sb}$", "stretch-and-break, magnetized planet"),
-            ("p_spi_erg_s_bp0", r"$P_{\rm spi,sb0}$", "stretch-and-break, unmagnetized planet"),
-            ("p_spi_kav22", r"$P_{\rm spi,aw}$", r"Alfv\'en wing, magnetized planet"),
-            ("p_spi_kav22_bp0", r"$P_{\rm spi,aw0}$", r"Alfv\'en wing, unmagnetized planet")]
+    vals = [("p_spi_erg_s", r"$P_{\rm spi,sb}$", "stretch-and-break", "1"),
+            ("p_spi_erg_s_bp0", r"$P_{\rm spi,sb0}$", "stretch-and-break","0"),
+            ("p_spi_kav22", r"$P_{\rm spi,aw}$", r"Alfv\'en wing", "1"),
+            ("p_spi_kav22_bp0", r"$P_{\rm spi,aw0}$", r"Alfv\'en wing", "0")]
 
     # init SPI tab
-    aumictab = pd.DataFrame(columns=["SPI scenario","abbrev.","AU Mic power [erg/s]"])
+    aumictab = pd.DataFrame(columns=["SPI scenario","abbrev.", "$B_p$ [G]", "AU Mic power [erg/s]"])
 
     # convert to latex vals and add to tab
-    for val, symb, expl in vals:
+    for val, symb, expl, bp in vals:
         v = aumicspi[val].values[0]
         up = aumicspi[val + "_high"].values[0]
         low = aumicspi[val + "_low"].values[0]
@@ -40,7 +40,11 @@ if __name__ == "__main__":
         v = v / 10**log10
         valstr = fr"${v:.1f}" + r"^{" + fr"{uperr:.1f}" + r"}_{" + fr"{lowerr:.1f}" + r"} \times 10" +r"^{" + f"{log10:.0f}" +"}$"
         # print(symb, expl, valstr)
-        aumictab = pd.concat([aumictab, pd.DataFrame({"SPI scenario": [expl], "abbrev.": [symb], "AU Mic power [erg/s]": [valstr]})], ignore_index=True)
+        aumictab = pd.concat([aumictab, pd.DataFrame({"SPI scenario": [expl],
+                                                      "$B_p$ [G]":[bp], 
+                                                      "abbrev.": [symb], 
+                                                      "AU Mic power [erg/s]": [valstr]})], 
+                                                      ignore_index=True)
 
     # convert to latex
     string = aumictab.to_latex(index=False, escape=False)

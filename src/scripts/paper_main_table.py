@@ -109,11 +109,11 @@ if __name__ == "__main__":
     
     # define the latex column names
     map_col_names = {
-        "st_rotp":"$P_{rot}$ [d]",
-        "orbper_d":"$P_{orb}$ [d]",
-        "st_rad":"$R_{*}$ [R$_\odot$]",
-        "pl_radj":"$R_{p}$ [R$_J$]",
-        "a_au":"$a$ [$10^{-2}$ au]",
+        "st_rotp":r"$P_{\rm rot}$ [d]",
+        "orbper_d":r"$P_{\rm orb}$ [d]",
+        "st_rad":r"$R_{*}$ [R$_\odot$]",
+        "pl_radj":r"$R_{\rm p}$ [R$_J$]",
+        "a_au":r"$a$ [$10^{-2}$ au]",
         "pl_orbeccen":"$e$",
         "st_lum":"log$_{10} L_{*}$ [L$_\odot$]",
         "Ro":r"$R$o",
@@ -122,7 +122,7 @@ if __name__ == "__main__":
         "p_spi_aw_bp1_norm":r"log$_{10} P_{\rm spi,aw}$",
         "p_spi_sb_bp0_norm":r"log$_{10} P_{\rm spi,sb0}$",
         "p_spi_aw_bp0_norm":r"log$_{10} P_{\rm spi,aw0}$",
-        "v_rel_km_s":r"$v_{rel}$ [km s$^{-1}$]",
+        "v_rel_km_s":r"$v_{\mathrm{rel}}$ [km s$^{-1}$]",
         "mean":"p-value",
         }
 
@@ -248,11 +248,11 @@ if __name__ == "__main__":
     bibkeys = {bibkeys[i]:i+1 for i in range(len(bibkeys))}
 
     # literature parameters table columns
-    lit_cols = ["ID", "$P_{rot}$ [d]", "$P_{orb}$ [d]", "$R_{*}$ [R$_\odot$]",
-            "$R_{p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "$e$", "log$_{10} L_{*}$ [L$_\odot$]"]
+    lit_cols = ["ID", r"$P_{\rm rot}$ [d]", r"$P_{\rm orb}$ [d]", "$R_{*}$ [R$_\odot$]",
+            r"$R_{\rm p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "$e$", "log$_{10} L_{*}$ [L$_\odot$]"]
 
     # derived parameters table columns
-    der_cols = ["ID", r"$R$o", r"$B$ [G]", r"$v_{rel}$ [km s$^{-1}$]", r"log$_{10} P_{\rm spi,sb}$",
+    der_cols = ["ID", r"$R$o", r"$B$ [G]", r"$v_{\mathrm{rel}}$ [km s$^{-1}$]", r"log$_{10} P_{\rm spi,sb}$",
                 r"log$_{10} P_{\rm spi,sb0}$", r"log$_{10} P_{\rm spi,aw}$", r"log$_{10} P_{\rm spi,aw0}$", "p-value",]
 
     # make a list of tuples with the two column lists

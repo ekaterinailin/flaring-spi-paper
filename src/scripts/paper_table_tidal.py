@@ -99,10 +99,10 @@ if __name__ == "__main__":
 
     # convert to latex readable entries 
     new_cols =  [r"$M_*$ [$M_\odot$]",
-                r"$M_p (\sin i)$ [$M_\oplus$]",
+                r"$M_{\mathrm{p}} (\sin i)$ [$M_\oplus$]",
                 r"log$_{10} 10^{-8} \Delta g / g$",
                 r"log$_{10} \tau_{\rm tide}$ [yr]",
-                r"$10^{-18} \frac{\partial L_{conv}}{\partial t}$"
+                r"$10^{-18} \frac{\partial L_{\rm conv}}{\partial t}$"
                 r" $\left[M_\odot \left(\frac{km}{s}\right)^2\right]$",
                 ]
 
@@ -164,11 +164,11 @@ if __name__ == "__main__":
 
     # add references
     df[r"ref. $M_*$"] = df.st_mass_bibkey.apply(lambda x: bibkeys[x])
-    df[r"ref. $M_p$"] = df.pl_bmassj_bibkey.apply(lambda x: bibkeys[x])
+    df[r"ref. $M_{\rm p}$"] = df.pl_bmassj_bibkey.apply(lambda x: bibkeys[x])
 
     # add reference columns to new_cols
     new_cols.append(r"ref. $M_*$")
-    new_cols.append(r"ref. $M_p$")
+    new_cols.append(r"ref. $M_{\rm p}$")
 
 
     # convert to latex
