@@ -128,6 +128,7 @@ Based on the filtered PSCP table, we used the \texttt{lightkurve}~\citep{lightku
 \subsection{Orbital periods and transit mid-times}
 \label{sec:data:orbitalperiod}
 We adopt the orbital periods from the PSCP, which were either obtained from Kepler or TESS transits, or from radial velocity measurements. For the transiting systems, we use the transit mid-times given in the PSCP to set orbital phase zero. If possible, we use the transit mid-times determined in each mission separately to reduce the uncertainties on orbital phase. For the non-transiting system, phase zero is set arbitrarily.
+
 \subsection{Semi-major axes and eccentricities}
 \label{sec:data:a}
 A critical parameter for the possibility of magnetic SPI and its power is the distance between the star and the planet, not the semi-major axis itself. This varies if the orbit is eccentric. We therefore adopt the mean semi-major axes from the literature, but use a custom estimate for the uncertainty that includes the eccentricity:
@@ -147,7 +148,7 @@ Among the stars without given uncertainties, the rotation of GJ~3082 was measure
 
 \subsection{Planetary radii}
 \label{sec:data:planetradii}
-For the transiting planets, we adopt the literature values for planet radius $R_p$, and uncertainties, from the PSCP. For the non-transiting radial velocity detected planets we use  $M_p\sin i$ to calculate a lower limit for the radius using the empirical relations derived in \cite{chen2017probabilistic} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. We note that for GJ 674, the mass estimates in \cite{bonfils2007harps} and \cite{boisse2011disentangling} do not quote uncertainties, but differ by $0.3M_\oplus$, so we assumed that value as the uncertainty on $M_p\sin i$.
+For the transiting planets, we adopt the literature values for planet radius $R_{\rm p}$, and uncertainties, from the PSCP. For the non-transiting radial velocity detected planets we use  $M_{\rm p}\sin i$ to calculate a lower limit for the radius using the empirical relations derived in \cite{chen2017probabilistic} using their open source \texttt{forecaster} tool, upgraded to \texttt{astro-forecaster}\footnote{https://pypi.org/project/astro-forecaster/} by Ben Cassesse. We note that for GJ 674, the mass estimates in \cite{bonfils2007harps} and \cite{boisse2011disentangling} do not quote uncertainties, but differ by $0.3M_\oplus$, so we assumed that value as the uncertainty on $M_{\rm p}\sin i$.
 
 \subsection{Bolometric luminosity}
 \label{sec:data:lum}
@@ -200,17 +201,17 @@ We use quadratic error propagation to estimate the uncertainty in $v_{\rm rel}$ 
 We derive the average magnetic field strength $B$ from $R$o using the empirical relation derived in \citet{reiners2022magnetism},  Table 2, in the unsaturated and saturated regimes, respectively:
 
 \begin{eqnarray}
-    B &= 199\,\text{G} \cdot R\rm o^{-1.26\pm 0.1} \;(\text{if}\; Ro > 0.13) \label{Eq3}\\
-    B &= 2050\,\text{G} \cdot R\rm o^{-0.11\pm 0.03} \;(\text{if}\; Ro < 0.13) \label{Eq4}
+    B &= 199\,\text{G} \cdot R\mathrm{o}^{-1.26\pm 0.1} \;(\text{if}\; R\mathrm{o} > 0.13) \label{Eq3}\\
+    B &= 2050\,\text{G} \cdot R\mathrm{o}^{-0.11\pm 0.03} \;(\text{if}\; R\mathrm{o} < 0.13) \label{Eq4}
 \end{eqnarray} 
 
-The convective turnover time $\tau$ in  $R \rm o=P_{\rm rot}/\tau$ is derived using bolometric luminosity~(Section~\ref{sec:data:lum}), following~\citet{reiners2014generalized, reiners2022magnetism}:
+The convective turnover time $\tau$ in  $R \mathrm{o}=P_{\rm rot}/\tau$ is derived using bolometric luminosity~(Section~\ref{sec:data:lum}), following~\citet{reiners2014generalized, reiners2022magnetism}:
 
 \begin{equation}
-    \tau = 12.3\, \rm d \cdot (L_{\rm bol}/L_\odot)^{-1/2}
+    \tau = 12.3\, \mathrm{d} \cdot (L_{\rm bol}/L_\odot)^{-1/2}
 \end{equation}
 
-We compared our derived values for $R$o and $B$ with existing estimates of coronal emission. We show $L_X/L_{\rm bol}$ obtained from~\citet{foster2022exoplanet} as a function of $Ro$ and $B$ in Fig.~\ref{fig:lx}. The X-ray emission relation to Rossby number in our sample follows that of stars that are not known to host close-in planets~\citep{wright2011stellaractivityrotation}, spanning both the saturated and unsaturated regime. The X-ray emission and our estimated magnetic field closely follow each other, also consistent with stars not selected for close-in planets~\citep{reiners2022magnetism}. There are two exceptions: GJ 3082 appears underluminous in X-ray compared to its Rossby number and expected magnetic field strength. AU Mic is slightly overluminous, falling somewhat above the saturated level of $L_X/L_{\rm bol}$. However, the star still follows the $B-L_X/L_{\rm bol}$ relation.  
+We compared our derived values for $R$o and $B$ with existing estimates of coronal emission. We show $L_X/L_{\rm bol}$ obtained from~\citet{foster2022exoplanet} as a function of $R$o and $B$ in Fig.~\ref{fig:lx}. The X-ray emission relation to Rossby number in our sample follows that of stars that are not known to host close-in planets~\citep{wright2011stellaractivityrotation}, spanning both the saturated and unsaturated regime. The X-ray emission and our estimated magnetic field closely follow each other, also consistent with stars not selected for close-in planets~\citep{reiners2022magnetism}. There are two exceptions: GJ 3082 appears underluminous in X-ray compared to its Rossby number and expected magnetic field strength. AU Mic is slightly overluminous, falling somewhat above the saturated level of $L_X/L_{\rm bol}$. However, the star still follows the $B-L_X/L_{\rm bol}$ relation.  
 
 \begin{figure}[ht!]
     \script{paper_lx_plots.py}
@@ -230,21 +231,21 @@ We consider two theories for the mechanism behind flaring SPI, the stretch-and-b
 First, we estimate the power of SPI generated by the stretch-and-break mechanism using the scaling relations in~\cite{lanza2012starplanet} (their Eqn. 45), where $P_{\rm spi,sb}$ is proportional to
 
 \begin{equation}
-    P_{\rm spi,sb} \sim B_p^{2/3} R_p^2 B_*^{4/3} R_*^4 v_{rel} a^{-4} .
+    P_{\rm spi,sb} \sim B_{\rm p}^{2/3} R_{\rm p}^2 B_*^{4/3} R_*^4 v_{\rm rel} a^{-4} .
 \end{equation}
 
-$B_p$ and $B_*$ are the planetary and stellar field strengths at their poles, respectively; $v_{rel}$ is the relative velocity between the stellar rotation and the planet's orbit at the semi-major axis $a$; and $R_*$ and $R_p$ are the stellar and planetary radii, respectively. Since the planetary fields are unknown, we ignore them in the calculation. We also do not know the stellar field strength at the pole for the vast majority of the stars, so we adopt the surface field strength~(Section~\ref{sec:methods:bfield}) as a proxy.
+$B_{\rm p}$ and $B_*$ are the planetary and stellar field strengths at their poles, respectively; $v_{\rm rel}$ is the relative velocity between the stellar rotation and the planet's orbit at the semi-major axis $a$; and $R_*$ and $R_{\rm p}$ are the stellar and planetary radii, respectively. Since the planetary fields are unknown, we ignore them in the calculation. We also do not know the stellar field strength at the pole for the vast majority of the stars, so we adopt the surface field strength~(Section~\ref{sec:methods:bfield}) as a proxy.
 
-Second, we also consider the case of an unmagnetized planet with $B_p=0$, in which case Eq.~45 in~\cite{lanza2012starplanet} reduces to
+Second, we also consider the case of an unmagnetized planet with $B_{\rm p}=0$, in which case Eq.~45 in~\cite{lanza2012starplanet} reduces to
 
 \begin{equation}
-    P_{\rm spi,sb0} \sim R_p^2 R_*^4 B_*^2 v_{rel}    a^{-4} 
+    P_{\rm spi,sb0} \sim R_{\rm p}^2 R_*^4 B_*^2 v_{\rm rel}    a^{-4} 
 \end{equation}
 
 Third, we estimate the power of SPI generated by the Alfv\'en wing mechanism ~\citep{saur2013magnetic,kavanagh2022radio},\textcolor{red}{ combining Eqn.~8 for the power of interaction and Eqn.~11 for the magnetopause radius of the planet from\citet{kavanagh2022radio} to arrive at:}
 
 \begin{equation}
-    P_{\rm spi,aw} \sim B_p^{2/3} R_{p}^2  R_*^2  B_*^{1/3}  v_{rel}^2 a^{-2} \rho_*^{1/2} \sin^2 \theta
+    P_{\rm spi,aw} \sim B_{\rm p}^{2/3} R_{p}^2  R_*^2  B_*^{1/3}  v_{\rm rel}^2 a^{-2} \rho_*^{1/2} \sin^2 \theta
 \end{equation}
 
 \textcolor{red}{Here, we assume that the magnetopause radius extends to where the magnetic pressures of planet and stellar magnetic wind -- which is dominated by the magnetic field in de sub-Alf\'enic regime -- are equal. We also replace the stellar wind density $\rho_W$ with its proportionality to $\rho_* (R_* / a)^{2}$, and stellar wind magnetic field at the planetary radius $B_W$ with the surface field strength $B_* (R_* / a)^{3}$, which result in the total $R_*^2 a^{-2}$ factor in the above equation. Since the stellar wind density at the stellar surface $\rho_*$ is poorly constrained empirically~\citep{vidotto2021evolution}, we follow~\citet{alvarado-gomez2020tuning,kavanagh2021planetinduced}, and fix $\rho_*=2\cdot10^{-10}\rm{cm}^{-3}$. The angle between the wind magnetic field vector and the velocity vector of the planet $\theta$ is also unknown, so we set $\sin\theta=1$ to obtain an upper limit. In reality, $\theta$ will vary both between systems, and over time in any individual system. Omitting $\rho_*$ assumes that all stellar wind densities are the same in our sample, which is not true in reality. The dependence on $\rho_*$ is stronger than that on $B_*$, but weaker than on every other parameter, so it may dominate the magnetic field dependence.}
@@ -252,10 +253,10 @@ Third, we estimate the power of SPI generated by the Alfv\'en wing mechanism ~\c
 And fourth, we also consider the case of an unmagnetized planet\textcolor{red}{ where the magnetospheric radius is set equal to the planetary radius}, in which case Eq.~8 in \cite{kavanagh2022radio} reduces to
 
 \begin{equation}
-    P_{\rm spi,aw0} \sim R_p^2 R_*^4 B_*  v_{rel}^2 a^{-4} \rho_*^{1/2} \sin^2 \theta
+    P_{\rm spi,aw0} \sim R_{\rm p}^2 R_*^4 B_*  v_{\rm rel}^2 a^{-4} \rho_*^{1/2} \sin^2 \theta
 \end{equation}
 
-Lacking $B_p$, and various additional factors that appear in $P_{\rm spi,sb},P_{\rm spi,sb0},P_{\rm spi,aw}$, and  $P_{\rm spi,aw0}$, such as the angle between the relative velocity and magnetic field of the stellar wind~\citep{kavanagh2022radio}, or the force-free parameter~\citep{lanza2012starplanet}, we restrict ourselves to differential estimates, and normalize all $P_{\rm spi}$ to AU Mic.
+Lacking $B_{\rm p}$, and various additional factors that appear in $P_{\rm spi,sb},P_{\rm spi,sb0},P_{\rm spi,aw}$, and  $P_{\rm spi,aw0}$, such as the angle between the relative velocity and magnetic field of the stellar wind~\citep{kavanagh2022radio}, or the force-free parameter~\citep{lanza2012starplanet}, we restrict ourselves to differential estimates, and normalize all $P_{\rm spi}$ to AU Mic.
 
 \section{Results}
 \label{sec:results}
@@ -285,7 +286,7 @@ We test this by dividing the timespan $\Delta T$ between the first and the last 
     \tau = P^2 / \sigma_P,
 \end{equation}
 where $P$ is the orbital period, and $\sigma_P$ is its uncertainty.
-If the orbital period is well-known, the resulting ratio $\Delta T/\tau$ should be $\ll 1$. The bottom panel in Figure~\ref{fig:coherence_hist} shows a histogram of $\Delta T/\tau$ in our sample. The orbital period is known sufficiently well for our analysis in most cases with ratios $<0.02$, that is, the orbital phase of the last flare is at most $2\%$ off, compared to the first. The three cases where the ratio is highest with $0.05$, $0.12$, $0.24$ deviation are TAP 26, GJ 3082, and GJ 674, respectively. We keep these systems in our sample, but caution that the measured absence of flaring SPI might be partly due to the uncertain orbital period of the planet in these cases.
+If the orbital period is well-known, the resulting ratio $\Delta T/\tau$ should be $\ll 1$. \textcolor{red}{Here, we are not interested in the absolute orbital phase, but only in the relative one. Therefore, we can ignore that the uncertainty on phase zero at transit midtime increases with the time passed since the transit midtime was measured. For non-transiting systems, this time can amount to several years, and the midtime is unconstrained by the time of the observation with Kepler or TESS. For transiting systems, the midtime is usually very well known. So in the following, we set phsae zero to an arbitrary time in non-transiting systems, and to the reported transit midtime for the rest.} The bottom panel in Figure~\ref{fig:coherence_hist} shows a histogram of $\Delta T/\tau$ in our sample. The orbital period is known sufficiently well for our analysis in most cases with ratios $<0.02$, that is, the orbital phase of the last flare is at most $2\%$ off, compared to the first. The three cases where the ratio is highest with $0.05$, $0.12$, $0.24$ deviation are TAP 26, GJ 3082, and GJ 674, respectively. We keep these systems in our sample, but caution that the measured absence of flaring SPI might be partly due to the uncertain orbital period of the planet in these cases.
 
 
 \citet{fischer2019timevariable} argue that the synodic period, at which the sub-planetary point crosses the same (magnetic) surface element on the star, may result in a clearer interaction signal, because a magnetically active region that is prone to planet-induced flares, will be passed only once per that period. However, we repeated the coherence calculation for $P_{\rm rot}$, and found that the ratio is $>0.1$ for most stars~(Figure~\ref{fig:coherence_hist}, top panel), so that a statistical analysis of rotational flare modulation is not feasible. 
@@ -344,7 +345,7 @@ We choose the $ED>1\,$s cutoff to make sure that we are comparing similar flares
 \footnotesize
 \movetableright=-20mm
 \script{paper_main_table.py}
-\caption{Flaring star-planet interaction. $Ro$, $B$, and $v_{rel}$, are derived from literature values (Table~\ref{tab:maintable_lit}). $P_{\rm spi,xx}$ stands for the power of stretch-and-break ($sb$) and Alfv\'en wing ($aw$) interaction mechanisms, assuming the planet has a magnetic field strength of $1\,$G. $P_{\rm spi,xx0}$ is the same, but assuming an unmagnetized planet. All powers are normalized to AU Mic. The $p$-value of the Anderson-Darling test is lower when the system shows a stronger clustering of flares in orbital phase.}
+\caption{Flaring star-planet interaction. $Ro$, $B$, and $v_{\rm rel}$, are derived from literature values (Table~\ref{tab:maintable_lit}). $P_{\rm spi,xx}$ stands for the power of stretch-and-break ($sb$) and Alfv\'en wing ($aw$) interaction mechanisms, assuming the planet has a magnetic field strength of $1\,$G. $P_{\rm spi,xx0}$ is the same, but assuming an unmagnetized planet. All powers are normalized to AU Mic. The $p$-value of the Anderson-Darling test is lower when the system shows a stronger clustering of flares in orbital phase.}
 \input{output/table_der_vals.tex}
     \label{tab:maintable_der}
 
@@ -374,8 +375,9 @@ We choose the $ED>1\,$s cutoff to make sure that we are comparing similar flares
 \end{figure}
 
 \begin{table}
+\movetableright=-10mm
 \script{paper_aumic_table.py}
-\caption{Powers of star-planet interaction calculated for AU Mic in the four different scenarios introduced in Section~\ref{sec:methods:pspi}.}
+\caption{\textcolor{red}{Powers of star-planet interaction calculated for AU Mic in the four different scenarios introduced in Section~\ref{sec:methods:pspi}.}}
 \input{output/aumic_spi.tex}
     \label{tab:aumic}
 \end{table}
@@ -395,7 +397,7 @@ While they appear in the flare catalog~(Table~\ref{tab:flares}), we excluded a n
 
 For instance, Kepler-808 (KOI-1300) has a $\sim0.4M_\odot$ \citep{kraus2016impact} companion that is about 1.8 mag fainter than the primary at a separation of $0.78\arcsec$~\citep{baranec2016roboao}. TOI-837 has co-moving M dwarf a few arcsec away in the same young cluster, 5 mag fainter, but the primary is an F9-G0 star, so flares could still originate from both stars~\citep{bouma2020cluster}. HD~41004~B, DS~Tuc~A, and LTT~1445 are known multiple systems where all components contribute significantly to the total TESS flux.
 
-%The only single star system excluded is GJ 1061. The star is lacking a stellar rotation period estimate, which we need to calculate the magnetic field, and $v_{rel}$. \citet{dreizler2020reddots} estimate that it is a fairly slow rotator with a period between 50 and 200 days, so we do not expect it to have a strong magnetic field anyway. TURNS OUT IT DOES NOT HAVE ENOUGH FLARES FOR THE ANALYSIS
+%The only single star system excluded is GJ 1061. The star is lacking a stellar rotation period estimate, which we need to calculate the magnetic field, and $v_{\rm rel}$. \citet{dreizler2020reddots} estimate that it is a fairly slow rotator with a period between 50 and 200 days, so we do not expect it to have a strong magnetic field anyway. TURNS OUT IT DOES NOT HAVE ENOUGH FLARES FOR THE ANALYSIS
 
 \paragraph{Kepler-411}
 \label{sec:results:individualstars:kep411}
@@ -449,7 +451,7 @@ KOI-12, also known as Kepler-448, is a two-planet system with an eccentric outer
 
 Our results in Fig.~\ref{fig:adtest_bp} are tentative, yet the trend between expected power of interaction and measured clustering of flares in orbital phase is suggestive, as is the appearance of an active and an inactive branch at high expected powers of magnetic SPI. We can now consider additional facts about the systems, as well as processes, that may explain the observed trends. We consider the extent of the Alfv\'en radius that decides over the possibility of magnetic interaction in the first place~(Section~\ref{sec:discussion:as}), and how orbital eccentricity can further enhance magnetic SPI signal~(Section~\ref{sec:discussion:eccentricity}). The observed branching might also be explained by intermittent SPI~(Section~\ref{sec:discussion:intermittency}), but its possible causes are not well known. As an easier to test alternative explanation, we highlight the important influence of viewing geometry on the observability of flaring SPI, which might explain the absence of magnetic SPI in TAP~26~(Section~\ref{sec:discussion:viewing}). 
 
-Magnetic and tidal SPI are difficult to disentangle by their global effects on stellar activity indicators~(Section~\ref{sec:intro:global}). Locally, however, we can discriminate between the two by their relevant periods, that is, $P_{\rm orb}$ and $P_{\rm orb /2}$. In Section~\ref{sec:discussion:tidal}, we repeat the analysis in this paper with $P_{\rm orb}/2$, and find yet more tentative trends in line with scaling laws for tidal interaction. In a system-by-system comparison, we find consistency with the expectation that slowly rotating, likely old, systems can only show local tidal interaction, while rapidly rotating systems with strong magnetic fields are dominated by magnetic forces.
+Magnetic and tidal SPI are difficult to disentangle by their global effects on stellar activity indicators~(Section~\ref{sec:intro:global}). Locally, however, we can discriminate between the two by their relevant periods, that is, $P_{\rm orb}$ and $P_{\rm orb} /2$. In Section~\ref{sec:discussion:tidal}, we repeat the analysis in this paper with $P_{\rm orb}/2$, and find yet more tentative trends in line with scaling laws for tidal interaction. In a system-by-system comparison, we find consistency with the expectation that slowly rotating, likely old, systems can only show local tidal interaction, while rapidly rotating systems with strong magnetic fields are dominated by magnetic forces.
 \subsection{Alfv\'en surface}
 \label{sec:discussion:as}
 
@@ -530,7 +532,7 @@ However, alignment between orbital, rotational and magnetic dipole axis is not g
     \script{paper_tidal_interaction.py}
     \begin{centering}
         \includegraphics[width=\hsize]{figures/PAPER_tidal_AD_test.png}
-    \caption{Deviation from random flare times in phase with $P_{\rm orb}/2$, i.e., in phase with the two tidal bulges raised on the star, compared to different models of tidal interaction~(Section~\ref{sec:discussion:tidal}). \textbf{Cross symbols} mark planets with $M_p \sin i$ measurements. \textbf{Round symbols} mark planets with measured  or estimated $M_p$ (see Section~\ref{sec:discussion:mpms}). 
+    \caption{Deviation from random flare times in phase with $P_{\rm orb}/2$, i.e., in phase with the two tidal bulges raised on the star, compared to different models of tidal interaction~(Section~\ref{sec:discussion:tidal}). \textbf{Cross symbols} mark planets with $M_{\rm p} \sin i$ measurements. \textbf{Round symbols} mark planets with measured  or estimated $M_{\rm p}$ (see Section~\ref{sec:discussion:mpms}). 
            \textbf{Left panel}: Tidal torque in the system for stars with a convective envelope. Blue color indicates that the star rotates slower than the planet orbits, so that angular momentum is transferred from the orbit to the spin of the star. Grey color is the reverse. \textbf{Middle panel}: The tidal dissipation timescale. \textbf{Right panel}:  Relative gravitational perturbation in the star.}
         \label{fig:tidal}
     \end{centering}
@@ -567,7 +569,7 @@ The third model uses the gravitational perturbation as a proxy for the interacti
 
 \subsubsection{Planetary and stellar masses}
 \label{sec:discussion:mpms}
-We collect the planetary and stellar masses from the literature~(Table~\ref{tab:tidal}). For missing planetary masses, the radii were known, so we used the mass-radius relations implemented in \texttt{astro-forecaster}~\citep[Ben Cassesse's implementation of \texttt{forecaster},][]{chen2017probabilistic}. GJ 3323, GJ 674 and GJ 3082 were also missing stellar mass estimates, which we obtained from the \citep{mann2015how, mann2016erratum} relations between absolute $K_s$ magnitude~\citep{skrutskie2006two} and stellar mass for M dwarfs using the distances from \citet{bailer-jones2021estimating}. For Kepler-42 b, we used  $M_p=0.1-2.06M_\oplus$ that covers pure rock to pure iron compositions in \citet{muirhead2012characterizing}, and adopted the logarithmic mean for our estimate. Kepler-1558 c has a similar radius to Kepler-42 b, i.e., most likely a bare core planet, so we used density ranging from Earth bulk density to pure rock to estimate its mass. We also adopt the upper limit of $5M_J$ for HIP 67522 from~\citet{rizzuto2020tess}, but use the lower error from \citet{chen2017probabilistic}. The assumptions we made here are conservative, and the estimates based on \citet{chen2017probabilistic} use a broad sample of planets, so we consider the planetary mass estimates with their respective uncertainties robust. We note, however, that the mass estimates for RV-detected planets are $M_p \sin i$, so that their expected interaction may be stronger than indicated in Fig.~\ref{fig:tidal}. 
+We collect the planetary and stellar masses from the literature~(Table~\ref{tab:tidal}). For missing planetary masses, the radii were known, so we used the mass-radius relations implemented in \texttt{astro-forecaster}~\citep[Ben Cassesse's implementation of \texttt{forecaster},][]{chen2017probabilistic}. GJ 3323, GJ 674 and GJ 3082 were also missing stellar mass estimates, which we obtained from the \citep{mann2015how, mann2016erratum} relations between absolute $K_{\rm s}$ magnitude~\citep{skrutskie2006two} and stellar mass for M dwarfs using the distances from \citet{bailer-jones2021estimating}. For Kepler-42 b, we used  $M_{\rm p}=0.1-2.06M_\oplus$ that covers pure rock to pure iron compositions in \citet{muirhead2012characterizing}, and adopted the logarithmic mean for our estimate. Kepler-1558 c has a similar radius to Kepler-42 b, i.e., most likely a bare core planet, so we used density ranging from Earth bulk density to pure rock to estimate its mass. We also adopt the upper limit of $5M_{\rm J}$ for HIP 67522 from~\citet{rizzuto2020tess}, but use the lower error from \citet{chen2017probabilistic}. The assumptions we made here are conservative, and the estimates based on \citet{chen2017probabilistic} use a broad sample of planets, so we consider the planetary mass estimates with their respective uncertainties robust. We note, however, that the mass estimates for RV-detected planets are $M_{\rm p} \sin i$, so that their expected interaction may be stronger than indicated in Fig.~\ref{fig:tidal}. 
 
 \subsubsection{Tidal vs. magnetic flaring star planet interaction}
 
