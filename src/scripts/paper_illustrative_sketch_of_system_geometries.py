@@ -97,6 +97,15 @@ if __name__ == "__main__":
     # but now only on the side of the circle where the small circle is
     ax1.plot([0, x1], [y1, y1], color='r', linewidth=2.5)
 
+    # add annotation to the planet
+    ax1.annotate('planet', xy=(aplanet, 0), xytext=(aplanet+0.1, 0.3), fontsize=14)
+
+    # add annotation to the star
+    ax1.annotate('star', xy=(0, 0), xytext=(-.7, 0.3), fontsize=14)
+
+    # add annotation to the dipole
+    ax1.annotate('magnetic field line', xy=(0.5, 0.5), xytext=(-2.5, .9), fontsize=12)
+
 
     # -----------------------------------------------------------------------------
     # PANEL 2
