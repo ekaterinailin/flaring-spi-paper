@@ -98,10 +98,10 @@ if __name__ == "__main__":
 
             ("Ro","Ro_high","Ro_low", 'high-low'),
             ("B_G","B_G_high","B_G_low", 'high-low'),
-            ("p_spi_sb_bp1_norm","p_spi_sb_bp1_norm_high","p_spi_sb_bp1_norm_low",'high-low'),
-            ('p_spi_aw_bp1_norm', 'p_spi_aw_bp1_norm_high','p_spi_aw_bp1_norm_low', 'high-low'),
-            ("p_spi_sb_bp0_norm","p_spi_sb_bp0_norm_high","p_spi_sb_bp0_norm_low",'high-low'),
-            ('p_spi_aw_bp0_norm', 'p_spi_aw_bp0_norm_high','p_spi_aw_bp0_norm_low', 'high-low'),
+            ("p_spi_sb_bp1_erg_s","p_spi_sb_bp1_erg_s_high","p_spi_sb_bp1_erg_s_low",'high-low'),
+            ('p_spi_aw_bp1_erg_s', 'p_spi_aw_bp1_erg_s_high','p_spi_aw_bp1_erg_s_low', 'high-low'),
+            ("p_spi_sb_bp0_erg_s","p_spi_sb_bp0_erg_s_high","p_spi_sb_bp0_erg_s_low",'high-low'),
+            ('p_spi_aw_bp0_erg_s', 'p_spi_aw_bp0_erg_s_high','p_spi_aw_bp0_erg_s_low', 'high-low'),
             
             ("v_rel_km_s", 'v_rel_err_km_s', 'err'),
 
@@ -118,10 +118,10 @@ if __name__ == "__main__":
         "st_lum":"log$_{10} L_{*}$ [L$_\odot$]",
         "Ro":r"$R$o",
         "B_G":r"$B$ [G]",
-        "p_spi_sb_bp1_norm":r"log$_{10} P_{\rm spi,sb}$",
-        "p_spi_aw_bp1_norm":r"log$_{10} P_{\rm spi,aw}$",
-        "p_spi_sb_bp0_norm":r"log$_{10} P_{\rm spi,sb0}$",
-        "p_spi_aw_bp0_norm":r"log$_{10} P_{\rm spi,aw0}$",
+        "p_spi_sb_bp1_erg_s":r"log$_{10} P_{\rm spi,sb}$ [erg s$^{-1}$]",
+        "p_spi_aw_bp1_erg_s":r"log$_{10} P_{\rm spi,aw}$ [erg s$^{-1}$]",
+        "p_spi_sb_bp0_erg_s":r"log$_{10} P_{\rm spi,sb0}$ [erg s$^{-1}$]",
+        "p_spi_aw_bp0_erg_s":r"log$_{10} P_{\rm spi,aw0}$ [erg s$^{-1}$]",
         "v_rel_km_s":r"$v_{\mathrm{rel}}$ [km s$^{-1}$]",
         "mean":r"$p$-value",
         }
@@ -147,10 +147,10 @@ if __name__ == "__main__":
                 "B_G","B_G_high","B_G_low",
                 "orbits_covered",
                 "v_rel_km_s", 'v_rel_err_km_s',
-                "p_spi_sb_bp1_norm","p_spi_sb_bp1_norm_high","p_spi_sb_bp1_norm_low",
-               'p_spi_aw_bp1_norm', 'p_spi_aw_bp1_norm_high','p_spi_aw_bp1_norm_low', 
-               "p_spi_sb_bp0_norm","p_spi_sb_bp0_norm_high","p_spi_sb_bp0_norm_low",
-               'p_spi_aw_bp0_norm', 'p_spi_aw_bp0_norm_high','p_spi_aw_bp0_norm_low',
+                "p_spi_sb_bp1_erg_s","p_spi_sb_bp1_erg_s_high","p_spi_sb_bp1_erg_s_low",
+               'p_spi_aw_bp1_erg_s', 'p_spi_aw_bp1_erg_s_high','p_spi_aw_bp1_erg_s_low', 
+               "p_spi_sb_bp0_erg_s","p_spi_sb_bp0_erg_s_high","p_spi_sb_bp0_erg_s_low",
+               'p_spi_aw_bp0_erg_s', 'p_spi_aw_bp0_erg_s_high','p_spi_aw_bp0_erg_s_low',
                 "mean", "std"]]
     
     # select only the single stars
@@ -180,11 +180,11 @@ if __name__ == "__main__":
 
 
     # calc log10 of the values in the list of columns
-    convtolog10 = ["p_spi_sb_bp1_norm","p_spi_sb_bp1_norm_high","p_spi_sb_bp1_norm_low",
-               'p_spi_aw_bp1_norm', 'p_spi_aw_bp1_norm_high','p_spi_aw_bp1_norm_low', 
-               "p_spi_sb_bp0_norm","p_spi_sb_bp0_norm_high","p_spi_sb_bp0_norm_low",
-               'p_spi_aw_bp0_norm', 'p_spi_aw_bp0_norm_high','p_spi_aw_bp0_norm_low']
-    
+    convtolog10 = ["p_spi_sb_bp1_erg_s","p_spi_sb_bp1_erg_s_high","p_spi_sb_bp1_erg_s_low",
+                    'p_spi_aw_bp1_erg_s', 'p_spi_aw_bp1_erg_s_high','p_spi_aw_bp1_erg_s_low', 
+                    "p_spi_sb_bp0_erg_s","p_spi_sb_bp0_erg_s_high","p_spi_sb_bp0_erg_s_low",
+                    'p_spi_aw_bp0_erg_s', 'p_spi_aw_bp0_erg_s_high','p_spi_aw_bp0_erg_s_low']
+            
     for col in convtolog10:
         singles[col] = np.log10(singles[col])
 
@@ -252,8 +252,11 @@ if __name__ == "__main__":
             r"$R_{\rm p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "$e$", "log$_{10} L_{*}$ [L$_\odot$]"]
 
     # derived parameters table columns
-    der_cols = ["ID", r"$R$o", r"$B$ [G]", r"$v_{\mathrm{rel}}$ [km s$^{-1}$]", r"log$_{10} P_{\rm spi,sb}$",
-                r"log$_{10} P_{\rm spi,sb0}$", r"log$_{10} P_{\rm spi,aw}$", r"log$_{10} P_{\rm spi,aw0}$", r"$p$-value",]
+    der_cols = ["ID", r"$R$o", r"$B$ [G]", r"$v_{\mathrm{rel}}$ [km s$^{-1}$]", 
+                r"log$_{10} P_{\rm spi,sb}$ [erg s$^{-1}$]",
+                r"log$_{10} P_{\rm spi,sb0}$ [erg s$^{-1}$]", 
+                r"log$_{10} P_{\rm spi,aw}$ [erg s$^{-1}$]", 
+                r"log$_{10} P_{\rm spi,aw0}$ [erg s$^{-1}$]", r"$p$-value",]
 
     # make a list of tuples with the two column lists
     splitcols = [("lit", lit_cols), ("der", der_cols)]
