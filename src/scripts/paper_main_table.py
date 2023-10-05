@@ -109,22 +109,24 @@ if __name__ == "__main__":
     
     # define the latex column names
     map_col_names = {
-        "st_rotp":r"$P_{\rm rot}$ [d]",
-        "orbper_d":r"$P_{\rm orb}$ [d]",
-        "st_rad":r"$R_{*}$ [R$_\odot$]",
-        "pl_radj":r"$R_{\rm p}$ [R$_J$]",
-        "a_au":r"$a$ [$10^{-2}$ au]",
+        "st_rotp":r"$P_{\rm rot}$",
+        "orbper_d":r"$P_{\rm orb}$",
+        "st_rad":r"$R_{*}$",
+        "pl_radj":r"$R_{\rm p}$",
+        "a_au":r"$a$",
         "pl_orbeccen":"$e$",
-        "st_lum":"log$_{10} L_{*}$ [L$_\odot$]",
+        "st_lum":"log$_{10} L_{*}$",
         "Ro":r"$R$o",
-        "B_G":r"$B$ [G]",
-        "p_spi_sb_bp1_erg_s":r"log$_{10} P_{\rm spi,sb}$ [erg s$^{-1}$]",
-        "p_spi_aw_bp1_erg_s":r"log$_{10} P_{\rm spi,aw}$ [erg s$^{-1}$]",
-        "p_spi_sb_bp0_erg_s":r"log$_{10} P_{\rm spi,sb0}$ [erg s$^{-1}$]",
-        "p_spi_aw_bp0_erg_s":r"log$_{10} P_{\rm spi,aw0}$ [erg s$^{-1}$]",
-        "v_rel_km_s":r"$v_{\mathrm{rel}}$ [km s$^{-1}$]",
+        "B_G":r"$B$",
+        "p_spi_sb_bp1_erg_s":r"log$_{10} P_{\rm spi,sb}$",
+        "p_spi_aw_bp1_erg_s":r"log$_{10} P_{\rm spi,aw}$",
+        "p_spi_sb_bp0_erg_s":r"log$_{10} P_{\rm spi,sb0}$",
+        "p_spi_aw_bp0_erg_s":r"log$_{10} P_{\rm spi,aw0}$",
+        "v_rel_km_s":r"$v_{\mathrm{rel}}$",
         "mean":r"$p$-value",
         }
+    
+
 
     # read table to texify
     df = pd.read_csv(paths.data / "results.csv")
@@ -197,7 +199,6 @@ if __name__ == "__main__":
     # convert the singles table to latex after converting the values to tex format
     print("Converting each parameter to a latex formatted column.")
 
-    print(singles.columns)
 
     for col in cols:
         newname = map_col_names[col[0]]
@@ -248,26 +249,38 @@ if __name__ == "__main__":
     bibkeys = {bibkeys[i]:i+1 for i in range(len(bibkeys))}
 
     # literature parameters table columns
-    lit_cols = ["ID", r"$P_{\rm rot}$ [d]", r"$P_{\rm orb}$ [d]", "$R_{*}$ [R$_\odot$]",
-            r"$R_{\rm p}$ [R$_J$]", "$a$ [$10^{-2}$ au]", "$e$", "log$_{10} L_{*}$ [L$_\odot$]"]
+    lit_cols = ["ID", r"$P_{\rm rot}$", r"$P_{\rm orb}$", "$R_{*}$",
+            r"$R_{\rm p}$", "$a$", "$e$", "log$_{10} L_{*}$"]
 
     # derived parameters table columns
-    der_cols = ["ID", r"$R$o", r"$B$ [G]", r"$v_{\mathrm{rel}}$ [km s$^{-1}$]", 
-                r"log$_{10} P_{\rm spi,sb}$ [erg s$^{-1}$]",
-                r"log$_{10} P_{\rm spi,sb0}$ [erg s$^{-1}$]", 
-                r"log$_{10} P_{\rm spi,aw}$ [erg s$^{-1}$]", 
-                r"log$_{10} P_{\rm spi,aw0}$ [erg s$^{-1}$]", r"$p$-value",]
+    der_cols = ["ID", r"$R$o", r"$B$", r"$v_{\mathrm{rel}}$", 
+                r"log$_{10} P_{\rm spi,sb}$",
+                r"log$_{10} P_{\rm spi,sb0}$", 
+                r"log$_{10} P_{\rm spi,aw}$", 
+                r"log$_{10} P_{\rm spi,aw0}$", r"$p$-value",]
+    
+    lit_unit_row = ['', '[d]', '[d]', r'[R$_\odot$]', r'[R$_J$]', r'[$10^{-2}$ au]',
+                     '', r'[L$_\odot$]',]
+    der_unit_row = ['', '', '[G]', r'[km s$^{-1}$]', r'[erg s$^{-1}$]', r'[erg s$^{-1}$]', 
+                    r'[erg s$^{-1}$]', r'[erg s$^{-1}$]',  '']
 
     # make a list of tuples with the two column lists
-    splitcols = [("lit", lit_cols), ("der", der_cols)]
+    splitcols = [("lit", lit_cols, lit_unit_row), ("der", der_cols, der_unit_row)]
 
 
     # SPLIT TABLE IN TWO
 
-    for label, cs in splitcols:
+    for label, cs, unit_row in splitcols:
 
         # make a new singles table with the literature parameters
         lit_singles = singles[cs]
+
+        # insert unit row as first row
+        lit_singles = lit_singles.reset_index(drop=True) # reset first
+        
+        lit_singles.loc[-1] = unit_row # then add line
+        lit_singles.index = lit_singles.index + 1 # up index
+        lit_singles = lit_singles.sort_index() # sort
 
         # make TeX table
         print("Converting table to TeX format.")
@@ -285,7 +298,7 @@ if __name__ == "__main__":
         string = string.replace(r"$-^{-}_{ -}$",r"-")
         string = string.replace("0.0e+00",r"0.0")
         string = string.replace("\citet{-}",r"")
-        string = string.replace("midrule","hline")
+        string = string.replace("midrule","")
         string = string.replace("toprule","hline")
         string = string.replace("bottomrule","hline")
 
