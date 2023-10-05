@@ -298,7 +298,7 @@ if __name__ == "__main__":
         string = string.replace(r"$-^{-}_{ -}$",r"-")
         string = string.replace("0.0e+00",r"0.0")
         string = string.replace("\citet{-}",r"")
-        string = string.replace("midrule","")
+        string = string.replace("\midrule","")
         string = string.replace("toprule","hline")
         string = string.replace("bottomrule","hline")
 
