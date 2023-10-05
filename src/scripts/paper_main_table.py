@@ -301,6 +301,14 @@ if __name__ == "__main__":
         string = string.replace("\midrule","")
         string = string.replace("toprule","hline")
         string = string.replace("bottomrule","hline")
+        try:
+            string = string.replace(r"[L$_\odot$] \\",r"[L$_\odot$] \\ \hline")
+        except:
+            continue
+        try:
+            string = string.replace(r"[erg s$^{-1}$] &  \\",r"[erg s$^{-1}$] &  \\ \hline")
+        except:
+            continue
 
         if label == "lit":
             note = (r"We note that we found K2-354 under EPIC 211314705 and K2-329(!)"
