@@ -14,7 +14,7 @@ import pandas as pd
 import paths
 import re
 
-
+from stringmanipulation import get_err_string
 
 def round_to_1(x):
     if x == 0:
@@ -216,9 +216,9 @@ if __name__ == "__main__":
             singles[newname] = singles.apply(g, axis=1)
 
         elif col[-1] == "err":
-
-            g1 = lambda row: g(row, oneerr=True)
-            singles[newname] = singles.apply(g1, axis=1)
+            print(col)
+            # g1 = lambda row: g(row, oneerr=True)
+            singles[newname] = get_err_string(singles, col[0],col[1])
 
         elif col[-1] == "high-low":
 
