@@ -104,6 +104,7 @@ if __name__ == "__main__":
             ('p_spi_aw_bp0_erg_s', 'p_spi_aw_bp0_erg_s_high','p_spi_aw_bp0_erg_s_low', 'high-low'),
             
             ("v_rel_km_s", 'v_rel_err_km_s', 'err'),
+            ("a_rstar", "a_rstar_err", "err"),
 
             ("mean", "std","err")]
     
@@ -125,6 +126,7 @@ if __name__ == "__main__":
         "v_rel_km_s":r"$v_{\mathrm{rel}}$",
         "mean":r"$p$-value",
         "obstime_d":"obs. time",
+        "a_rstar":r"$a/R_*$",
         }
     
 
@@ -154,7 +156,7 @@ if __name__ == "__main__":
                'p_spi_aw_bp1_erg_s', 'p_spi_aw_bp1_erg_s_high','p_spi_aw_bp1_erg_s_low', 
                "p_spi_sb_bp0_erg_s","p_spi_sb_bp0_erg_s_high","p_spi_sb_bp0_erg_s_low",
                'p_spi_aw_bp0_erg_s', 'p_spi_aw_bp0_erg_s_high','p_spi_aw_bp0_erg_s_low',
-                "mean", "std",]]
+                "mean", "std","a_rstar", "a_rstar_err"]]
     
 
     
@@ -258,7 +260,7 @@ if __name__ == "__main__":
 
     # literature parameters table columns
     lit_cols = ["ID", r"$P_{\rm rot}$", r"$P_{\rm orb}$", "$R_{*}$",
-            r"$R_{\rm p}$", "$a$", "$e$", "log$_{10} L_{*}$", "obs. time"]
+            r"$R_{\rm p}$", "$a$", r"$a/R_*$", "$e$", "log$_{10} L_{*}$", "obs. time"]
 
     # derived parameters table columns
     der_cols = ["ID", r"$R$o", r"$B$", r"$v_{\mathrm{rel}}$", 
@@ -267,7 +269,7 @@ if __name__ == "__main__":
                 r"log$_{10} P_{\rm spi,aw}$", 
                 r"log$_{10} P_{\rm spi,aw0}$", r"$p$-value",]
     
-    lit_unit_row = ['', '[d]', '[d]', r'[R$_\odot$]', r'[R$_J$]', r'[$10^{-2}$ au]',
+    lit_unit_row = ['', '[d]', '[d]', r'[R$_\odot$]', r'[R$_J$]', r'[$10^{-2}$ au]', '',
                      '', r'[L$_\odot$]', "[d]"]
     der_unit_row = ['', '', '[G]', r'[km s$^{-1}$]', r'[erg s$^{-1}$]', r'[erg s$^{-1}$]', 
                     r'[erg s$^{-1}$]', r'[erg s$^{-1}$]',  '']
