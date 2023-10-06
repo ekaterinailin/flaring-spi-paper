@@ -124,6 +124,7 @@ if __name__ == "__main__":
         "p_spi_aw_bp0_erg_s":r"log$_{10} P_{\rm spi,aw0}$",
         "v_rel_km_s":r"$v_{\mathrm{rel}}$",
         "mean":r"$p$-value",
+        "obstime_d":"obs. time",
         }
     
 
@@ -136,7 +137,7 @@ if __name__ == "__main__":
     df["a_au_err"] = df["a_au_err"] * 100
 
     # select only the columns we want
-    sel = df[["ID","TIC",
+    sel = df[["ID","TIC",'obstime_d',
                 'st_rotp','st_rotp_err','st_rotp_source', 
                 "orbper_d","orbper_d_err", "pl_orbper_bibkey",
                 "pl_orbeccen", "pl_orbeccenerr1", "pl_orbeccenerr2", "pl_orbeccen_bibkey",
@@ -153,7 +154,9 @@ if __name__ == "__main__":
                'p_spi_aw_bp1_erg_s', 'p_spi_aw_bp1_erg_s_high','p_spi_aw_bp1_erg_s_low', 
                "p_spi_sb_bp0_erg_s","p_spi_sb_bp0_erg_s_high","p_spi_sb_bp0_erg_s_low",
                'p_spi_aw_bp0_erg_s', 'p_spi_aw_bp0_erg_s_high','p_spi_aw_bp0_erg_s_low',
-                "mean", "std"]]
+                "mean", "std",]]
+    
+
     
     # select only the single stars
     singles = sel[sel.multiple_star.isnull()]
@@ -172,7 +175,8 @@ if __name__ == "__main__":
 
 
     # rename the column with the source of the rotation period
-    singles = singles.rename(index=str, columns={"st_rotp_source":"st_rotp_bibkey"})
+    singles = singles.rename(index=str, columns={"st_rotp_source":"st_rotp_bibkey",
+                                                  "obstime_d":"obs. time"})
 
 
     # sort table by p-value
@@ -195,6 +199,10 @@ if __name__ == "__main__":
     singles["B_G"] = (singles["B_G"].round(0).values).astype(int)
     singles["B_G_high"] = (singles["B_G_high"].round(0).values).astype(int)
     singles["B_G_low"] = (singles["B_G_low"].round(0).values).astype(int)
+
+    # round obs. time to 1 decimal
+    singles["obs. time"] = singles.apply(lambda x: f"{x['obs. time']:.1f}", axis=1)
+
 
     # convert the singles table to latex after converting the values to tex format
     print("Converting each parameter to a latex formatted column.")
@@ -250,7 +258,7 @@ if __name__ == "__main__":
 
     # literature parameters table columns
     lit_cols = ["ID", r"$P_{\rm rot}$", r"$P_{\rm orb}$", "$R_{*}$",
-            r"$R_{\rm p}$", "$a$", "$e$", "log$_{10} L_{*}$"]
+            r"$R_{\rm p}$", "$a$", "$e$", "log$_{10} L_{*}$", "obs. time"]
 
     # derived parameters table columns
     der_cols = ["ID", r"$R$o", r"$B$", r"$v_{\mathrm{rel}}$", 
@@ -260,7 +268,7 @@ if __name__ == "__main__":
                 r"log$_{10} P_{\rm spi,aw0}$", r"$p$-value",]
     
     lit_unit_row = ['', '[d]', '[d]', r'[R$_\odot$]', r'[R$_J$]', r'[$10^{-2}$ au]',
-                     '', r'[L$_\odot$]',]
+                     '', r'[L$_\odot$]', "[d]"]
     der_unit_row = ['', '', '[G]', r'[km s$^{-1}$]', r'[erg s$^{-1}$]', r'[erg s$^{-1}$]', 
                     r'[erg s$^{-1}$]', r'[erg s$^{-1}$]',  '']
 
