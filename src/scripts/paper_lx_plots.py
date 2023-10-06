@@ -94,7 +94,7 @@ if __name__ == "__main__":
                 label="Wright et al. 2011", c="grey", zorder=-10, marker="x", alpha=0.2)
 
     ax1.errorbar(df.Ro, lxlbol, xerr=[df.Ro - df.Ro_low, df.Ro_high - df.Ro],
-                yerr=lxlbol_err, markersize=8, fmt="d")
+                yerr=lxlbol_err, markersize=8, fmt="d", linewidth=2.5)
     
     # annotate with ID
     txts = []
@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
     # adjust text positions
     aT.adjust_text(txts,  time_lim=2, force_static=(1, 1),
-                   arrowprops=dict(arrowstyle="-", color='k', lw=0.5),
+                   arrowprops=dict(arrowstyle="-", color='k', lw=1),
                    ax=ax1)
 
     # ---------------------------------------------------------------------
@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
     ax2.errorbar(df.B_G, lxlbol, markersize=8, 
                 xerr=[df.B_G - df.B_G_low, df.B_G_high - df.B_G],
-                yerr=lxlbol_err, fmt='d')
+                yerr=lxlbol_err, fmt='d', linewidth=2.5)
 
     # annotate with ID
     txts = []
@@ -150,9 +150,9 @@ if __name__ == "__main__":
     ax2.legend(loc='lower right', fontsize=13, frameon=True)
 
     # adjust text positions
-    aT.adjust_text(txts,  time_lim=1,  force_text=(1, 1), 
-                   only_move={"text": "x", "static": "xy", "explode": "xy", "pull": "xy"},
-                   arrowprops=dict(arrowstyle="-", color='k', lw=0.5),
+    aT.adjust_text(txts,  time_lim=.1,  force_text=(1.2, 1.2), 
+                   only_move={"text": "xy", "static": "xy", "explode": "xy", "pull": "xy"},
+                   arrowprops=dict(arrowstyle="-", color='k', lw=1),
                    ax=ax2)
 
 
