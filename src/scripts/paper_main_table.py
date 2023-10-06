@@ -317,6 +317,10 @@ if __name__ == "__main__":
             string = string.replace(r"[erg s$^{-1}$] &  \\",r"[erg s$^{-1}$] &  \\ \hline")
         except:
             continue
+        try:
+            string = string.replace(r"[d] \\",r"[d] \\ \hline")
+        except:
+            continue
 
         if label == "lit":
             note = (r"We note that we found K2-354 under EPIC 211314705 and K2-329(!)"

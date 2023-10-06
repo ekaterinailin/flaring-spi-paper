@@ -2,11 +2,10 @@ import numpy as np
 
 def trail(x, col, errcol, nalt): 
     n = x.log10err
-    print(n)
     if np.isnan(n):
         return fr"${x[col]:.{nalt})f} [{x[errcol]:.0f}]$"
     elif n < 0:
-        return fr"${x[col]:.0f} [{x[errcol]*10**(-n):.0f}]$"
+        return fr"${x[col]:.0f} [{x[errcol]*10**n:.0f}]$"
     else:
         return fr"${x[col]:.{n}f} [{x[errcol]:.0f}]$"
 
