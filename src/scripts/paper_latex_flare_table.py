@@ -6,6 +6,7 @@ results of the flare finding and characterization.
 """
 
 import paths
+import numpy as np
 import pandas as pd
 
 if __name__ == "__main__":
@@ -17,11 +18,9 @@ if __name__ == "__main__":
     flare_table = flare_table.sort_values(by="tstart", ascending=True)
 
     # Get ED with uncertainties in one expression
-    flare_table[r"$ED$ [s]"] = flare_table.apply(lambda x: fr"${x.ED:.2f} \pm {x.ED_err:.2f}$",
-                                                 axis=1)
-    # Delete the now obsolete columns
-    del flare_table["ED"]
-    del flare_table["ED_err"]
+    # flare_table[r"$ED$ [s]"] = flare_table.apply(lambda x: fr"${x.ED:.2f} \pm {x.ED_err:.2f}$",
+    #                                              axis=1)
+ 
 
     # Get 4 digits after decimal point for amplitude column
     flare_table["rel_amplitude"] = flare_table.apply(lambda x: fr"${x.rel_amplitude:.4f}$",
@@ -35,9 +34,29 @@ if __name__ == "__main__":
     flare_table["tstop"] = flare_table.apply(lambda x: fr"${x.tstop:.4f}$",
                                              axis=1)
 
-    # Get 3 digits after decimal point for orbital phase column
-    flare_table["orbital_phase"] = flare_table.apply(lambda x: fr"${x.orbital_phase:.3f}$",
-                                                axis=1)
+    def trail(x, col, errcol): 
+        n = x.log10err
+        return fr"${x[col]:.{n}f} [{x[errcol]:.0f}]$"
+
+    def get_err_string(df,col,errcol, fillna=20):
+        """Get the error string for a column with uncertainties"""
+        
+        df["log10err"] = np.abs(np.floor(np.log10(df[errcol])))
+        df.log10err = df.log10err.fillna(fillna).astype(int) 
+
+        df[col] = df.apply(lambda x: np.round(x[col], x.log10err), axis=1)
+        df[errcol] = df.apply(lambda x: np.round(x[errcol] * 10**(x.log10err), 0), axis=1)
+
+
+        return df.apply(lambda x: trail(x, col, errcol), axis=1)
+
+    flare_table["orbital_phase"] = get_err_string(flare_table,"orbital_phase","orbital_phase_err")
+    flare_table[r"$ED$ [s]"] = get_err_string(flare_table,"ED","ED_err")
+
+    # Delete the now obsolete columns
+    del flare_table["orbital_phase_err"]
+    del flare_table["ED"]
+    del flare_table["ED_err"]
 
     # Rename columns to be the same as in the AU Mic paper
     flare_table = flare_table.rename(index=str,
