@@ -97,15 +97,20 @@ In this work, we searched for excess flaring in all available Kepler and TESS sh
 In this study, we aimed at compiling the largest possible sample to search for flaring SPI. We took the entire Planetary Systems Composite Parameters Table (PSCP\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}}, Section~\ref{sec:data:sps}) from the NASA Exoplanet Archive, as of July 2022, and scanned the systems for available Kepler and TESS light curves~(Section~\ref{sec:data:photometry}). We searched a total of 1811 systems and over 7200 light curves from both missions for flares. To calculate the clustering of in orbital phase, we further required the orbital periods of each system~(Section~\ref{sec:data:orbitalperiod}). We then estimated the theoretically expected power of interaction for each system with at least three flares. For this, we required further system parameters -- distance between planet and star, stellar rotation period, planetary radius, and stellar luminosity~(Sections~\ref{sec:data:a}-\ref{sec:data:lum}), which we mostly took from the literature. We began by compiling the table of system parameters with the PSCP, but verified, supplemented and updated the table with more up-to-date measurements. The relevant properties of the final sample of 25 systems are shown in Table~\ref{tab:maintable_lit}.
 
 
-\begin{longrotatetable}
+\begin{table*}
+\begin{rotatetable*}
 \script{paper_main_table.py}
-\movetableright=-20mm
-    % \caption{Flaring single star-planet system parameters. Obs. time is the total observing time with Kepler and TESS.}
-% \footnotesize
+% \rotate
+ \caption{Flaring single star-planet system parameters. Obs. time is the total observing time with Kepler and TESS.}
+\movetableright=-40mm
+   
+\footnotesize
+
     \input{output/table_lit_vals.tex}
         \label{tab:maintable_lit}
     \tablerefs{\input{output/lit_table_bibstring.tex}}
-\end{longrotatetable}
+\end{rotatetable*}
+\end{table*}
 
 
 \subsection{Star-planet systems}
