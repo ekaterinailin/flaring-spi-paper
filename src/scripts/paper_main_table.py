@@ -139,7 +139,7 @@ if __name__ == "__main__":
     df["a_au_err"] = df["a_au_err"] * 100
 
     # select only the columns we want
-    sel = df[["ID","TIC",'obstime_d',
+    sel = df[["ID","TIC",'obstime_d',"st_spectype","st_spectype_bibkey",
                 'st_rotp','st_rotp_err','st_rotp_source', 
                 "orbper_d","orbper_d_err", "pl_orbper_bibkey",
                 "pl_orbeccen", "pl_orbeccenerr1", "pl_orbeccenerr2", "pl_orbeccen_bibkey",
@@ -205,6 +205,11 @@ if __name__ == "__main__":
     # round obs. time to 1 decimal
     singles["obs. time"] = singles.apply(lambda x: f"{x['obs. time']:.1f}", axis=1)
 
+    # convert st_spectype and st_spectype_bibkey to latex format
+    singles.st_spectype = singles.st_spectype.fillna("")
+    singles.st_spectype_bibkey = singles.st_spectype_bibkey.fillna("")
+    singles["SpT"] = singles.apply(lambda x: x["st_spectype"] + " \citet{" + x["st_spectype_bibkey"] + "}", axis=1)
+
 
     # convert the singles table to latex after converting the values to tex format
     print("Converting each parameter to a latex formatted column.")
@@ -251,6 +256,7 @@ if __name__ == "__main__":
     bibkeys = np.append(bibkeys, fulltable.pl_orbsmax_bibkey.dropna().unique())
     bibkeys = np.append(bibkeys, fulltable.st_lum_bibkey.dropna().unique())
     bibkeys = np.append(bibkeys, fulltable.pl_orbeccen_bibkey.dropna().unique())
+    bibkeys = np.append(bibkeys, fulltable.st_spectype_bibkey.dropna().unique())
 
     # enumerate the bibkeys
     bibkeys = np.unique(bibkeys)
@@ -259,7 +265,7 @@ if __name__ == "__main__":
     bibkeys = {bibkeys[i]:i+1 for i in range(len(bibkeys))}
 
     # literature parameters table columns
-    lit_cols = ["ID", r"$P_{\rm rot}$", r"$P_{\rm orb}$", "$R_{*}$",
+    lit_cols = ["ID", r"$P_{\rm rot}$", r"$P_{\rm orb}$", "$R_{*}$", "SpT",
             r"$R_{\rm p}$", "$a$", r"$a/R_*$", "$e$", "log$_{10} L_{*}$", "obs. time"]
 
     # derived parameters table columns
@@ -269,7 +275,7 @@ if __name__ == "__main__":
                 r"log$_{10} P_{\rm spi,aw}$", 
                 r"log$_{10} P_{\rm spi,aw0}$", r"$p$-value",]
     
-    lit_unit_row = ['', '[d]', '[d]', r'[R$_\odot$]', r'[R$_J$]', r'[$10^{-2}$ au]', '',
+    lit_unit_row = ['', '[d]', '[d]', r'[R$_\odot$]', '', r'[R$_J$]', r'[$10^{-2}$ au]', '',
                      '', r'[L$_\odot$]', "[d]"]
     der_unit_row = ['', '', '[G]', r'[km s$^{-1}$]', r'[erg s$^{-1}$]', r'[erg s$^{-1}$]', 
                     r'[erg s$^{-1}$]', r'[erg s$^{-1}$]',  '']
