@@ -258,8 +258,13 @@ if __name__ == "__main__":
     bibkeys = np.append(bibkeys, fulltable.pl_orbeccen_bibkey.dropna().unique())
     bibkeys = np.append(bibkeys, fulltable.st_spectype_bibkey.dropna().unique())
 
+    # split entries in bibkeys that are separated by a comma
+    bibkeys = np.concatenate([b.split(", ") for b in bibkeys])
+
     # enumerate the bibkeys
     bibkeys = np.unique(bibkeys)
+
+    print(bibkeys)
 
     # make a dictionary with the bibkeys and the corresponding index
     bibkeys = {bibkeys[i]:i+1 for i in range(len(bibkeys))}
@@ -342,8 +347,16 @@ if __name__ == "__main__":
 
         # replace the bibkeys with the index in the string table
         for key in bibkeys.keys():
-            replace = "\citet{"+key+"}"
-            string = string.replace(replace, "(" + str(bibkeys[key]) + ")")
+            # if the key has a comma, split a comma and replace both
+           
+                replace = "\citet{"+key+"}"
+                string = string.replace(replace, "(" + str(bibkeys[key]) + ")")
+           
+                replace = "\citet{"+key+","
+                string = string.replace(replace, "(" + str(bibkeys[key]) + ",")
+                
+                replace = key+"}"
+                string = string.replace(replace, str(bibkeys[key]) + ")")
 
         # substitute "--" with any " (*)"" behind it with just "-" using regex
         string = re.sub(r"-- \(.+?\)", "-", string)
