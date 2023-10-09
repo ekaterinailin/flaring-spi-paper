@@ -97,17 +97,15 @@ In this work, we searched for excess flaring in all available Kepler and TESS sh
 In this study, we aimed at compiling the largest possible sample to search for flaring SPI. We took the entire Planetary Systems Composite Parameters Table (PSCP\footnote{ \url{https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars}}, Section~\ref{sec:data:sps}) from the NASA Exoplanet Archive, as of July 2022, and scanned the systems for available Kepler and TESS light curves~(Section~\ref{sec:data:photometry}). We searched a total of 1811 systems and over 7200 light curves from both missions for flares. To calculate the clustering of in orbital phase, we further required the orbital periods of each system~(Section~\ref{sec:data:orbitalperiod}). We then estimated the theoretically expected power of interaction for each system with at least three flares. For this, we required further system parameters -- distance between planet and star, stellar rotation period, planetary radius, and stellar luminosity~(Sections~\ref{sec:data:a}-\ref{sec:data:lum}), which we mostly took from the literature. We began by compiling the table of system parameters with the PSCP, but verified, supplemented and updated the table with more up-to-date measurements. The relevant properties of the final sample of 25 systems are shown in Table~\ref{tab:maintable_lit}.
 
 
-\begin{table*}
+\begin{longrotatetable}
 \script{paper_main_table.py}
 \movetableright=-20mm
-
-    
-    \caption{Flaring single star-planet system parameters. Obs. time is the total observing time with Kepler and TESS.}
-\scriptsize
+    % \caption{Flaring single star-planet system parameters. Obs. time is the total observing time with Kepler and TESS.}
+% \footnotesize
     \input{output/table_lit_vals.tex}
         \label{tab:maintable_lit}
     \tablerefs{\input{output/lit_table_bibstring.tex}}
-\end{table*}
+\end{longrotatetable}
 
 
 \subsection{Star-planet systems}
@@ -218,7 +216,7 @@ We compared our derived values for $R$o and $B$ with existing estimates of coron
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/PAPER_lxlbol.png}
         \caption{
-           X-ray luminosity over bolometric luminosity compared to Rossby number (\textbf{upper panel}), and average surface magnetic field strength (\textbf{lower panel}). Both relations follow those of stars not selected for hosting close-in planets, except for GJ 3082, which is underluminous for its Rossby number, and hence also its estimated magnetic field appears too strong for its $L_X/L_{\rm bol}$.
+           X-ray luminosity over bolometric luminosity compared to Rossby number (\textbf{upper panel}), and average surface magnetic field strength (\textbf{lower panel}). \textcolor{red}{Blue lines denote the error bars, grey lines point to the IDs of the corresponding stars.} Both relations follow those of stars not selected for hosting close-in planets, except for GJ 3082, which is underluminous for its Rossby number, and hence also its estimated magnetic field appears too strong for its $L_X/L_{\rm bol}$.
         }
         \label{fig:lx}
     \end{centering}
@@ -357,7 +355,7 @@ We choose the $ED>1\,$s cutoff to make sure that we are comparing similar flares
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/PAPER_ADtest_bg_main.png}
         \caption{
-            Expected power of magnetic SPI vs. AD test results, assuming the stretch-and-break scenario with an unmagnetized planet. While no individual system amounts to a $>3\sigma$ detection, the global trend is intriguing: Systems with low expected power show no deviation from random intrinsic flaring (i.e. high $p$-values). In contrast, systems with high expected power show two branches. One where the significance of interaction increases with power, and one without such a trend. See Fig.~\ref{fig:adtest_ro} in the Appendix for the same figure, color-coded by Rossby number.
+            Expected power of magnetic SPI vs. AD test results, assuming the stretch-and-break scenario with an unmagnetized planet. \textcolor{red}{The vertical and horizontal grey lines denote the uncertainties quoted in Table~\ref{tab:maintable_der}.} While no individual system amounts to a $>3\sigma$ detection, the global trend is intriguing: Systems with low expected power show no deviation from random intrinsic flaring (i.e. high $p$-values). In contrast, systems with high expected power show two branches. One where the significance of interaction increases with power, and one without such a trend. See Fig.~\ref{fig:adtest_ro} in the Appendix for the same figure, color-coded by Rossby number.
         }
         \label{fig:adtest_bp}
     \end{centering}
