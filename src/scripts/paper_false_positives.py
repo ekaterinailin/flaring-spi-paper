@@ -31,15 +31,15 @@ if __name__ == '__main__':
     lctic = lcstic[0].download()
     tictitle = 'Physical False Positive: Solar System Object'
     xlimtic = (2516.6, 2518.3)
-    ylimtic = (None, None)
+    ylimtic = (4500, None)
 
     # Get flare light curve of GJ 3323
     flcname = 'GJ 3323'
-    lcs = lk.search_lightcurve('GJ 3323', author='SPOC', exptime=120, sector=32)
+    lcs = lk.search_lightcurve('GJ 3323', author='SPOC', exptime=120, sector=5)
     flc = lcs[0].download()
     ftitle = 'Flare Light Curve'
-    fxlim = (2175.5, 2176.2)
-    fylim = (13500, 14400)
+    fxlim = (1445.5, 1445.9)
+    fylim = (13200, 15800)
 
     # plot the light curves side by side in one figure
     fig, ax = plt.subplots(1, 3, figsize=(15, 4))
