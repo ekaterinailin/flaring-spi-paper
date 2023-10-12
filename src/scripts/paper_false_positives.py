@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
 
     # get Kepler light curve of Kepler-235
+    kicname = 'Kepler-235'
     lcskic = lk.search_lightcurve('Kepler-235', author='Kepler', cadence='short', quarter=14)
     lckic = lcskic[2].download()
     kictitle = 'Instrumental False Positive: Possible Argabrightening'
@@ -25,24 +26,38 @@ if __name__ == '__main__':
     ylimkic = (5100, 5600)
 
     # get TESS light curve of TIC 435339847
+    ticname = 'K2-77'
     lcstic = lk.search_lightcurve('TIC 435339847', cadence='short', sector=44)
     lctic = lcstic[0].download()
     tictitle = 'Physical False Positive: Solar System Object'
     xlimtic = (2516.6, 2518.3)
     ylimtic = (None, None)
 
+    # Get flare light curve of GJ 3323
+    flcname = 'GJ 3323'
+    lcs = lk.search_lightcurve('GJ 3323', author='SPOC', exptime=120, sector=32)
+    flc = lcs[0].download()
+    ftitle = 'Flare Light Curve'
+    fxlim = (2175.5, 2176.2)
+    fylim = (13500, 14400)
+
     # plot the light curves side by side in one figure
-    fig, ax = plt.subplots(1, 2, figsize=(12, 4))
-    lckic.plot(ax=ax[0], linewidth=1)
-    lctic.plot(ax=ax[1], linewidth=1)
+    fig, ax = plt.subplots(1, 3, figsize=(15, 4))
+    flc.plot(ax=ax[0], linewidth=1, label=flcname)
+    lckic.plot(ax=ax[1], linewidth=1, label=kicname)
+    lctic.plot(ax=ax[2], linewidth=1, label=ticname)
+
 
     # set the limits of the x and y axes separately for each light curve
-    ax[0].set_xlim(xlimkic)
-    ax[0].set_ylim(ylimkic)
-    ax[1].set_xlim(xlimtic)
-    ax[1].set_ylim(ylimtic)
-    ax[0].set_title(kictitle)
-    ax[1].set_title(tictitle)
+    ax[1].set_xlim(xlimkic)
+    ax[1].set_ylim(ylimkic)
+    ax[2].set_xlim(xlimtic)
+    ax[2].set_ylim(ylimtic)
+    ax[0].set_xlim(fxlim)
+    ax[0].set_ylim(fylim)
+    ax[0].set_title(ftitle)
+    ax[1].set_title(kictitle)
+    ax[2].set_title(tictitle)
 
     for a in ax:
         a.legend(frameon=False)
