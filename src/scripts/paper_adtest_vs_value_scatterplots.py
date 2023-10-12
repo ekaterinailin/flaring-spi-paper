@@ -268,6 +268,9 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
     # get reference sigma values
     sigmas, sigma_labels = get_sigma_values()
 
+    # pick value of TOI-540 as the threshold for labeling
+    threshold = df[df.ID=="TOI-540"][value].values[0]
+
 
     data = df[df[value].notnull()]
 
@@ -290,7 +293,7 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
 
         # # add the label to each star
         for star, row in group.iterrows():
-            if (row["mean"]<=.2) | (row[value]>=10.):
+            if ((row["mean"]<=.2) & (row[value]>=threshold)) | (row["ID"]=="KOI-12") | (row["ID"] == "TAP 26"):
                 texts.append(ax.text(x=row[value], y=row["mean"], s=row["ID"],
                         fontsize=12, ha="right", va="top", rotation=0))
 
@@ -310,14 +313,15 @@ def make_adtest_figure(df, value, valuelabel, legend, labels, ext, ax, leg=False
 
     # legend
     if leg == True:
-        ax.legend(legend, labels, loc=(0, 0.08), fontsize=15)
+        ax.legend(legend, labels, loc=(0, 0.08), fontsize=13)
 
     # limits
     ax.set_xlim(data[f"{value}_low"].min() * 0.85, data[f"{value}_high"].max() * 1.15)
     ax.set_ylim(2e-3, 1)
 
     # adjust label positions
-    adjust_text(texts, arrowprops=dict(arrowstyle="-", color='k', lw=0.5), ax=ax)
+    adjust_text(texts, force_text=(1.2, 2.2), force_static=(1,1), 
+                arrowprops=dict(arrowstyle="-", color='k', lw=0.5), ax=ax)
 
 
 
@@ -382,8 +386,8 @@ if __name__ == "__main__":
 
     # FOUR SCENARIO PLOTS
 
-    columns = ["p_spi_sb_bp1_norm", "p_spi_sb_bp0_norm",
-              "p_spi_aw_bp1_norm", "p_spi_aw_bp0_norm"]
+    columns = ["p_spi_sb_bp1_erg_s", "p_spi_sb_bp0_erg_s",
+              "p_spi_aw_bp1_erg_s", "p_spi_aw_bp0_erg_s"]
     xlabels = [r"$\sim$ $P_{\rm spi,sb}$ (stretch-and-break interaction with magnetized planet)",
               r"$\sim$ $P_{\rm spi,sb0}$  (stretch-and-break interaction with unmagnetized planet)",
               r"$\sim$ $P_{\rm spi,aw}$  (Alfvén wing interaction with magnetized planet)",
@@ -414,7 +418,7 @@ if __name__ == "__main__":
     axes = axes.flatten()
 
     for value, valuelabel, ax in list(zip(columns, xlabels, axes)):
-        if value=="p_spi_sb_bp1_norm":
+        if value=="p_spi_sb_bp1_erg_s":
             leg = True
         else:
             leg = False
@@ -452,7 +456,7 @@ if __name__ == "__main__":
     axes = axes.flatten()
 
     for value, valuelabel, ax in list(zip(columns, xlabels, axes)):
-        if value=="p_spi_sb_bp0_norm":
+        if value=="p_spi_sb_bp0_erg_s":
             leg = True
         else:
             leg = False
@@ -479,7 +483,7 @@ if __name__ == "__main__":
     axes = axes.flatten()
 
     for value, valuelabel, ax in list(zip(np.array(columns)[[0,2,3]], np.array(xlabels)[[0,2,3]], axes)):
-        if value=="p_spi_sb_bp1_norm":
+        if value=="p_spi_sb_bp1_erg_s":
             leg = True
         else:
             leg = False
@@ -514,7 +518,7 @@ if __name__ == "__main__":
     axes = axes.flatten()
 
     for value, valuelabel, ax in list(zip(columns, xlabels, axes)):
-        if value=="p_spi_sb_bp1_norm":
+        if value=="p_spi_sb_bp1_erg_s":
             leg = True
         else:
             leg = False

@@ -150,7 +150,7 @@ if __name__ == "__main__":
     ax2.legend(loc='lower right', fontsize=13, frameon=True)
 
     # adjust text positions
-    aT.adjust_text(txts,  time_lim=.1,  force_text=(1.2, 1.2), 
+    aT.adjust_text(txts,  time_lim=.1,  force_text=(1.2, 1.2),
                    only_move={"text": "xy", "static": "xy", "explode": "xy", "pull": "xy"},
                    arrowprops=dict(arrowstyle="-", color='k', lw=1),
                    ax=ax2)
