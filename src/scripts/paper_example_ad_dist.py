@@ -201,15 +201,18 @@ if __name__ == "__main__":
 
 
     plt.figure(figsize=(6,5))
-    for perc, ls, sig in zip([68.27, 95.45, 99.75],[":", "--", "-"],[1,2,3]):
+    for perc, ls, sig in zip([68.27, 95.45, 99.75],[":", "--", "-."],[1,2,3]):
 
         adval = scoreatpercentile(ad, perc)
 
         plt.axvline(adval, label=fr"$p={((100-perc)/100):.3f}\;({sig}\sigma)$", linestyle=ls, color="k")
 
+
+    plt.axvline(4.5, label="HIP 67522, $p=0.0056$", linestyle="-", color="r")
+
     plt.hist(ad_, bins=100)
-    plt.xlim(0, adval+5)
-    plt.legend(loc=1, fontsize=13.5)
+    plt.xlim(0, adval+8)
+    plt.legend(loc=1, fontsize=12, frameon=False)
     plt.xlabel(r"$A^2$ statistic", fontsize=13)
     plt.ylabel("Number of samples", fontsize=13)
     plt.tight_layout()
