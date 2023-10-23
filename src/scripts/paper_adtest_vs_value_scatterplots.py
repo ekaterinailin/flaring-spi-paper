@@ -388,10 +388,10 @@ if __name__ == "__main__":
 
     columns = ["p_spi_sb_bp1_erg_s", "p_spi_sb_bp0_erg_s",
               "p_spi_aw_bp1_erg_s", "p_spi_aw_bp0_erg_s"]
-    xlabels = [r"$\sim$ $P_{\rm spi,sb}$ (stretch-and-break interaction with magnetized planet)",
-              r"$\sim$ $P_{\rm spi,sb0}$  (stretch-and-break interaction with unmagnetized planet)",
-              r"$\sim$ $P_{\rm spi,aw}$  (Alfvén wing interaction with magnetized planet)",
-              r"$\sim$ $P_{\rm spi,aw0}$  (Alfvén wing interaction with unmagnetized planet)"]
+    xlabels = [r"$P_{\rm spi,sb}$ [erg/s] (stretch-and-break interaction with magnetized planet)",
+              r"$P_{\rm spi,sb0}$ [erg/s] (stretch-and-break interaction with unmagnetized planet)",
+              r"$P_{\rm spi,aw}$ [erg/s] (Alfvén wing interaction with magnetized planet)",
+              r"$P_{\rm spi,aw0}$ [erg/s] (Alfvén wing interaction with unmagnetized planet)"]
 
     # ------------------------------------------------------------
     # DISTANCE
