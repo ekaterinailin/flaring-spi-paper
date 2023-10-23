@@ -15,5 +15,6 @@ python paper_lx_plots.py
 python paper_as_vs_ad.py
 python paper_correlation_coefficients.py
 python paper_aumic_table.py
+python paper_example_ad_dist.py
 
 
