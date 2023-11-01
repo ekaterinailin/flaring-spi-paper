@@ -12,6 +12,7 @@
 % Author list
 \author[0000-0002-6299-7542]{Ekaterina Ilin}
 \affiliation{Leibniz Insitute for Astrophysics Potsdam (AIP), An der Sternwarte 16, 14482 Potsdam, Germany}
+\affiliation{ASTRON, Netherlands Institute for Radio Astronomy, Oude Hoogeveensedijk 4, Dwingeloo, 7991 PD, The Netherlands}
 
 \author[0000-0003-1231-2194]{Katja Poppenh\"ager}
 \affiliation{Leibniz Insitute for Astrophysics Potsdam (AIP), An der Sternwarte 16, 14482 Potsdam, Germany}
@@ -32,7 +33,13 @@
 \begin{abstract}
     In many star-planet systems discovered so far, the innermost planet orbits within only a few stellar radii. In these systems, planets could become in-situ probes of the extended stellar magnetic field. Because they disturb the field as they move, they are expected to trigger flares in the corona. Potential differences to the energies and morphologies of intrinsic flares are poorly constrained. However, as we expect planet-induced flares to correlate with the planet's orbital period, we can identify them from a clustering of flares in phase with the planet's orbit. We used the excellent phase coverage from Kepler and the Transiting Exoplanet Survey Satellite to find flaring star-planet systems, compile a catalog of all their flares, and measure how much they cluster in orbital phase. In the 1811 searched systems, we found 25 single stars with three or more flares each. We quantified the significance of the clustering in each system, and compared it against the theoretically expected power of magnetic interaction that leads to planet-induced flaring. Most systems do not show any clustering, consistent with low expected power. Those we expect to show clustering fall on two branches. An inactive one, without any signs of clustering, and a tentative active one, where the clustering becomes more pronounced as the expected power of interaction increases. The flares in HIP 67522 are prominently clustered ($p<0.006$). This young Hot Jupiter system is the most promising candidate for magnetic star-planet interaction in our sample.
 
+
 \keywords{stars: flare, planet–star interactions, stars: magnetic field, stars: low-mass, stars: activity}
+
+\vspace{0.4cm}
+\textit{Accepted 2023 October 30. Received 2023 October 24; in original form 2023 July 04}
+
+
 \end{abstract}
 
 % Main body with filler text
@@ -98,7 +105,7 @@ In this study, we aimed at compiling the largest possible sample to search for f
 \begin{rotatetable*}
 \script{paper_main_table.py}
 % \rotate
- \caption{Flaring single star-planet system parameters. Obs. time is the total observing time with Kepler and TESS. \textcolor{red}{The digits in square brackets refer to the uncertainties in the corresponding last digits shown, e.g., $0.051[1]$ is the same as $0.051\pm0.001$, and $98[12]$ is the same as $98\pm12$.}}
+ \caption{Flaring single star-planet system parameters. Obs. time is the total observing time with Kepler and TESS. The digits in square brackets refer to the uncertainties in the corresponding last digits shown, e.g., $0.051[1]$ is the same as $0.051\pm0.001$, and $98[12]$ is the same as $98\pm12$.}
 \movetableright=-40mm
    
 \footnotesize
@@ -182,7 +189,7 @@ In other words, equivalent duration is the time during which the non-flaring sta
 
 \subsection{Custom Anderson-Darling test}
 \label{sec:methods:adtest}
-For each star-planet system with three or more flares in its light curves, we test for deviations from a random distribution of flares with orbital phase. We use the same customized Anderson-Darling test as in \cite{ilin2022searching}, which is more sensitive to deviations at both ends of the distribution than the widely used Kolmogorov-Smirnov test~\citep{feigelson2012modern}. In short, we first take the number of flares observed in the TESS and Kepler data to calculate a base flare rate for each light curve. We then calculate how often each orbital phase has been observed, also for each light curve separately, to ensure that the different detection thresholds for TESS and Kepler do not bias the base rate. With the phase coverage and base flare rate combined, we can tell how many flares we would expect to see in any given phase bin if flares were randomly distributed. \textcolor{red}{The bin widths correspond to the distance between each consecutive detection of a flare in phase space.} We then aggregate this number of expected flares per orbital phase bin into one expected distribution (blue curves in Figs.~\ref{fig:cumdist_transiting} and \ref{fig:cumdist_rv}) by summing over all available light curves. As a last step, we compare the expected distribution to the observed one using an Anderson-Darling test. For this, we sample 10000 times from the expected distribution the same number of flares as we observe in each system. For instance, for HIP 67522, we sample 12 flares distributed according to its blue curve in Fig.~\ref{fig:cumdist_transiting}. For each of the 10000 samples, we compute the Anderson-Darling statistic $A^2$, which yields a distribution of $A^2$ values~\textcolor{red}{(see~Fig.~\ref{fig:ad_dist_hip} for the $A^2$ distribution derived for HIP~67522)}. In a last step, we compute $A^2$ for the observed distribution, and compute the $p$-value. We repeat this test with different phase offsets to account for remaining biases in sensitivity of the test at different phases.
+For each star-planet system with three or more flares in its light curves, we test for deviations from a random distribution of flares with orbital phase. We use the same customized Anderson-Darling test as in \cite{ilin2022searching}, which is more sensitive to deviations at both ends of the distribution than the widely used Kolmogorov-Smirnov test~\citep{feigelson2012modern}. In short, we first take the number of flares observed in the TESS and Kepler data to calculate a base flare rate for each light curve. We then calculate how often each orbital phase has been observed, also for each light curve separately, to ensure that the different detection thresholds for TESS and Kepler do not bias the base rate. With the phase coverage and base flare rate combined, we can tell how many flares we would expect to see in any given phase bin if flares were randomly distributed. The bin widths correspond to the distance between each consecutive detection of a flare in phase space. We then aggregate this number of expected flares per orbital phase bin into one expected distribution (blue curves in Figs.~\ref{fig:cumdist_transiting} and \ref{fig:cumdist_rv}) by summing over all available light curves. As a last step, we compare the expected distribution to the observed one using an Anderson-Darling test. For this, we sample 10000 times from the expected distribution the same number of flares as we observe in each system. For instance, for HIP 67522, we sample 12 flares distributed according to its blue curve in Fig.~\ref{fig:cumdist_transiting}. For each of the 10000 samples, we compute the Anderson-Darling statistic $A^2$, which yields a distribution of $A^2$ values~(see~Fig.~\ref{fig:ad_dist_hip} for the $A^2$ distribution derived for HIP~67522). In a last step, we compute $A^2$ for the observed distribution, and compute the $p$-value. We repeat this test with different phase offsets to account for remaining biases in sensitivity of the test at different phases.
 
 The only adjustment to the procedure in \cite{ilin2022searching} is that we use four equidistant start phases (i.e., 0, 0.25, 0.5 and 0.75) compared to the 20 used in~\cite{ilin2022searching} to save time, because the range of derived $p$-values is already well-sampled using four. We adopt the standard deviation of these four $p$-values as the uncertainty on the flaring SPI measurement.
 
@@ -273,7 +280,7 @@ We searched a total of 3032 Kepler Quarters and 4181 TESS Sectors of a total of 
     \script{paper_latex_flare_table.py}
     \centering
             \caption{
-            Flare catalog of all star-planet systems observed by Kepler and TESS (as of July 2022). In transiting multi-planet systems, the orbital phase refers to the innermost planet, with the transit mid-time at phase zero. Qua./Sec. is the Quarter or Sector number of the observation in Kepler or TESS, respectively. The first and last data points of a flare are denoted $t_s$ and $t_f$. The orbital phase of the innermost planet is measured at $t_s$. We also give relative amplitude $a$, and equivalent duration $ED$ (see Eq.~\ref{eq:ED}) for each flare. \textcolor{red}{The digits in square brackets refer to the uncertainties in the corresponding last digits shown, e.g., $0.051[1]$ is the same as $0.051\pm0.001$, and $98[12]$ is the same as $98\pm12$.} The full catalog is available online (see Data Availability Statement).
+            Flare catalog of all star-planet systems observed by Kepler and TESS (as of July 2022). In transiting multi-planet systems, the orbital phase refers to the innermost planet, with the transit mid-time at phase zero. Qua./Sec. is the Quarter or Sector number of the observation in Kepler or TESS, respectively. The first and last data points of a flare are denoted $t_s$ and $t_f$. The orbital phase of the innermost planet is measured at $t_s$. We also give relative amplitude $a$, and equivalent duration $ED$ (see Eq.~\ref{eq:ED}) for each flare. The digits in square brackets refer to the uncertainties in the corresponding last digits shown, e.g., $0.051[1]$ is the same as $0.051\pm0.001$, and $98[12]$ is the same as $98\pm12$. The full catalog is available online (see Data Availability Statement).
         }
     \input{output/flare_table.tex}
         \label{tab:flares}
@@ -349,7 +356,7 @@ We choose the $ED>1\,$s cutoff to make sure that we are comparing similar flares
 \footnotesize
 \movetableright=-20mm
 \script{paper_main_table.py}
-\caption{Flaring star-planet interaction. $R$o, $B$, and $v_{\rm rel}$, are derived from literature values (Table~\ref{tab:maintable_lit}). $P_{\rm spi,xx}$ stands for the power of stretch-and-break ($sb$) and Alfv\'en wing ($aw$) interaction mechanisms, assuming the planet has a magnetic field strength of $1\,$G. $P_{\rm spi,xx0}$ is the same, but assuming an unmagnetized planet. The $p$-value of the Anderson-Darling test is lower when the system shows a stronger clustering of flares in orbital phase. \textcolor{red}{The digits in square brackets refer to the uncertainties in the corresponding last digits shown, e.g., $0.051[1]$ is the same as $0.051\pm0.001$, and $98[12]$ is the same as $98\pm12$.}}
+\caption{Flaring star-planet interaction. $R$o, $B$, and $v_{\rm rel}$, are derived from literature values (Table~\ref{tab:maintable_lit}). $P_{\rm spi,xx}$ stands for the power of stretch-and-break ($sb$) and Alfv\'en wing ($aw$) interaction mechanisms, assuming the planet has a magnetic field strength of $1\,$G. $P_{\rm spi,xx0}$ is the same, but assuming an unmagnetized planet. The $p$-value of the Anderson-Darling test is lower when the system shows a stronger clustering of flares in orbital phase. The digits in square brackets refer to the uncertainties in the corresponding last digits shown, e.g., $0.051[1]$ is the same as $0.051\pm0.001$, and $98[12]$ is the same as $98\pm12$.}
 \input{output/table_der_vals.tex}
     \label{tab:maintable_der}
 
@@ -377,15 +384,6 @@ We choose the $ED>1\,$s cutoff to make sure that we are comparing similar flares
         \label{fig:adtest_bp_rest}
     \end{centering}
 \end{figure}
-
-% \begin{table}
-% \movetableright=-10mm
-% \script{paper_aumic_table.py}
-% \caption{Powers of star-planet interaction calculated for AU Mic in the four different scenarios introduced in Section~\ref{sec:methods:pspi}.}
-% \input{output/aumic_spi.tex}
-%     \label{tab:aumic}
-% \end{table}
-
 
 \subsection{Individual systems}
 \label{sec:results:individualstars}
@@ -686,7 +684,7 @@ This study used the reproducibility software \href{https://github.com/showyourwo
     \script{paper_example_ad_dist.py}
     \begin{centering}
     \includegraphics[width=0.5\linewidth]{figures/example_ad_dist.png}
-\caption{\textcolor{red}{The distribution of 10000 samples of the $A^2$ statistic for HIP 67522. A value of $A^2$ is calculated by drawing a fixed number of flares \textit{at random orbital phases}. The fixed number has to be the same as the number of the flares that were observed in reality. Then, one takes the orbital phases of these observed flares, and compares their $A^2$ value to that of the distribution. An observed $A^2$ value in the tails of the distribution means that flares do not occur \textit{at random orbital phases}, but instead cluster in phase with the planetary orbit, suggesting that the planet triggers at least some of those flares. Here, we show the $A^2$ values that would correspond to $1$, $2$, and $3\sigma$ detections of clustering in orbital phase as vertical lines, along with the measured value for HIP 67522.}}
+\caption{The distribution of 10000 samples of the $A^2$ statistic for HIP 67522. A value of $A^2$ is calculated by drawing a fixed number of flares \textit{at random orbital phases}. The fixed number has to be the same as the number of the flares that were observed in reality. Then, one takes the orbital phases of these observed flares, and compares their $A^2$ value to that of the distribution. An observed $A^2$ value in the tails of the distribution means that flares do not occur \textit{at random orbital phases}, but instead cluster in phase with the planetary orbit, suggesting that the planet triggers at least some of those flares. Here, we show the $A^2$ values that would correspond to $1$, $2$, and $3\sigma$ detections of clustering in orbital phase as black vertical lines, along with the measured $A^2$ value for HIP 67522 as red vertical line.}
     \label{fig:ad_dist_hip}
         \end{centering}
 \end{figure*}
