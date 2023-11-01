@@ -27,6 +27,8 @@ if __name__ == "__main__":
     flare_table["rel_amplitude"] = flare_table.apply(lambda x: fr"${x.rel_amplitude:.4f}$",
                                                      axis=1)
 
+
+
     # Get 4 digits after decimal point for tstart column
     flare_table["tstart"] = flare_table.apply(lambda x: fr"${x.tstart:.4f}$",
                                               axis=1)
