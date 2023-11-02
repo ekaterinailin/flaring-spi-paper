@@ -208,6 +208,70 @@ if __name__ == "__main__":
     # convert st_spectype and st_spectype_bibkey to latex format
     singles.st_spectype = singles.st_spectype.fillna("")
     singles.st_spectype_bibkey = singles.st_spectype_bibkey.fillna("")
+
+    # delete some columns that are not needed
+    del singles["multiple_star"]
+    del singles["multiple_star_source"]
+    del singles["orbits_covered"]
+
+    s = singles.copy()
+
+    # drop all bibkey columns
+    for col in s.columns:
+        if "bibkey" in col:
+            del s[col]
+
+    # write the singles table to a csv file in the zenodo folder
+    s.to_csv(paths.data / "zenodo/Tables_1_3_star_planet_systems.csv", index=False)
+
+    # add text to the top of the table that explains the columns
+    top_text = ("# ID and TIC,star identifier\n"
+                "# obs. time, time span of the observations in days\n"
+                "# st_spectype, spectral type of the star\n"
+                "# st_rotp, rotation period of the star in days\n"
+                "# st_rotp_err, uncertainty on the rotation period\n"
+                "# orbper_d, orbital period of the planet in days\n"
+                "# orbper_d_err, uncertainty on the orbital period\n"
+                "# pl_orbeccen, orbital eccentricity of the innermost planet\n"
+                "# pl_orbeccenerr1, upper uncertainty on the orbital eccentricity\n"
+                "# pl_orbeccenerr2, lower uncertainty on the orbital eccentricity\n"
+                "# st_rad, stellar radius in solar radii\n"
+                "# st_rad_err1, upper uncertainty on the stellar radius\n"
+                "# pl_radj, planetary radius in Jupiter radii\n"
+                "# pl_radjerr1, upper uncertainty on the planetary radius\n"
+                "# pl_raderr2, lower uncertainty on the planetary radius\n"
+                "# Ro, Rossby number\n"
+                "# Ro_high, Ro + upper uncertainty on the Rossby number\n"
+                "# Ro_low, Ro - lower uncertainty on the Rossby number\n"
+                "# st_lum, stellar luminosity in solar luminosities\n"
+                "# st_lumerr1, upper uncertainty on the stellar luminosity\n"
+                "# st_lumerr2, lower uncertainty on the stellar luminosity\n"
+                "# a_au, planet-star distance in au\n"
+                "# a_au_err, uncertainty on the planet-star distance\n"
+                "# B_G, stellar surface magnetic field strength in Gauss\n"
+                "# B_G_high, B_G + upper uncertainty on the stellar surface magnetic field strength\n"
+                "# B_G_low, B_G - lower uncertainty on the stellar surface magnetic field strength\n"
+                "# v_rel_km_s, relative velocity between corotating stellar magnetic field and planet at the planet's orbital distance in km/s\n"
+                "# v_rel_err_km_s, uncertainty on the relative velocity\n"
+                "# p_spi_sb_bp1_erg_s, power of magnetic star-planet interaction with a 1G planetary field using the stretch-and-break mechanism in erg/s\n"
+                "# p_spi_sb_bp1_erg_s_high, power + upper uncertainty on the power of magnetic star-planet interaction with a 1G planetary field using the stretch-and-break mechanism\n"
+                "# p_spi_sb_bp1_erg_s_low, power - lower uncertainty on the power of magnetic star-planet interaction with a 1G planetary field using the stretch-and-break mechanism\n"
+                "# p_spi_aw_bp1_erg_s, power of magnetic star-planet interaction with a 1G planetary field using the Alfvén wave mechanism in erg/s\n"
+                "# p_spi_aw_bp1_erg_s_high, power + upper uncertainty on the power of magnetic star-planet interaction with a 1G planetary field using the Alfvén wave mechanism\n"
+                "# p_spi_aw_bp1_erg_s_low, power - lower uncertainty on the power of magnetic star-planet interaction with a 1G planetary field using the Alfvén wave mechanism\n"
+                "# p_spi_sb_bp0_erg_s, power of magnetic star-planet interaction with an unmagnetized planet using the stretch-and-break mechanism in erg/s\n"
+                "# p_spi_sb_bp0_erg_s_high, power + upper uncertainty on the power of magnetic star-planet interaction with an unmagnetized planet using the stretch-and-break mechanism\n"
+                "# p_spi_sb_bp0_erg_s_low, power - lower uncertainty on the power of magnetic star-planet interaction with an unmagnetized planet using the stretch-and-break mechanism\n"
+                "# p_spi_aw_bp0_erg_s, power of magnetic star-planet interaction with an unmagnetized planet using the Alfvén wave mechanism in erg/s\n"
+                "# p_spi_aw_bp0_erg_s_high, power + upper uncertainty on the power of magnetic star-planet interaction with an unmagnetized planet using the Alfvén wave mechanism\n"
+                "# p_spi_aw_bp0_erg_s_low, power - lower uncertainty on the power of magnetic star-planet interaction with an unmagnetized planet using the Alfvén wave mechanism\n"
+                "# mean, mean p-value of the Anderson-Darling test\n"
+                "# std, standard deviation of the p-values of the Anderson-Darling test\n"
+                "# a_rstar, planet-star distance in stellar radii\n"
+                "# a_rstar_err, uncertainty on the planet-star distance in stellar radii\n")
+
+
+    # add the bibkey to the spectral type
     singles["SpT"] = singles.apply(lambda x: x["st_spectype"] + " \citet{" + x["st_spectype_bibkey"] + "}", axis=1)
 
 
@@ -241,10 +305,7 @@ if __name__ == "__main__":
             if (c in singles.columns) & (newname != c):
                 del singles[c]
 
-    # delete some columns that are not needed
-    del singles["multiple_star"]
-    del singles["multiple_star_source"]
-    del singles["orbits_covered"]
+
 
     
 

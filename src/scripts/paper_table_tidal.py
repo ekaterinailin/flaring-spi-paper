@@ -93,6 +93,46 @@ if __name__ == "__main__":
     # take neg value of pl_bmassjerr2
     df.M_pl_low_err = - df.M_pl_low_err
 
+    dfz = df.copy()
+
+    # select columns to go on zenodo
+    cols = ["TIC", "ID", "M_star", "M_star_up_err", "M_star_low_err",
+            "M_pl", "M_pl_up_err", "M_pl_low_err",	"grav_pert", 
+            "grav_pert_low_err", "grav_pert_up_err", "tidal_disip_timescale",
+            "tidal_disip_timescale_up_err", "tidal_disip_timescale_low_err",
+            "torque_conv", "torque_conv_up_err", "torque_conv_low_err", "mean", "std"]
+
+    # save table to file in the zenodo folder
+    dfz[cols].to_csv(paths.data / "zenodo/Table_4_tidal_interaction.csv", index=False)
+
+    # add text to the top of the written table with explanations of each column
+    top_text = ("# TIC and ID, star designations\n"
+                "# M_star, stellar mass in solar masses\n"
+                "# M_star_up_err, upper uncertainty on the stellar mass\n"
+                "# M_star_low_err, lower uncertainty on the stellar mass\n"
+                "# M_pl, planetary mass in Jupiter masses\n"
+                "# M_pl_up_err, upper uncertainty on the planetary mass\n"
+                "# M_pl_low_err, lower uncertainty on the planetary mass\n"
+                "# grav_pert, gravitational perturbation\n"
+                "# grav_pert_low_err, lower uncertainty on the gravitational perturbation\n"
+                "# grav_pert_up_err, upper uncertainty on the gravitational perturbation\n"
+                "# tidal_disip_timescale, tidal dissipation timescale in years\n"
+                "# tidal_disip_timescale_up_err, upper uncertainty on the tidal dissipation timescale\n"
+                "# tidal_disip_timescale_low_err, lower uncertainty on the tidal dissipation timescale\n"
+                "# torque_conv, convective torque in solar masses x (km/s)^2\n"
+                "# torque_conv_up_err, upper uncertainty on the convective torque\n"
+                "# torque_conv_low_err, lower uncertainty on the convective torque\n"
+                "# mean, mean of the Anderson-Darling test p-values\n"
+                "# std, standard deviation of the Anderson-Darling test p-values\n")
+    
+    # add the top text to the top of the table in the zenodo folder
+    with open(paths.data / "zenodo/Table_4_tidal_interaction.csv", "r") as f:
+        lines = f.readlines()
+    with open(paths.data / "zenodo/Table_4_tidal_interaction.csv", "w") as f:
+        f.write(top_text)
+        f.writelines(lines)
+
+
     # take absolute value of torque_conv_up_err and torque_conv_low_err
     # df.torque_conv_up_err = np.abs(df.torque_conv_up_err)
     # df.torque_conv_low_err = np.abs(df.torque_conv_low_err)
@@ -145,7 +185,6 @@ if __name__ == "__main__":
     g = lambda row: f"{row['mean']:.2f} [{row['std']:.2f}]"  
     df[r"$p$-value"] = df.apply(g, axis=1)
 
-    print(df)
 
     # add ID column and p-value column
     new_cols.insert(0, "ID")
